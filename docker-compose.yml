@@ -23,8 +23,8 @@ services:
       - DB_PORT=27017
     volumes:
       - type: bind
-        source: ./server-side/
-        target: /usr/src/app/
+        source: ./server-side/src
+        target: /usr/src/app/src
     depends_on:
       - mongo-server
   mongo-server:
