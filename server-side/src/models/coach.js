@@ -14,7 +14,7 @@ const coachSchema = new mongoose.Schema(
       unique: true,
     },
     dob: {
-      type: Date,
+      type: String,
     },
     password: {
       type: String,
@@ -23,6 +23,9 @@ const coachSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Discipline",
     },
+    firstAuth: {
+      type: Boolean,
+    }
   },
   { timestamps: true }
 );

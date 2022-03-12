@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import home from "./routes/home";
+import coach from "./routes/coach";
 import configDB from "./config/db";
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // routes endpoints
 app.use("/", home);
+app.use("/", coach);
 
 const port = process.env.PORT || 3000;
 export const server = app.listen(port, () => {
