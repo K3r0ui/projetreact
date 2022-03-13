@@ -1,10 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+import express from "express";
+import bcrypt from "bcryptjs";
+import { Coach } from "../models/coach";
+import verifyCoach, { firstAuthMid } from "../middlewares/verifyCoach";
 
-const { Coach } = require('../models/coach');
+const router = express.Router();
 
 // router.get('/list', async (req, res) => {
 //     const coackList = await Coach.find();
@@ -14,41 +13,46 @@ const { Coach } = require('../models/coach');
 //     res.send(coackList);
 // })
 
-
-router.post('/signup', async (req, res) => {
-    let coach = new Coach({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 15),
-        dob: req.body.dob,
-        firstAuth: false,
-    })
+router.post("/signup", async (req, res) => {
+  let coach;
+  try {
+    coach = new Coach({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      dob: req.body.dob,
+    });
     coach = await coach.save();
-    if (!coach) {
-        return res.status(404).send('the coach cannot be created')
-    }
-    res.send(coach);
+    const token = await coach.generateJWT();
+    res.header("x-auth-token", token).send(coach);
+  } catch (error) {
+    res.status(400).send("email already used");
+  }
 });
 
+router.post("/login", async (req, res) => {
+  let coach = await Coach.findByEmail(req.body.email);
+  if (!coach) return res.status(400).send("Email or Password invalid.");
 
-router.post('/login', async (req, res) => {
-    const coach = await Coach.findOne({ email: req.body.email })
-    const secret = "azerty";
-    if (!coach) {
-        return res.status(400).send('the coach not found')
-    }
-    if (coach && bcrypt.compareSync(req.body.password, coach.password)) {
-        const token = jwt.sign({
-            coachId: coach.id,
-        },
-            secret,
-            { expiresIn: '1d' })
+  const validPwd = await bcrypt.compare(req.body.password, coach.password);
+  if (!validPwd) return res.status(400).send("Email or Password invalid.");
 
-        res.status(200).send({ coach, token: token })
-    } else {
-        res.status(400).send('password is wrong');
-    }
+  const token = await coach.generateJWT();
+
+  res.send(token);
+});
+
+router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
+  const result = await Coach.findOneAndUpdate(
+    { _id: req.user.id },
+    {
+      $set: { discipline: req.body.discipline },
+    },
+    { new: true }
+  );
+
+  res.send(result);
 });
 
 export default router;

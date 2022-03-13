@@ -18,7 +18,8 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
-      - JWTSECRETKEY=havertz
+      - JWTSECRETKEY_C=havertz
+      - JWTSECRETKEY_J=werner
       - DB_DNS=mongo-server
       - DB_PORT=27017
     volumes:
