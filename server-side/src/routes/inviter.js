@@ -3,8 +3,10 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 
 const { Joueur } = require("../models/joueur");
+import { Coach } from "../models/coach";
+import verifyCoach from "../middlewares/verifyCoach";
 
-router.post("/", async (req, res) => {
+router.post("/", verifyCoach, async (req, res) => {
 
     let joueur
     try {
@@ -13,6 +15,7 @@ router.post("/", async (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
+            coach: req.user.id
         })
         joueur = await joueur.save();
 
@@ -26,10 +29,13 @@ router.post("/", async (req, res) => {
                 rejectUnauthorized: false
             },
         });
+        const coach = await Coach.findById(req.user.id)
+        console.log(coach);
+
         let mailOptions = {
             from: "nodeisamm@gmail.com",
             to: `${req.body.email}`,
-            subject: "Invitation from COACH to join a session",
+            subject: `Invitation from COACH: ${coach.firstName} ${coach.lastName} to join a session`,
             text: "test",
             html: `<h3> YOUR INFO </h3> 
           <ul>
