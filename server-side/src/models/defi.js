@@ -6,10 +6,21 @@ const defiSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    link: {
+      type: String
+    },
     coach: {
       type: ObjectId,
       ref: "Coach",
     },
+    joueur: {
+      type: ObjectId,
+      ref: "Joueur"
+    },
+    done: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );

@@ -11,8 +11,10 @@ const competenceSchema = new mongoose.Schema(
     },
     stars: {
       type: Number,
+      min: [0, 'Must be at least 0'],
+      max: [5, 'Must be at most 5']
     },
-    changement: {
+    isVisible: {
       type: Boolean,
     },
     link: {

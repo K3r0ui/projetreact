@@ -30,7 +30,7 @@ router.post("/", verifyCoach, async (req, res) => {
             },
         });
         const coach = await Coach.findById(req.user.id)
-        
+
         let mailOptions = {
             from: "nodeisamm@gmail.com",
             to: `${req.body.email}`,

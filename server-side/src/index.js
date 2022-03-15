@@ -4,6 +4,8 @@ import home from "./routes/home";
 import coach from "./routes/coach";
 import competence from "./routes/competence";
 import inviter from "./routes/inviter"
+import joueur from "./routes/joueur"
+import defi from './routes/defi'
 import configDB from "./config/db";
 import { Discipline } from "./models/discipline";
 
@@ -17,9 +19,13 @@ app.use(express.json());
 app.use("/", home);
 app.use("/coach", coach);
 //CRUD Competence 
-app.use('/', competence)
+app.use('/competence', competence);
 //Inviter Joueur
-app.use('/inviter', inviter)
+app.use('/inviter', inviter);
+
+app.use('/joueur', joueur);
+
+app.use('/defi', defi);
 
 // const discipline = new Discipline({
 //   description: "football",

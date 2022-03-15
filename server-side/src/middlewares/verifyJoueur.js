@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { Joueur } from "../models/joueur";
 
 export default (req, res, next) => {
   try {
@@ -10,5 +11,18 @@ export default (req, res, next) => {
     next();
   } catch (error) {
     res.status(400).send("Invalid token");
+  }
+};
+
+export const firstAuthMid = async (req, res, next) => {
+  try {
+    let joueur = await Joueur.findById(req.user.id);
+    if (joueur.firstAuth) {
+      next();
+    } else {
+      res.status(400).send("Joueur Not allowed");
+    }
+  } catch (error) {
+    res.status(400).send("Error query");
   }
 };

@@ -29,6 +29,10 @@ const joueurSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Coach",
     },
+    firstAuth: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );
@@ -38,14 +42,14 @@ joueurSchema.statics.findByEmail = async (email) => {
 };
 
 joueurSchema.methods.generateJWT = async function () {
-  return await jwt.sign({ id: this._id }, process.env.JWTSECRETKEY_C, {
+  return await jwt.sign({ id: this._id }, process.env.JWTSECRETKEY_J, {
     expiresIn: "10h",
   });
 };
 
 joueurSchema.pre("save", async function (next) {
   const user = this;
-  const salt = await bcrypt.genSalt(parseInt(process.env.JWTSECRETKEY_C));
+  const salt = await bcrypt.genSalt(parseInt(process.env.JWTSECRETKEY_J));
   user.password = await bcrypt.hash(user.password, salt);
   next();
 });
