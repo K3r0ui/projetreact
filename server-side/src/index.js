@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import home from "./routes/home";
 import coach from "./routes/coach";
+import competence from "./routes/competence";
+import inviter from "./routes/inviter"
 import configDB from "./config/db";
 import { Discipline } from "./models/discipline";
 
@@ -14,6 +16,10 @@ app.use(express.json());
 // routes endpoints
 app.use("/", home);
 app.use("/coach", coach);
+//CRUD Competence 
+app.use('/', competence)
+//Inviter Joueur
+app.use('/inviter', inviter)
 
 // const discipline = new Discipline({
 //   description: "football",

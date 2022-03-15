@@ -13,7 +13,11 @@ const competenceSchema = new mongoose.Schema(
       type: Number,
     },
     changement: {
+      type: Boolean,
+    },
+    link: {
       type: String,
+      required: false
     },
     joueur: {
       type: ObjectId,
