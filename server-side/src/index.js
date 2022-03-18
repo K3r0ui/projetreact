@@ -6,6 +6,8 @@ import competence from "./routes/competence";
 import inviter from "./routes/inviter"
 import joueur from "./routes/joueur"
 import defi from './routes/defi'
+import event from './routes/event'
+
 import configDB from "./config/db";
 import { Discipline } from "./models/discipline";
 
@@ -26,6 +28,7 @@ app.use('/inviter', inviter);
 app.use('/joueur', joueur);
 
 app.use('/defi', defi);
+app.use('/event', event);
 
 // const discipline = new Discipline({
 //   description: "football",
