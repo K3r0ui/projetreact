@@ -13,10 +13,17 @@ const defiSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Coach",
     },
-    joueur: {
-      type: ObjectId,
-      ref: "Joueur"
-    },
+    joueurs: [
+      {
+        joueur: {
+          type: ObjectId,
+          ref: "Joueur"
+        },
+        delai: {
+          type: String
+        }
+      }
+    ],
     done: {
       type: Boolean,
       default: false

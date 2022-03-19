@@ -8,14 +8,18 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get(
-        `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`
+        `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+        headers: {
+          'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+'
+        }
+      }
       );
       setMsg(data);
     };
     fetchData();
   }, []);
 
-  return <div className="App"><h1>achref</h1></div>;
+  return <div className="App"><h1>{msg}</h1></div>;
 }
 
 export default App;

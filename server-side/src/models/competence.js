@@ -14,17 +14,14 @@ const competenceSchema = new mongoose.Schema(
       min: [0, 'Must be at least 0'],
       max: [5, 'Must be at most 5']
     },
-    isVisible: {
-      type: Boolean,
-    },
     link: {
       type: String,
       required: false
     },
-    joueur: {
+    coach: {
       type: ObjectId,
-      ref: "Joueur",
-    },
+      ref: "Coach",
+    }
   },
   { timestamps: true }
 );

@@ -7,9 +7,11 @@ import inviter from "./routes/inviter"
 import joueur from "./routes/joueur"
 import defi from './routes/defi'
 import event from './routes/event'
+import lieu from './routes/lieu'
 
 import configDB from "./config/db";
 import { Discipline } from "./models/discipline";
+
 
 const app = express();
 app.use(cors());
@@ -29,6 +31,8 @@ app.use('/joueur', joueur);
 
 app.use('/defi', defi);
 app.use('/event', event);
+
+app.use('/lieu', lieu)
 
 // const discipline = new Discipline({
 //   description: "football",

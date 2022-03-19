@@ -6,6 +6,15 @@ const lieuSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+    city: {
+      type: String
+    },
+    country: {
+      type: String
+    },
+    address: {
+      type: String
+    },
     coach: {
       type: ObjectId,
       ref: "Coach",

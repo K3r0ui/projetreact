@@ -33,6 +33,18 @@ const joueurSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    event: [
+      {
+        type: ObjectId,
+        ref: "Event"
+      }
+    ],
+    defis: [
+      {
+        type: ObjectId,
+        ref: "Defi"
+      }
+    ]
   },
   { timestamps: true }
 );

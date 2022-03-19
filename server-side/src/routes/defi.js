@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 
 const { Defi } = require("../models/defi");
-const { Joueur } = require("../models/joueur");
 
 
 import verifyCoach from "../middlewares/verifyCoach";
 import verifyJoueur from "../middlewares/verifyJoueur";
+import verifyToken from "../middlewares/verifyToken";
+import { Joueur } from "../models/joueur";
 
+
+//Get List of defi of coach
 router.get('/coach', verifyCoach, async (req, res) => {
     try {
         const defi = await Defi.find({ coach: req.user.id });
@@ -17,31 +19,22 @@ router.get('/coach', verifyCoach, async (req, res) => {
     } catch {
         res.status(400).send("No Defi Trouved")
     }
-
 })
 
-router.get('/coach/:id', verifyCoach, async (req, res) => {
-    try {
-        const defi = await Defi.findOne({ _id: req.params.id, coach: req.user.id });
-        res.status(200).send(defi)
-    } catch {
-        res.status(400).send("No Defi Trouved under Coach")
-    }
-
-})
-
+//Get List defi of joueur
 router.get('/joueur', verifyJoueur, async (req, res) => {
     try {
-        const defi = await Defi.find({ joueur: req.user.id })
-        res.status(200).send(defi)
+        const joueur = await Joueur.findById(req.user.id).populate("defis")
+        res.status(200).send(joueur.defis)
     } catch {
         res.status(400).send("No Defi Trouved under Player")
     }
 })
 
-router.get('/joueur/:id', verifyJoueur, async (req, res) => {
+//Get defit By Id
+router.get('/joueur/:id', verifyToken, async (req, res) => {
     try {
-        let defi = await Defi.findOne({ _id: req.params.id, joueur: req.user.id })
+        let defi = await Defi.findOne({ _id: req.params.id }).populate("defis")
         res.status(200).send(defi)
     } catch {
         res.status(400).send("No Defi Trouved under Player")
@@ -56,7 +49,6 @@ router.post('/coach', verifyCoach, async (req, res) => {
             description: req.body.description,
             link: req.body.link,
             coach: req.user.id,
-            joueur: req.body.joueur
         })
         newDefi.save()
         res.status(200).send(newDefi)
@@ -67,6 +59,28 @@ router.post('/coach', verifyCoach, async (req, res) => {
     }
 })
 
+// ADD Joueur to defit
+router.put('/coach/assigned/:id', verifyCoach, async (req, res) => {
+    try {
+        const newJoueurs = {
+            joueur: req.body.joueur,
+            delai: req.body.delai
+        }
+        const defi = await Defi.findByIdAndUpdate(
+            req.params.id,
+            { $push: { joueurs: newJoueurs } },
+            { new: true }
+        );
+        await Joueur.findByIdAndUpdate(
+            req.body.joueur,
+            { $push: { defis: req.params.id } },
+            { new: true }
+        )
+        res.status(200).send(defi);
+    } catch {
+        res.status(400).send("player can not join defi")
+    }
+})
 
 router.put('/coach/:id', verifyCoach, async (req, res) => {
     try {
@@ -84,12 +98,14 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
     }
 })
 
+
+
 router.put('/joueur/:id', verifyJoueur, async (req, res) => {
     try {
         const defi = await Defi.findOneAndUpdate(
-            { _id: req.params.id, joueur: req.user.id },
+            { _id: req.params.id },
             {
-                done: true,
+                done: req.body.done,
             },
             { new: true }
         );

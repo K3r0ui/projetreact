@@ -18,10 +18,18 @@ const statSchema = new mongoose.Schema(
     changement: {
       type: String,
     },
+    lien: {
+      type: String
+    },
     discipline: {
       type: ObjectId,
       ref: "Discipline",
     },
+    coach: {
+      type: ObjectId,
+      ref: "Coach",
+    }
+
   },
   { timestamps: true }
 );
