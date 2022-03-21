@@ -24,6 +24,26 @@ const seanceSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Lieu",
     },
+    joueur: {
+      type: ObjectId,
+      ref: "Joueur"
+    },
+    competences: [
+      {
+        type: ObjectId,
+        ref: "Competence"
+      }
+    ],
+    statistiques: [
+      {
+        type: ObjectId,
+        ref: "Stat"
+      }
+    ],
+    raisonannul: {
+      type: String
+    },
+
   },
   { timestamps: true }
 );

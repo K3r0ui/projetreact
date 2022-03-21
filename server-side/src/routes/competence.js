@@ -4,10 +4,12 @@ const router = express.Router();
 const { Competence } = require("../models/competence");
 
 import verifyCoach from "../middlewares/verifyCoach";
+import verifyJoueur from "../middlewares/verifyJoueur";
 import verifyToken from "../middlewares/verifyToken";
+import { Joueur } from "../models/joueur";
 
 
-//Get All competence of joueur with id
+//Get All competence of coach
 router.get("/coach", verifyCoach, async (req, res) => {
     try {
         const compts = await Competence.find({ coach: req.user.id });
@@ -18,7 +20,7 @@ router.get("/coach", verifyCoach, async (req, res) => {
 });
 
 //Get competence with id
-router.get("/coach/:id", verifyToken, async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
     try {
         const compts = await Competence.findById(req.params.id);
         res.send(compts);
@@ -28,17 +30,25 @@ router.get("/coach/:id", verifyToken, async (req, res) => {
 });
 
 
+//Joueur get all competence
+router.get("/joueur", verifyJoueur, async (req, res) => {
+    try {
+        const compts = await Joueur.findById(req.user.id).populate("competences")
+        res.send(compts.competences)
+    } catch {
+        res.status(404).json("EROOOOOOOOR");
+    }
+});
+
 
 // Coach Add new Competence 
 router.post("/coach", verifyCoach, async (req, res) => {
-
     let newComp
     try {
         newComp = new Competence({
             title: req.body.title,
             description: req.body.description,
             link: req.body.link,
-            stars: req.body.stars,
             coach: req.user.id
         });
         newComp = await newComp.save();
@@ -49,7 +59,7 @@ router.post("/coach", verifyCoach, async (req, res) => {
     }
 });
 
-//Coach update visibility and stars of Competence 
+//Coach update of Competence 
 router.put("/coach/:id", verifyCoach, async (req, res) => {
     try {
         const compt = await Competence.findByIdAndUpdate(
@@ -58,7 +68,6 @@ router.put("/coach/:id", verifyCoach, async (req, res) => {
                 title: req.body.title,
                 description: req.body.description,
                 link: req.body.link,
-                stars: req.body.stars,
             },
             { new: true }
         );
@@ -66,27 +75,74 @@ router.put("/coach/:id", verifyCoach, async (req, res) => {
     } catch {
         return res.status(400).send("COMPETENCE CANNOT BE UPDATED");
     }
-
 });
+
+
+router.put("/coach/assigned/:id", verifyCoach, async (req, res) => {
+    try {
+        const compts = await Competence.findById(req.params.id)
+        const findIndex = compts.joueurs.findIndex(x => x == req.body.joueur);
+
+        if (findIndex !== -1) {
+            res.status(500).send("Joueur already have this competence")
+        } else {
+            await Joueur.findByIdAndUpdate(
+                req.body.joueur,
+                {
+                    $push: { competences: { compentence: req.params.id } }
+                }
+            )
+            const compt = await Competence.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $push: { joueurs: req.body.joueur }
+                },
+                { new: true }
+            )
+            res.send(compt);
+        }
+
+    } catch {
+        return res.status(400).send("COMPETENCE CANNOT BE assigned");
+    }
+});
+
+router.put("/coach/altercometrencejoueur/:id", verifyCoach, async (req, res) => {
+    try {
+        const data = {
+            competence: req.params.id,
+            stars: req.body.stars,
+            isVisible: req.body.isVisible
+        }
+        let joueur = await Joueur.findById(req.body.joueur)
+        const findIndex = joueur.competences.findIndex(x => x.competence == req.params.id)
+        joueur.competences[findIndex] = data;
+        joueur = await joueur.save();
+        res.send(joueur);
+    } catch {
+        return res.status(400).send("COMPETENCE CANNOT BE modifi");
+    }
+})
 
 //delete compentence 
-router.delete("/coach/:id", verifyCoach, (req, res) => {
-    Competence.findByIdAndRemove(req.params.id)
-        .then((compt) => {
-            if (compt) {
-                return res
-                    .status(200)
-                    .json({ success: true, Message: "COMPETENCE HAS BEEN DELETED !!" });
-            } else {
-                return res
-                    .status(404)
-                    .json({ success: false, Message: "COMPETENCE CANNOT BE DELETED !!" });
-            }
+router.delete("/coach/:id", verifyCoach, async (req, res) => {
+    try {
+        const compt = await Competence.findById(req.params.id);
+
+        compt.joueurs.forEach(async x => {
+            let joueur = await Joueur.findById(x)
+            const findIndex = joueur.competences.findIndex(x => x.competence == req.params.id)
+            joueur.competences.splice(findIndex, 1)
+            await joueur.save()
         })
-        .catch((err) => {
-            return res.status(404).json({ success: false, Message: err });
-        });
+
+        await Competence.findByIdAndRemove(req.params.id);
+        res.status(200).send("SUCCESS")
+    } catch {
+        res.status(500).json("Error");
+    };
 });
+
 
 
 export default router;

@@ -15,9 +15,6 @@ const statSchema = new mongoose.Schema(
     unite: {
       type: String,
     },
-    changement: {
-      type: String,
-    },
     lien: {
       type: String
     },
@@ -28,8 +25,13 @@ const statSchema = new mongoose.Schema(
     coach: {
       type: ObjectId,
       ref: "Coach",
-    }
-
+    },
+    joueurs: [
+      {
+        type: ObjectId,
+        ref: "Joueur",
+      }
+    ],
   },
   { timestamps: true }
 );

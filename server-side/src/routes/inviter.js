@@ -17,7 +17,7 @@ router.post("/", verifyCoach, async (req, res) => {
             password: req.body.password,
             coach: req.user.id
         })
-        joueur = await joueur.save();
+
 
         let smtpTransport = nodemailer.createTransport({
             service: "gmail",
@@ -53,6 +53,8 @@ router.post("/", verifyCoach, async (req, res) => {
         });
 
         smtpTransport.close();
+        joueur = await joueur.save();
+        req.send(joueur)
 
     } catch (error) {
         res.status(400).send("email already user")

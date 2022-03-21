@@ -3,6 +3,7 @@ import cors from "cors";
 import home from "./routes/home";
 import coach from "./routes/coach";
 import competence from "./routes/competence";
+import stat from "./routes/stat";
 import inviter from "./routes/inviter"
 import joueur from "./routes/joueur"
 import defi from './routes/defi'
@@ -24,6 +25,7 @@ app.use("/", home);
 app.use("/coach", coach);
 //CRUD Competence 
 app.use('/competence', competence);
+app.use('/stat', stat);
 //Inviter Joueur
 app.use('/inviter', inviter);
 

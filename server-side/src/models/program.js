@@ -20,7 +20,7 @@ const programSchema = new mongoose.Schema(
           type: ObjectId,
           ref: "Competence"
         },
-        isVisible: {
+        done: {
           type: Boolean,
           default: false
         }
@@ -32,13 +32,18 @@ const programSchema = new mongoose.Schema(
           type: ObjectId,
           ref: "Stat"
         },
-        isVisible: {
+        done: {
           type: Boolean,
           default: false
         }
       }
+    ],
+    seances: [
+      {
+        type: ObjectId,
+        ref: "Seance"
+      }
     ]
-
   },
   { timestamps: true }
 );
