@@ -3,47 +3,51 @@ import mongoose from "mongoose";
 const programSchema = new mongoose.Schema(
   {
     name: {
-      type: String
+      type: String,
     },
     description: {
       type: String,
     },
     image: {
-      type: String
+      type: String,
     },
-    VideoLink: {
-      type: String
+    videoLink: {
+      type: String,
+    },
+    coach: {
+      type: ObjectId,
+      ref: "Coach",
     },
     competences: [
       {
         competence: {
           type: ObjectId,
-          ref: "Competence"
+          ref: "Competence",
         },
         done: {
           type: Boolean,
-          default: false
-        }
-      }
+          default: false,
+        },
+      },
     ],
     statistiques: [
       {
         statistique: {
           type: ObjectId,
-          ref: "Stat"
+          ref: "Stat",
         },
         done: {
           type: Boolean,
-          default: false
-        }
-      }
+          default: false,
+        },
+      },
     ],
     seances: [
       {
         type: ObjectId,
-        ref: "Seance"
-      }
-    ]
+        ref: "Seance",
+      },
+    ],
   },
   { timestamps: true }
 );
