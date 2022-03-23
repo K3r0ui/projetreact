@@ -1,10 +1,12 @@
 import express from "express";
+import mongoose from 'mongoose';
 import { Event } from "../models/event";
 import { EventJoueur } from "../models/eventJoueur";
 import api_key from "../middlewares/api_key";
 import verifyJoueur from "../middlewares/verifyJoueur";
 import verifyCoach from "../middlewares/verifyCoach";
 import { Joueur } from "../models/joueur";
+import verifyToken from "../middlewares/verifyToken";
 
 
 const router = express.Router();
@@ -20,7 +22,69 @@ router.get('/coach', verifyCoach, async (req, res) => {
     } catch {
         res.status(500).send("Eroor")
     }
+});
+
+
+//get All """""""id""""""""""" joueur participate in event
+
+router.get('/coach/participate/:id', verifyCoach, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id).select("joueurs");
+        const jrs = event.joueurs.map(joueur => {
+            if (joueur.status == "participer") {
+                return joueur.joueur
+            }
+        })
+        if (!jrs[0]) {
+            res.send("there not user participate ")
+        } else {
+            res.send(jrs)
+        }
+
+
+    } catch {
+        res.status(500).send("there is some error")
+    }
+});
+
+
+router.get('/coach/interess/:id', verifyCoach, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id).select("joueurs");
+        const jrs = event.joueurs.map(joueur => {
+            if (joueur.status == "interessé") {
+                return joueur.joueur
+            }
+        })
+        if (!jrs[0]) {
+            res.send("there not user interessted ")
+        }
+        res.send(jrs)
+
+    } catch {
+        res.status(500).send("there is some error")
+    }
+});
+
+router.get('/coach/notparticipate/:id', verifyCoach, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id).select("joueurs");
+        const jrs = event.joueurs.map(joueur => {
+            if (joueur.status == "ne pas participer") {
+                return joueur.joueur
+            }
+        })
+        if (!jrs[0]) {
+            res.send("there not user not participate ")
+        }
+        res.send(jrs)
+
+    } catch {
+        res.status(500).send("there is some error")
+    }
 })
+
+
 
 
 //Get list of Event of here Coach
@@ -29,7 +93,7 @@ router.get("/joueur/private", verifyJoueur, async (req, res) => {
         const joueur = await Joueur.findById(req.user.id)
         const coachid = joueur.coach
         const events = await Event.find(
-            { coach: coachid }
+            { coach: coachid, etat: "private" }
         )
         if (!events) {
             req.status(400).send("No event Found");
@@ -60,9 +124,53 @@ router.get("/joueur/public", verifyJoueur, async (req, res) => {
 
 
 
+//Joueur get """"id""""" of all evnt participer
+router.get("/joueur/participate", verifyJoueur, async (req, res) => {
+    try {
+        const joueur = await Joueur.findById(req.user.id).populate("events");
+        const events = joueur.events.map(event => {
+            if (event.status == "participer") {
+                return event.event
+            }
+        });
+        console.log(events[0]);
+        if (!events[0]) {
+            res.status(400).send("have not event participate")
+        } else {
+            res.send(events)
+        }
+    }
+    catch {
+        res.status(500).send("there is some error")
+    }
+})
+
+
+router.get("/joueur/interess", verifyJoueur, async (req, res) => {
+    try {
+        const joueur = await Joueur.findById(req.user.id).populate("events");
+        const events = joueur.events.map(event => {
+            if (event.status == "interessé") {
+                return event.event
+            }
+        });
+        console.log(events[0]);
+        if (!events[0]) {
+            res.status(400).send("have not event interesser")
+        } else {
+            res.send(events)
+        }
+    }
+    catch {
+        res.status(500).send("there is some error")
+    }
+})
+
+
+
 
 //routes for players and coatchs 
-router.get('/:id', api_key, async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
         if (event) {
@@ -81,7 +189,7 @@ router.get('/:id', api_key, async (req, res) => {
 
 //routes for  coatchs 
 // insert event 
-router.post('/coach', [api_key, verifyCoach], async (req, res) => {
+router.post('/coach', verifyCoach, async (req, res) => {
     let newEvent
     try {
         newEvent = new Event({
@@ -100,6 +208,9 @@ router.post('/coach', [api_key, verifyCoach], async (req, res) => {
 
 // update event 
 router.put('/coach/:id', verifyCoach, async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        res.status(400).send('Invalid Product Id');
+    }
     try {
         const event = await Event.findOneAndUpdate(
             { _id: req.params.id },
@@ -116,42 +227,54 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
 });
 
 
-router.delete("/coach/:id", verifyCoach, (req, res) => {
-    Event.findByIdAndRemove(req.params.id)
-        .then((event) => {
-            if (event) {
-                return res
-                    .status(200)
-                    .json({ success: true, Message: "Event HAS BEEN DELETED !!" });
-            } else {
-                return res
-                    .status(404)
-                    .json({ success: false, Message: "Event CANNOT BE DELETED !!" });
-            }
+router.delete("/coach/:id", verifyCoach, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id)
+        event.joueurs.forEach(async (x) => {
+            let joueur = await Joueur.findById(x.joueur)
+
+            const findIndex = joueur.events.findIndex(
+                (x) => x.event == req.params.id
+            );
+            joueur.events.splice(findIndex, 1);
+            await joueur.save();
         })
-        .catch((err) => {
-            return res.status(404).json({ success: false, Message: err });
-        });
+
+        Event.findByIdAndRemove(req.params.id)
+        res.status(200).json("Event HAS BEEN DELETED !!");
+    } catch {
+        res.status(500).json("Error");
+    }
 });
-
-
 
 
 
 //Joueur Join Event 
 router.put('/joueur/join/:id', verifyJoueur, async (req, res) => {
     try {
-        const event = await Event.findByIdAndUpdate(
-            req.params.id,
-            { $push: { joueurs: req.user.id } },
-            { new: true }
-        );
-        await Joueur.findByIdAndUpdate(
-            req.user.id,
-            { $push: { event: req.params.id } },
-            { new: true }
-        )
-        res.status(200).send(event);
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            res.status(400).send('Invalid Product Id');
+        }
+        const joueur = await Joueur.findById(req.user.id);
+        const index = joueur.events.findIndex((x) => x.event == req.params.id)
+        if (index !== -1) {
+            res.status(400).send("you are ready join this event")
+        } else if (req.body.status != "interessé" && req.body.status != "participer" && req.body.status != "ne pas participer") {
+            res.status(400).send("status Error")
+        } else {
+            const event = await Event.findByIdAndUpdate(
+                req.params.id,
+                { $push: { joueurs: { joueur: req.user.id, status: req.body.status } } },
+                { new: true }
+            );
+            await Joueur.findByIdAndUpdate(
+                req.user.id,
+                { $push: { events: { event: req.params.id, status: req.body.status } } },
+                { new: true }
+            )
+            res.status(200).send(event);
+        }
+
     } catch {
         res.status(400).send("player can not join event")
     }

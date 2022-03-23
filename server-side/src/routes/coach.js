@@ -2,16 +2,9 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import { Coach } from "../models/coach";
 import verifyCoach, { firstAuthMid } from "../middlewares/verifyCoach";
+import { Joueur } from "../models/joueur";
 
 const router = express.Router();
-
-// router.get('/list', async (req, res) => {
-//     const coackList = await Coach.find();
-//     if (!coackList) {
-//         res.status(500).json({ success: false });
-//     }
-//     res.send(coackList);
-// })
 
 router.post("/signup", async (req, res) => {
   let coach;
@@ -44,19 +37,74 @@ router.post("/login", async (req, res) => {
 });
 
 router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
-  const result = await Coach.findOneAndUpdate(
-    { _id: req.user.id },
-    {
-      $set: { discipline: req.body.discipline },
-    },
-    { new: true }
-  );
+  try {
+    const result = await Coach.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $set: { discipline: req.body.discipline },
+      },
+      { new: true }
+    );
 
-  res.send(result);
+    res.send(result);
+  } catch {
+    res.status(500).send("there is some error")
+  }
 });
 
+router.put("/alert", [verifyCoach, firstAuthMid], async (req, res) => {
+  try {
+    const result = await Coach.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $set: { alert: req.body.alert },
+      },
+      { new: true }
+    );
+    res.send(result);
+  } catch {
+    res.status(500).send("there is some error")
+  }
+});
 
+//set nombre de seance non atteint
+router.put("/alert", [verifyCoach, firstAuthMid], async (req, res) => {
+  try {
+    const result = await Coach.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $set: { nbsc: req.body.nbsc },
+      },
+      { new: true }
+    );
+    res.send(result);
+  } catch {
+    res.status(500).send("there is some error")
+  }
+});
 
+//get list of here joueur 
+router.get("/alljoueurs", verifyCoach, async (req, res) => {
+  try {
+    const joueurs = await Joueur.find({ "coach": req.user.id });
+    if (!joueurs) {
+      res.status(400).send("you don't have a joueurs")
+    }
+    res.send(joueurs)
+  } catch {
+    res.status(500).send("there is something wrong ")
+  }
+})
+
+//get profile
+router.get('/profile', verifyCoach, async (req, res) => {
+  try {
+    const coach = await Coach.findById(req.user.id);
+    res.send(coach)
+  } catch {
+    res.status(500).send("there is something wrong ")
+  }
+})
 
 
 export default router;

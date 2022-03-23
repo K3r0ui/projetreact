@@ -32,6 +32,10 @@ const coachSchema = new mongoose.Schema(
     alert: {
       type: ObjectId,
       ref: "Alert"
+    },
+    nbsc: {
+      type: Number,
+      required: true
     }
   },
   { timestamps: true }

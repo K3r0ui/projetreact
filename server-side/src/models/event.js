@@ -15,8 +15,15 @@ const eventSchema = new mongoose.Schema(
     },
     joueurs: [
       {
-        type: ObjectId,
-        ref: "Joueur"
+        joueur: {
+          type: ObjectId,
+          ref: "Joueur"
+        },
+        status: {
+          type: String,
+          required: true
+        }
+
       }
     ]
   },

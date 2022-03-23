@@ -121,6 +121,45 @@ router.put("/coach/alterstatistiquejoueur/:id", verifyCoach, async (req, res) =>
         let joueur = await Joueur.findById(req.body.joueur)
         const findIndex = joueur.statistiques.findIndex(x => x.statistique == req.params.id)
         joueur.statistiques[findIndex] = data;
+
+
+
+        //send mail if this statistique is visible
+        if (data.isVisible) {
+
+            let smtpTransport = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: "nodeisamm@gmail.com",
+                    pass: "otaku666",
+                },
+                tls: {
+                    rejectUnauthorized: false
+                },
+            });
+            const coach = await Coach.findById(req.user.id)
+
+            let mailOptions = {
+                from: "nodeisamm@gmail.com",
+                to: `${joueur.email}`,
+                subject: `new Statistique from: ${coach.firstName} ${coach.lastName}`,
+                text: "test",
+                html: `<h3> You have a new statistique  </h3> 
+                <div>
+                  <b>To check this statistique please visit this link</b>
+                </div>
+                <div>
+                <a href="http://localhost:3000/"> clic here </a>
+                </div>
+                `,
+            };
+
+            smtpTransport.sendMail(mailOptions);
+            smtpTransport.close();
+
+        }
+
+
         joueur = await joueur.save();
         res.send(joueur);
     } catch {

@@ -85,6 +85,7 @@ router.put("/coach/:id", verifyCoach, async (req, res) => {
   }
 });
 
+//assigned competence to Joeur
 router.put("/coach/assigned/:id", verifyCoach, async (req, res) => {
   try {
     const compts = await Competence.findById(req.params.id);
@@ -125,6 +126,43 @@ router.put(
         (x) => x.competence == req.params.id
       );
       joueur.competences[findIndex] = data;
+
+
+      //send mail if this competence is visible
+      if (data.isVisible) {
+
+        let smtpTransport = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "nodeisamm@gmail.com",
+            pass: "otaku666",
+          },
+          tls: {
+            rejectUnauthorized: false
+          },
+        });
+        const coach = await Coach.findById(req.user.id)
+
+        let mailOptions = {
+          from: "nodeisamm@gmail.com",
+          to: `${joueur.email}`,
+          subject: `new Competence from: ${coach.firstName} ${coach.lastName}`,
+          text: "test",
+          html: `<h3> You have a new competence  </h3> 
+                <div>
+                  <b>to check this competence please visit this link</b>
+                </div>
+                <div>
+                <a href="http://localhost:3000/"> clic here </a>
+                </div>
+                `,
+        };
+
+        smtpTransport.sendMail(mailOptions);
+
+        smtpTransport.close();
+      }
+
       joueur = await joueur.save();
       res.send(joueur);
     } catch {
