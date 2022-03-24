@@ -27,5 +27,22 @@ router.get("/profile", verifyJoueur, async (req, res) => {
     }
     res.status(200).send(joueur)
 
+});
+
+router.put("/modifierprofile", verifyJoueur, async (req, res) => {
+    try {
+        const joueur = await Joueur.findByIdAndUpdate(
+            req.user.id,
+            {
+                firstName: req.body.firstName
+            },
+            { new: true }
+        )
+    } catch {
+        res.status(500).send("there is something wrong ")
+    }
 })
+
+
+
 export default router;

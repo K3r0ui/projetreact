@@ -36,6 +36,20 @@ const coachSchema = new mongoose.Schema(
     nbsc: {
       type: Number,
       required: true
+    },
+    abonnement: {
+      type: {
+        type: String,
+        default: "free"
+      },
+      doc: {
+        type: Date,
+        default: new Date()
+      },
+      nbjoueur: {
+        type: Number,
+        default: 3
+      }
     }
   },
   { timestamps: true }

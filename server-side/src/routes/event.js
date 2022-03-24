@@ -1,8 +1,6 @@
 import express from "express";
 import mongoose from 'mongoose';
 import { Event } from "../models/event";
-import { EventJoueur } from "../models/eventJoueur";
-import api_key from "../middlewares/api_key";
 import verifyJoueur from "../middlewares/verifyJoueur";
 import verifyCoach from "../middlewares/verifyCoach";
 import { Joueur } from "../models/joueur";

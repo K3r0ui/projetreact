@@ -19,11 +19,44 @@ const joueurSchema = new mongoose.Schema(
       unique: true,
     },
     dob: {
-      type: Date,
+      type: String,
+    },
+    photo: {
+      type: String
+    },
+    pob: {
+      type: String
+    },
+    sexe: {
+      type: String
+    },
+    job: {
+      type: String
+    },
+    ville: {
+      type: String
+    },
+    telephone: {
+      type: String
+    },
+    price: {
+      type: Number
+    },
+    taille: {
+      type: Number
+    },
+    poid: {
+      type: Number
+    },
+    orientation: {
+      type: String,
+      enum: ["droit", "Gauche"]
+    },
+    nbscweek: {
+      type: Number
     },
     password: {
-      type: String,
-      required: true,
+      type: String
     },
     coach: {
       type: ObjectId,
@@ -33,6 +66,10 @@ const joueurSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    etat: {
+      type: String,
+      default: "actif"
+    },
     events: [
       {
         event: {
@@ -41,7 +78,6 @@ const joueurSchema = new mongoose.Schema(
         },
         status: {
           type: String,
-          required: true,
         }
       }
     ],
@@ -82,7 +118,11 @@ const joueurSchema = new mongoose.Schema(
           default: false
         }
       }
-    ]
+    ],
+    invitation: {
+      type: ObjectId,
+      ref: "Invitation"
+    }
   },
   { timestamps: true }
 );
@@ -97,12 +137,12 @@ joueurSchema.methods.generateJWT = async function () {
   });
 };
 
-joueurSchema.pre("save", async function (next) {
-  const user = this;
-  const salt = await bcrypt.genSalt(parseInt(process.env.JWTSECRETKEY_J));
-  user.password = await bcrypt.hash(user.password, salt);
-  next();
-});
+// joueurSchema.pre("save", async function (next) {
+//   const user = this;
+//   const salt = await bcrypt.genSalt(parseInt(process.env.JWTSECRETKEY_J));
+//   user.password = await bcrypt.hash(user.password, salt);
+//   next();
+// });
 
 joueurSchema.methods.toJSON = function () {
   const user = this;

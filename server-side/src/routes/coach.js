@@ -104,6 +104,33 @@ router.get('/profile', verifyCoach, async (req, res) => {
   } catch {
     res.status(500).send("there is something wrong ")
   }
+});
+
+
+
+router.put("/payerabonnement", verifyCoach, async (req, res) => {
+  let coach;
+  try {
+    const co = await Coach.findById(req.user.id)
+    let nb = 0
+    if (req.body.type == "free") {
+      nb = co.abonnement.nbjoueur + 3
+    }
+    else if (req.body.type == "basic") {
+      nb = co.abonnement.nbjoueur + 10
+    } else {
+      nb = -1
+    }
+    coach = await Coach.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $set: { abonnement: { type: req.body.type, doc: new Date(), nbjoueur: nb } },
+      },
+      { new: true }
+    );
+  } catch {
+    res.status(500).send("there is something wrong ")
+  }
 })
 
 

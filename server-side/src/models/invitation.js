@@ -3,11 +3,13 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const invitationSchema = new mongoose.Schema(
   {
-    email: {
-      type: String,
+    joueur: {
+      type: ObjectId,
+      ref: "Joueur",
     },
     etat: {
       type: String,
+      default: "En attente"
     },
     coach: {
       type: ObjectId,
