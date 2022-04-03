@@ -9,7 +9,7 @@
     ],
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": false
         },
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -18,11 +18,7 @@
         "react"
     ],
     "rules": {
-        "indent": [
-            "error",
-            "space"
-        ],
-
+        
         "quotes": [
             "error",
             "single"

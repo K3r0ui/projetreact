@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+  front:
+    build: ./client-side/
+    image: partie-front
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_DNS=localhost
+    volumes:
+      - type: bind
+        source: ./client-side/src
+        target: /usr/src/app/src
   node-server:
     build: ./server-side/
     image: partie-back
