@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './App.css';
 import React from 'react';
+import NavbarApp from './components/Navbar/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [msg, setMsg] = useState('');
@@ -23,6 +25,8 @@ function App() {
 
   return (
     <div className="App">
+    <NavbarApp/>
+
      <h1>welcome {msg} </h1>
     </div>
   );
