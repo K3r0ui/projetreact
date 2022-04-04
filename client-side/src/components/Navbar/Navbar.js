@@ -6,6 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import DefiPage from '../../pages/DefiPage/DefiPage';
+import EventsPage from '../../pages/EventsPage/EventsPage';
+import HomePage from '../../pages/HomePage/HomePage';
 
 
 
@@ -15,7 +17,7 @@ const NavbarApp = () => {
 <>
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
   <Container>
-  <Navbar.Brand href="#home">Godfadher</Navbar.Brand>
+  <Navbar.Brand href="/">Godfadher</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="me-auto">
@@ -23,8 +25,8 @@ const NavbarApp = () => {
       <Nav.Link href="#pricing">Pricing</Nav.Link>
       <NavDropdown title="Coach" id="collasible-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="defi">defis</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Evennements</NavDropdown.Item>
+        <NavDropdown.Item href="defis">defis</NavDropdown.Item>
+        <NavDropdown.Item href="events">Evennements</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
       </NavDropdown>
@@ -40,7 +42,9 @@ const NavbarApp = () => {
 </Navbar>
 <BrowserRouter>
     <Routes>
-      <Route path="defi" element={<DefiPage/>} />
+      <Route path="/" element={<HomePage/>} />
+      <Route path="defis" element={<DefiPage/>} />
+      <Route path="events" element={<EventsPage/>} />
      
     </Routes>
   </BrowserRouter>

@@ -24,6 +24,7 @@ const coachSchema = new mongoose.Schema(
     discipline: {
       type: ObjectId,
       ref: "Discipline",
+      
     },
     firstAuth: {
       type: Boolean,
@@ -35,7 +36,7 @@ const coachSchema = new mongoose.Schema(
     },
     nbsc: {
       type: Number,
-      required: true
+      
     },
     abonnement: {
       type: {

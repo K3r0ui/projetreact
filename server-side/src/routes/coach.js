@@ -20,15 +20,17 @@ router.post("/signup", async (req, res) => {
     const token = await coach.generateJWT();
     res.header("x-auth-token", token).send(coach);
   } catch (error) {
-    res.status(400).send("email already used");
+    res.status(400).send(error);
   }
 });
 
 router.post("/login", async (req, res) => {
   let coach = await Coach.findByEmail(req.body.email);
+
   if (!coach) return res.status(400).send("Email or Password invalid.");
 
   const validPwd = await bcrypt.compare(req.body.password, coach.password);
+
   if (!validPwd) return res.status(400).send("Email or Password invalid.");
 
   const token = await coach.generateJWT();
