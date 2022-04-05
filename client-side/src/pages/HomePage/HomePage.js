@@ -19,7 +19,9 @@ const HomePage = () => {
   }, []);
 
     return (<><h1>home page </h1>
-    <h1>welcome {msg} </h1></>  );
+    <h1>welcome {msg} </h1>
+   </>  );
+    
 }
  
 export default HomePage;
