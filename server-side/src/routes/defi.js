@@ -94,7 +94,7 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
         );
         res.send(defi);
     } catch {
-        return res.status(404).send("Defi CANNOT BE UPDATED ");
+        return res.status(200).send("Defi CANNOT BE UPDATED ");
     }
 })
 

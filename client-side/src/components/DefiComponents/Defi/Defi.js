@@ -17,7 +17,7 @@ const Defi = (props) => {
       <td> <iframe src={props.defi.link} title="YouTube video" allowfullscreen></iframe></td>
       <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success">modifier</button>
+            <button type="button" onClick={props.updateDefi}class="btn btn-success">modifier</button>
             <button type="button" onClick={deleteDefi} class="btn btn-danger">supprimer</button>
         </div>
       </td>

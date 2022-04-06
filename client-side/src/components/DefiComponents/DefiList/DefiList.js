@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { getAllDefis,deleteDefiById } from '../../../services/Defi.service';
+import { getAllDefis,deleteDefiById, updateDefi, addDefi } from '../../../services/Defi.service';
 import Defi from '../Defi/Defi';
 const DefiList = () => {
 
@@ -26,11 +26,15 @@ const DefiList = () => {
     setData(data.filter(defi=>defi._id !== id)) ;
 
   }
+  const updateDefii=()=>{
+    alert("work");
+    addDefi("dec","lien");
 
-  
+  }
+
+
 
     return ( <>
-    <h1>   defilist</h1>
     <div class="container">
     <table class="table">
     <thead>
