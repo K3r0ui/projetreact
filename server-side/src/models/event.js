@@ -9,6 +9,9 @@ const eventSchema = new mongoose.Schema(
     etat: {
       type: String,
     },
+    description: {
+      type: String,
+    },
     coach: {
       type: ObjectId,
       ref: "Coach",
