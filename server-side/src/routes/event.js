@@ -193,6 +193,7 @@ router.post('/coach', verifyCoach, async (req, res) => {
         newEvent = new Event({
             name: req.body.name,
             etat: req.body.etat,
+            description: req.body.description,
             coach: req.user.id,
         })
         newEvent.save()
@@ -214,7 +215,8 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
             { _id: req.params.id },
             {
                 etat: req.body.etat,
-                name: req.body.name
+                name: req.body.name,
+                description: req.body.description,
             },
             { new: true }
         );
@@ -238,10 +240,10 @@ router.delete("/coach/:id", verifyCoach, async (req, res) => {
             await joueur.save();
         })
 
-        Event.findByIdAndRemove(req.params.id)
-        res.status(200).json("Event HAS BEEN DELETED !!");
-    } catch {
-        res.status(500).json("Error");
+        const r=await Event.findByIdAndRemove(req.params.id);
+        res.status(200).json(r);
+    } catch(e) {
+        res.status(500).json("erreeer");
     }
 });
 

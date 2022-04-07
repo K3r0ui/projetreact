@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {  Popconfirm,Modal } from 'antd';
 import { Form, Input, message, Button, Space } from 'antd';
 import DefiForm from '../DefiForm/DefiForm';
@@ -8,7 +7,6 @@ import DefiForm from '../DefiForm/DefiForm';
 const Defi = (props) => {
      //destractering
     const {defi,handleUpdateDefi} =props;
-   // const [data, setData] = useState();
     const [visible, setVisible] = useState(false);
 
     //fonctions pour formulaire
@@ -61,7 +59,7 @@ const Defi = (props) => {
       <th scope="row">1</th>
       <td>{defi.description}</td>
       <td>{defi.link}</td>
-      <td> <iframe src={props.defi.link} title="YouTube video" allowfullscreen></iframe></td>
+      <td> <iframe src={defi.link} title="YouTube video" allowfullscreen></iframe></td>
       <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
         <button type="button" onClick={modifier} class="btn btn-secondary">modifier</button>
