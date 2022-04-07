@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {  Popconfirm,Modal } from 'antd';
 import { Form, Input, message, Button, Space } from 'antd';
+import DefiForm from '../DefiForm/DefiForm';
 
 
 const Defi = (props) => {
@@ -15,10 +16,10 @@ const Defi = (props) => {
      
 
     //faire la mise a jour 
-    const onFinish = (values) => {
+    const finish = (description,lien) => {
       
-      handleUpdateDefi(defi._id,values.description,values.lien);
-      message.success('Submit success!');
+      handleUpdateDefi(defi._id,description,lien);
+     
       setVisible(false);
        console.log('Received values of form: ', values);
       
@@ -31,7 +32,7 @@ const Defi = (props) => {
     const confirm = () =>
     new Promise(resolve => {
       setTimeout(() => resolve(), 2000);
-      deleteDefi();
+      deleteDefi();   
       
     });
     const deleteDefi =()=>{
@@ -63,7 +64,7 @@ const Defi = (props) => {
       <td> <iframe src={props.defi.link} title="YouTube video" allowfullscreen></iframe></td>
       <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <button type="button" onClick={modifier} class="btn btn-danger">modifier</button>
+        <button type="button" onClick={modifier} class="btn btn-secondary">modifier</button>
           <Popconfirm
             title="Title"
             onConfirm={confirm}
@@ -80,55 +81,10 @@ const Defi = (props) => {
           visible={visible}
           onOk={handleOk}
           onCancel={handleCancel}
+          okButtonProps={{ disabled: true }}
         
         >
-          <Form
-      form={form}
-      initialValues={{ lien:defi.link,description:defi.description }}
-      layout="vertical"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        name="lien"
-        label="URL"
-        rules={[
-          {
-            required: true,
-            message: 'Entrer un lien exacte'
-          },
-          {
-            type: 'url',
-            warningOnly: true,
-          },
-          {
-            type: 'string',
-            min: 6,
-          },
-        ]}
-      >
-        <Input placeholder="Lien de vidéo" />
-      </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[{ required: true, message: 'Entrer une description' }]}
-      >
-        <Input.TextArea showCount maxLength={100} placeholder="Description" />
-        
-      </Form.Item>
-      <Form.Item>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-         
-        </Space>
-      </Form.Item>
-    
-
-    </Form>
+         <DefiForm finish={ finish} initialValues={{ lien:defi.link,description:defi.description }}/>
         </Modal> 
         
         

@@ -6,15 +6,14 @@ import { addDefi } from '../../../services/Defi.service';
 
   
 
-const DefiForm = () => {
+const DefiForm = (props) => {
 const navigate = useNavigate();
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    message.success('Submit success!');
-    console.log('Received values of form: ', values);
-    addDefi(values.description,values.lien);
-    navigate('/defis');
+   
+     props.finish(values.description,values.lien);
+     message.success('Submit success!');
   };
 
   const onFinishFailed = () => {
@@ -26,6 +25,8 @@ const navigate = useNavigate();
   return (
     <div class="container mt-5">
     <Form
+    initialValues={props.initialValues}
+
       form={form}
       layout="vertical"
       onFinish={onFinish}
@@ -61,12 +62,15 @@ const navigate = useNavigate();
         
       </Form.Item>
       <Form.Item>
+      <center>
         <Space>
-          <Button type="primary" htmlType="submit">
+        
+          <Button type="primary" class="btn btn-primary" htmlType="submit">
             Submit
           </Button>
-         
+          
         </Space>
+        </center>
       </Form.Item>
     
 

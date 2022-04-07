@@ -4,13 +4,12 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link
+  
 } from "react-router-dom";
 import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
 import HomePage from '../../pages/HomePage/HomePage';
 import DefiForm from '../DefiComponents/DefiForm/DefiForm';
-import DefiFormUpdate from '../DefiComponents/DefiFormUpdate/DefiFormUpdate';
 
 
 
@@ -49,11 +48,10 @@ const NavbarApp = () => {
     <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="defis" element={<DefiPage/>} />
-      <Route path="defi/update/:id" element={<DefiFormUpdate
-      />} />
+    
       <Route path="defis/insert" element={<DefiForm/>} />
       <Route path="events" element={<EventsPage/>} />
-      <Route path="*"element={
+      <Route path="http://localhost:3000/*"element={
         <main style={{ padding: "1rem" }}>
           <center><h3>Il n'y a rien ici !</h3></center>
         </main>

@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Spin, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Spin, Space ,Modal,Empty} from 'antd';
+import {  useNavigate,} from "react-router-dom";
 import { getAllDefis,deleteDefiById, updateDefi, addDefi } from '../../../services/Defi.service';
 import Defi from '../Defi/Defi';
+import DefiForm from '../DefiForm/DefiForm';
 const DefiList = () => {
 
 
   const [data, setData] = useState([]);
   const [loading,setLoading]=useState(false)
+  const [visible, setVisible] = useState(false);
+
   
 
 
@@ -22,17 +25,21 @@ const DefiList = () => {
         console.log(data2)
 
       }
+      console.log(data.length==0);
       setLoading(false)
 
     };
     fetchData();
   }, []);
   
+  //fonction pour la supprission 
   const handleDeleteDefiById = (id) => {
     deleteDefiById(id);
     setData(data.filter(defi=>defi._id !== id)) ;
 
   }
+
+  // fonction pour fair l'appdate
   const handleUpdateDefi=(id,description,lien)=>{
     
     updateDefi(id,description,lien);
@@ -49,14 +56,39 @@ const DefiList = () => {
 
   }
 
-  
+  //-------------fonction pour poupup-----
+
+  const ajouter =()=>{
+    setVisible(true);
+
+  }
+
+  const handleOk=()=>{
+    setVisible(false);
+  }
+  const handleCancel=()=>{
+    setVisible(false);
+  }
+    
+  const finish=async(description,lien)=>{
+    
+    const response = await addDefi(description,lien);
+    setVisible(false);
+    console.log(response.status&&response.status==200);
+    if( response.status&&response.status==200)
+    {
+      setData([...data, response.data]);
+
+    }
+
+  }
+
+  //-----------
 
 
 
     return ( <>
-    <div class="container mt-5 ">
-      <Link class="btn btn-primary" role="button" aria-pressed="true" to="/defis/insert">ajouter un defi</Link>
-      <button type="button" onClick={ajouter} class="btn btn-danger">add</button>
+    <div class="container mt-5 ">      <button type="button" onClick={ajouter} class="btn btn-primary">Ajouter un défi</button>
 
       {loading && (<>
       <div class="d-flex justify-content-center">
@@ -66,6 +98,11 @@ const DefiList = () => {
       </div>    
       </>)
     }
+    
+    {data.length==0&&(<>
+      <Empty />
+    </>)}
+      {data.length!=0&&(<>
     <table class="table mt-3">
     <thead>
       <tr>
@@ -86,8 +123,30 @@ const DefiList = () => {
 
   </tbody>
 </table>
+</>)
+}
    </div>
     
+
+
+
+
+
+
+   <Modal
+          
+          title="Ajouter un defi"
+          visible={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okButtonProps={{ disabled: true }}
+        
+  >
+
+<DefiForm finish={finish} initialValues={{ lien:'',description:'' }}/>
+
+</Modal>
+ 
     
     
     </> );
