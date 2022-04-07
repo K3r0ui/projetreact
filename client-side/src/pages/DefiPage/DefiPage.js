@@ -98,10 +98,10 @@ const DefiPage = () => {
 </>)
 }
 
-{data.length==0&&(<>
+{data.length==0 &&!loading&& (<>
 <Empty />
 </>)}
-{data.length!=0&&(<>
+{data.length!=0 &&!loading &&(<>
 
 <DefiList handleUpdateDefi={handleUpdateDefi} handleDeleteDefiById={handleDeleteDefiById} data={data} setData={setData} />
 
