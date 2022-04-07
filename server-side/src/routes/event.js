@@ -240,10 +240,10 @@ router.delete("/coach/:id", verifyCoach, async (req, res) => {
             await joueur.save();
         })
 
-        Event.findByIdAndRemove(req.params.id)
-        res.status(200).json("Event HAS BEEN DELETED !!");
-    } catch {
-        res.status(500).json("Error");
+        const r=await Event.findByIdAndRemove(req.params.id);
+        res.status(200).json(r);
+    } catch(e) {
+        res.status(500).json("erreeer");
     }
 });
 

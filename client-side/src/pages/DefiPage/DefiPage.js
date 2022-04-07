@@ -5,7 +5,7 @@ import { getAllDefis ,deleteDefiById, updateDefi, addDefi} from '../../services/
 import DefiList from '../../components/DefiComponents/DefiList/DefiList';
 import DefiForm from '../../components/DefiComponents/DefiForm/DefiForm';
 const DefiPage = () => {
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [loading,setLoading]=useState(false)
   const [visible, setVisible] = useState(false);
 
@@ -22,7 +22,6 @@ const DefiPage = () => {
         console.log(data2)
 
       }
-      console.log(data.length==0);
       setLoading(false)
 
     };
@@ -87,7 +86,7 @@ const DefiPage = () => {
     
 
     return (<>
-     <div class="container mt-5 ">      <button type="button" onClick={ajouter} class="btn btn-primary">Ajouter un défi</button>
+<div class="container mt-5 ">      <button type="button" onClick={ajouter} class="btn btn-primary">Ajouter un défi</button>
 
 {loading && (<>
 <div class="d-flex justify-content-center">
