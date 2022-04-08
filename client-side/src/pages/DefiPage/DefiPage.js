@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { Spin, Space ,Modal,Empty} from 'antd';
-import { getAllDefis ,deleteDefiById, updateDefi, addDefi} from '../../services/defi.service';
+import { getAllDefis ,deleteDefiById, updateDefi, addDefi } from '../../services/defi.service';
 import DefiList from '../../components/DefiComponents/DefiList/DefiList';
 import DefiForm from '../../components/DefiComponents/DefiForm/DefiForm';
 const DefiPage = () => {
