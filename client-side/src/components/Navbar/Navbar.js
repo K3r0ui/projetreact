@@ -9,8 +9,7 @@ import {
 import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
 import HomePage from '../../pages/HomePage/HomePage';
-import DefiForm from '../DefiComponents/DefiForm/DefiForm';
-
+import SeancePage from '../../pages/SeancePage/SeancePage';
 
 
 
@@ -31,6 +30,8 @@ const NavbarApp = () => {
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="/defis">defis</NavDropdown.Item>
         <NavDropdown.Item href="/events">Evennements</NavDropdown.Item>
+        <NavDropdown.Item href="/seances">Séances</NavDropdown.Item>
+
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
       </NavDropdown>
@@ -48,8 +49,8 @@ const NavbarApp = () => {
     <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="defis" element={<DefiPage/>} />
-    
-      <Route path="defis/insert" element={<DefiForm/>} />
+      <Route path="seances" element={<SeancePage/>} />
+
       <Route path="events" element={<EventsPage/>} />
       <Route path="http://localhost:3000/*"element={
         <main style={{ padding: "1rem" }}>

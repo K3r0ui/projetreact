@@ -3,6 +3,12 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const seanceSchema = new mongoose.Schema(
   {
+    titre: {
+      type: String,
+    },
+    date: {
+      type: Date,
+    },
     goal: {
       type: Boolean,
     },

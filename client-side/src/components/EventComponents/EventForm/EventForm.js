@@ -36,10 +36,7 @@ const EventForm = (props) => {
               required: true,
               message: 'Entrer un lien exacte'
             },
-            {
-              type: 'url',
-              warningOnly: true,
-            },
+           
             {
               type: 'string',
               min: 6,

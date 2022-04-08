@@ -1,5 +1,5 @@
 const Seance = () => {
-    return (  );
+    return (<></>  );
 }
  
 export default Seance;
