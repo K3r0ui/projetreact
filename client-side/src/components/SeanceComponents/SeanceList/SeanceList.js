@@ -1,5 +1,7 @@
 const SeanceList = () => {
-    return ( <></> );
+    return ( <>
+    
+    </> );
 }
  
 export default SeanceList;

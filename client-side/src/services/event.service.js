@@ -2,7 +2,7 @@ import axios from 'axios'
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGE0NzRmMWZlOTI4ZWUwYmE3ZDNlNyIsImlhdCI6MTY0OTM2MjQ5NiwiZXhwIjoxNjQ5Mzk4NDk2fQ.5xiKkA3QHFE00bTU4Tj5A9w50jU_jEfTbNTBIvAm2tY'
+        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZWE1N2U5NDM4N2RlY2FmMTMxNyIsImlhdCI6MTY0OTQyNzQ5NywiZXhwIjoxNjQ5NDYzNDk3fQ.UfUG4dSvQifSxux72VdfJez8LS0eZtRaGqH_BoeLPDw'
     }
   };
 const url="http://localhost:8080/event/coach";  

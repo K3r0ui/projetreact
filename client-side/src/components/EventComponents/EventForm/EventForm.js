@@ -57,9 +57,9 @@ const EventForm = (props) => {
         <Form.Item
           name="etat"
           label="Etat"
-          rules={[{ required: true, message: 'Entrer une description' }]}
+          rules={[{ required: true, message: 'Entrer l etat ' }]}
         >
-        <Radio.Group defaultValue={"public"} >
+        <Radio.Group  >
             <Radio value={"privé"}>privé</Radio>
             <Radio value={"public"}>public</Radio>
             

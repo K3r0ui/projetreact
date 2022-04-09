@@ -188,7 +188,7 @@ const SeanceForm = (props) => {
     <Form.Item
      >   
         
-        <Select  placeholder="Selectionner un programme" style={{ width: 500 }} onChange={onProgrammeChange}>
+        <Select  placeholder="Selectionner un programme" style={{ width: "50%" }} onChange={onProgrammeChange}>
         {programmes.map(programme => (
           <Option key={programme}>{programme}</Option>
         ))}
@@ -196,7 +196,7 @@ const SeanceForm = (props) => {
 
         </Select>
 
-        <Select   placeholder="Selectionner le lieu" style={{ width: 500}}  onChange={onLieuChange}>
+        <Select   placeholder="Selectionner le lieu" style={{ width: "50%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (
             <Option key={lieu}>{lieu}</Option>
             ))}
