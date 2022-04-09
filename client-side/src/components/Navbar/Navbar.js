@@ -10,12 +10,13 @@ import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
 
 import CompentencePage from '../../pages/compentencePage/compentencePage';
-
 import StatPage from '../../pages/statPage/statPage';
 
 import HomePage from '../../pages/HomePage/HomePage';
 import DefiForm from '../DefiComponents/DefiForm/DefiForm';
 
+
+import InvitationPage from '../../pages/invitationPage/invitationPage.js';
 
 
 
@@ -41,6 +42,7 @@ const NavbarApp = () => {
                   <NavDropdown.Item href="/stat">Statistique</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
+                  <NavDropdown.Item href="/invitation">Invitation</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               <Nav>
@@ -63,6 +65,8 @@ const NavbarApp = () => {
 
           <Route path="compentence" element={<CompentencePage />} />
           <Route path="stat" element={<StatPage />} />
+
+          <Route path="invitation" element={<InvitationPage />} />
           <Route path="http://localhost:3000/*" element={
             <main style={{ padding: "1rem" }}>
               <center><h3>Il n'y a rien ici !</h3></center>
