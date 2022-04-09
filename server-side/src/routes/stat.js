@@ -6,13 +6,14 @@ import verifyToken from "../middlewares/verifyToken";
 import verifyJoueur from "../middlewares/verifyJoueur";
 import { Stat } from "../models/stat";
 import { Joueur } from "../models/joueur";
+import { Discipline } from "../models/discipline";
 
 
 
 //All Static of Coach
 router.get("/coach", verifyCoach, async (req, res) => {
     try {
-        const stats = await Stat.find({ coach: req.user.id });
+        const stats = await Stat.find({ coach: req.user.id }).populate("discipline");
         res.status(200).send(stats);
     } catch {
         res.status(500).send("Error")
@@ -44,6 +45,7 @@ router.get("/joueur", verifyJoueur, async (req, res) => {
 router.post("/coach", verifyCoach, async (req, res) => {
     let newStat
     try {
+        const discipline = await Discipline.findById(req.body.discipline)
         newStat = new Stat({
             title: req.body.title,
             description: req.body.description,
@@ -54,6 +56,7 @@ router.post("/coach", verifyCoach, async (req, res) => {
             coach: req.user.id
         });
         newStat = await newStat.save();
+        newStat.discipline = discipline
         res.status(200).send(newStat);
     } catch {
         res.status(500).send("Stat Cannot be created");

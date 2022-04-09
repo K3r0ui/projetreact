@@ -2,7 +2,7 @@ import axios from 'axios'
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGE0NzRmMWZlOTI4ZWUwYmE3ZDNlNyIsImlhdCI6MTY0OTM2MjQ5NiwiZXhwIjoxNjQ5Mzk4NDk2fQ.5xiKkA3QHFE00bTU4Tj5A9w50jU_jEfTbNTBIvAm2tY'
+        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTQ1MDU2OCwiZXhwIjoxNjQ5NDg2NTY4fQ.hhRJDLhmNGT65Q06zkjD7hI18Xrwa6p7r3WKcGGsPgg'
     }
   };
 export const getAllDefis =async()=>{

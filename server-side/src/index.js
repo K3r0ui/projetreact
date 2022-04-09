@@ -9,6 +9,7 @@ import joueur from "./routes/joueur"
 import defi from './routes/defi'
 import event from './routes/event'
 import lieu from './routes/lieu'
+import discipline from './routes/discipline'
 
 import configDB from "./config/db";
 import { Discipline } from "./models/discipline";
@@ -35,6 +36,8 @@ app.use('/defi', defi);
 app.use('/event', event);
 
 app.use('/lieu', lieu)
+
+app.use('/discipline', discipline)
 
 // const discipline = new Discipline({
 //   description: "football",

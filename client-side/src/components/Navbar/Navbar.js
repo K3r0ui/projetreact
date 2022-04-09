@@ -4,10 +4,15 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  
+
 } from "react-router-dom";
 import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
+
+import CompentencePage from '../../pages/compentencePage/compentencePage';
+
+import StatPage from '../../pages/statPage/statPage';
+
 import HomePage from '../../pages/HomePage/HomePage';
 import DefiForm from '../DefiComponents/DefiForm/DefiForm';
 
@@ -15,58 +20,65 @@ import DefiForm from '../DefiComponents/DefiForm/DefiForm';
 
 
 const NavbarApp = () => {
-    return ( 
-<>
-<BrowserRouter>
+  return (
+    <>
+      <BrowserRouter>
 
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Container>
-  <Navbar.Brand href="/"  >Godfadher</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="me-auto">
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-      <NavDropdown title="Coach" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="/defis">defis</NavDropdown.Item>
-        <NavDropdown.Item href="/events">Evennements</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
-    <Nav>
-      <Nav.Link href="#deets">More deets</Nav.Link>
-      <Nav.Link eventKey={2} href="#memes">
-        Dank memes
-      </Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-  </Container>
-</Navbar>
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand href="/"  >Godfadher</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <NavDropdown title="Coach" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="/defis">defis</NavDropdown.Item>
+                  <NavDropdown.Item href="/events">Evennements</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/compentence">Compentence</NavDropdown.Item>
+                  <NavDropdown.Item href="/stat">Statistique</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+              <Nav>
+                <Nav.Link href="#deets">More deets</Nav.Link>
+                <Nav.Link eventKey={2} href="#memes">
+                  Dank memes
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
-    <Routes>
-      <Route path="/" element={<HomePage/>} />
-      <Route path="defis" element={<DefiPage/>} />
-    
-      <Route path="defis/insert" element={<DefiForm/>} />
-      <Route path="events" element={<EventsPage/>} />
-      <Route path="http://localhost:3000/*"element={
-        <main style={{ padding: "1rem" }}>
-          <center><h3>Il n'y a rien ici !</h3></center>
-        </main>
-      }/>
-       
-     
-    </Routes>
-  </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="defis" element={<DefiPage />} />
+
+          <Route path="defis/insert" element={<DefiForm />} />
+          <Route path="events" element={<EventsPage />} />
 
 
+          <Route path="compentence" element={<CompentencePage />} />
+          <Route path="stat" element={<StatPage />} />
+          <Route path="http://localhost:3000/*" element={
+            <main style={{ padding: "1rem" }}>
+              <center><h3>Il n'y a rien ici !</h3></center>
+            </main>
+          } />
 
 
-        </>
+        </Routes>
+      </BrowserRouter>
 
-     );
+
+
+
+    </>
+
+  );
 }
- 
+
 export default NavbarApp;
