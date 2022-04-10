@@ -7,6 +7,7 @@ import {
   
 } from "react-router-dom";
 import DefiPage from '../../pages/DefiPage/DefiPage';
+import EventsJoueurPage from '../../pages/EventsJoueurPage/EventsJoueurPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
 import HomePage from '../../pages/HomePage/HomePage';
 import SeancePage from '../../pages/SeancePage/SeancePage';
@@ -35,6 +36,13 @@ const NavbarApp = () => {
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
       </NavDropdown>
+      <NavDropdown title="Joueur" id="collasible-nav-dropdown">
+        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+        <NavDropdown.Item href="/joueur/events">Evennements</NavDropdown.Item>
+
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
+      </NavDropdown>
     </Nav>
     <Nav>
       <Nav.Link href="#deets">More deets</Nav.Link>
@@ -50,6 +58,8 @@ const NavbarApp = () => {
       <Route path="/" element={<HomePage/>} />
       <Route path="defis" element={<DefiPage/>} />
       <Route path="seances" element={<SeancePage/>} />
+      <Route path="joueur/events" element={<EventsJoueurPage/>} />
+
 
       <Route path="events" element={<EventsPage/>} />
       <Route path="http://localhost:3000/*"element={

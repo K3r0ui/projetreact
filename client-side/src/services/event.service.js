@@ -5,6 +5,7 @@ const config = {
         'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTYyMDE4MSwiZXhwIjoxNjQ5NjU2MTgxfQ.TlwJ60jECQ5q6pWEudZ177-A7_RdNyMsVDAWKx72NpA'
     }
   };
+  
 const url="http://localhost:8080/event/coach";  
 
 export const getAllEvents =async()=>{
@@ -80,3 +81,39 @@ export const deleteEventById = async (id) => {
 
 
   }
+
+  const configJoueur = {
+    headers:{
+        'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
+        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTFhNGY2ZDZlZGYxZmU0MzNkYjljNiIsImlhdCI6MTY0OTYyODE0MSwiZXhwIjoxNjQ5NjY0MTQxfQ.B5gHjSjFI4IDnPTTulpkZIug6q6NOKL8EMz_QQyV0fQ'
+    }
+  };  
+  const urlJoueur="http://localhost:8080/event/joueur";  
+
+  export const getPrivateEvents =async()=>{
+    try {
+    const result = await axios.get(
+        //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+          urlJoueur+"/private", configJoueur
+        );
+        console.log(result.data);
+        return result.data;
+    } catch (error) {
+        
+     console.log('error')      }
+    
+    }
+
+     export const getPublicEvents =async()=>{
+        try {
+        const result = await axios.get(
+            //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+              urlJoueur+"/public", configJoueur
+            );
+            console.log(result.data);
+            return result.data;
+        } catch (error) {
+            
+         console.log('error')      }
+   
+}
