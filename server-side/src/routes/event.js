@@ -91,10 +91,10 @@ router.get("/joueur/private", verifyJoueur, async (req, res) => {
         const joueur = await Joueur.findById(req.user.id)
         const coachid = joueur.coach
         const events = await Event.find(
-            { coach: coachid, etat: "private" }
+            { coach: coachid, etat: "privé" }
         )
         if (!events) {
-            req.status(400).send("No event Found");
+            req.status(200).send("No event Found");
         }
         res.status(200).send(events);
     } catch {
