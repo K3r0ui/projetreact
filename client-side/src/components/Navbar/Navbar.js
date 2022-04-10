@@ -15,6 +15,8 @@ import HomePage from '../../pages/HomePage/HomePage';
 import SeancePage from '../../pages/SeancePage/SeancePage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
+import LieuPage from '../../pages/LieuPage/LieuPage';
+
 const NavbarApp = () => {
    return (
       <>
@@ -40,6 +42,9 @@ const NavbarApp = () => {
                            <NavDropdown.Item href='/seances'>
                               Séances
                            </NavDropdown.Item>
+                           <NavDropdown.Item href='/lieu'>
+                              Lieu
+                           </NavDropdown.Item>
 
                            <NavDropdown.Divider />
                            <NavDropdown.Item href='#action/3.4'>
@@ -61,6 +66,7 @@ const NavbarApp = () => {
                <Route path='/register' element={<RegisterPage />} />
                <Route path='defis' element={<DefiPage />} />
                <Route path='seances' element={<SeancePage />} />
+               <Route path='lieu' element={<LieuPage />} />
 
                <Route path='events' element={<EventsPage />} />
 

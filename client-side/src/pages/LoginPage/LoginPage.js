@@ -46,6 +46,7 @@ const LoginPage = () => {
                password,
             }
          );
+
          toast.success('Log In successfully');
          if (typeof window !== 'undefined') {
             localStorage.setItem('token', JSON.stringify(data));

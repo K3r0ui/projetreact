@@ -6,11 +6,13 @@ const config = {
          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTI0ODk5NWFiYzRhYWJjYzZlOTkyOCIsImlhdCI6MTY0OTU4NTI2OCwiZXhwIjoxNjQ5NjIxMjY4fQ.6pNcZ9IHv4pk4MfmPNsr5yeqBfliF9Q5XY3F88IQO70',
    },
 };
-export const getAllDefis = async () => {
+const url = 'http://localhost:8080/lieu/coach';
+
+export const getAllLieus = async () => {
    try {
       const result = await axios.get(
          //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-         'http://localhost:8080/defi/coach',
+         url,
          config
       );
       console.log(result.data);
@@ -19,15 +21,17 @@ export const getAllDefis = async () => {
       console.log('error');
    }
 };
-export const addDefi = async (description, lien) => {
+export const addLieu = async (name, city, country, address) => {
    try {
       const data = {
-         description: description,
-         link: lien,
+         name: name,
+         city: city,
+         country: country,
+         address: address,
       };
       const result = await axios.post(
          //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-         'http://localhost:8080/defi/coach',
+         url,
          data,
          config
       );
@@ -38,15 +42,17 @@ export const addDefi = async (description, lien) => {
       console.log(error);
    }
 };
-export const updateDefi = async (id, description, lien) => {
+export const updateLieu = async (id, name, city, country, address) => {
    try {
       const data = {
-         description: description,
-         link: lien,
+         name: name,
+         city: city,
+         country: country,
+         address: address,
       };
       const result = await axios.put(
          //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-         'http://localhost:8080/defi/coach/' + id,
+         url + '/' + id,
          data,
          config
       );
@@ -56,9 +62,9 @@ export const updateDefi = async (id, description, lien) => {
    }
 };
 
-export const deleteDefiById = async (id) => {
+export const deleteLieuById = async (id) => {
    try {
-      await axios.delete('http://localhost:8080/defi/coach/' + id, config);
+      await axios.delete(url + '/' + id, config);
       return true;
       // setData(data.filter(defi=>defi._id !== id))    )
    } catch (error) {
