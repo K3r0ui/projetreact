@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table} from 'antd';
 import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm';
+import moment from "moment";
 
 
 const SeancePage = () => {
     const { RangePicker } = DatePicker;
-  //  const [data, setData] = useState([]);
+
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
-    const [size, setSize] = useState('large');
-    const [lieux, SetLieux] = useState(['lieu1','lieu2']);
+    const [size, setSize] = useState('all');
+    const [lieux, SetLieux] = useState(['lieu1','lieu2','lieu3','lieu4']);
     const [joueurs, SetJoueurs] = useState(['joueur1','joueur2']);
+    let dateNow = moment().format("YYYY-MM-DD")
 
 
     //fonction for table 
@@ -21,28 +23,62 @@ const SeancePage = () => {
 
     const columns = [
         {
-          title: 'Name',
-          dataIndex: 'name',
+          title: 'Nom de seance',
+          dataIndex: 'nom',
           width: 150,
         },
         {
-          title: 'Age',
-          dataIndex: 'age',
+          title: 'Date de seance',
+          dataIndex: 'date',
           width: 150,
         },
         {
-          title: 'Address',
-          dataIndex: 'address',
+          title: 'Lieu',
+          dataIndex: 'lieu',
+          width: 150,
         },
+        {
+          title: 'Joueur',
+          dataIndex: 'joueur',
+          width: 150,
+        },
+        {
+          title: 'Statistiques',
+          dataIndex: 'statistiques',
+          width: 150,
+        },
+        {
+          title: 'Competances',
+          dataIndex: 'competances',
+          width: 150,
+        },
+       
       ];
       
       const data2 = [];
       for (let i = 0; i < 100; i++) {
         data2.push({
           key: i,
-          name: `Edward King ${i}`,
-          age: 32,
-          address: `London, Park Lane no. ${i}`,
+          nom: `Seance ${i}`,
+          date: '2022-03-25',
+          lieu: `lieu${i}`,
+          joueur: `joueur${i}`,
+
+          statistiques:"['stat1','stat2']",
+          competances:"['comp1','competance2']"
+        });
+        
+      }
+      for (let i = 0; i < 5; i++) {
+        data2.push({
+          key: i+100,
+          nom: `Seance ${i}`,
+          date: dateNow,
+          lieu: `lieu${i}`,
+          joueur: `joueur${i}`,
+
+          statistiques:"['stat1','stat2']",
+          competances:"['comp1','competance2']"
         });
         
       }
@@ -65,11 +101,19 @@ const SeancePage = () => {
   }
   const onLieuChange = value => {
     console.log(`selected `,value);
+    const dataChange=  data2.filter(seance => seance.lieu ===value )
+    setSize('any')
+   
+     setData(dataChange);
+
       };
 
 
 const onJoueurChange = value => {
-    console.log(`selected `,value);
+  setSize('any')
+  const dataChange=  data2.filter(seance => seance.joueur ===value )
+   
+  setData(dataChange);
 };     
     
   const finish=async(name,description,etat)=>{
@@ -84,12 +128,39 @@ const onJoueurChange = value => {
     }*/
     
   }
+  //bouton tous les seance et seance aujourd'huit
   const buttonChange = (e) => {
+        if(e.target.value==="all")
+        {
+          setData(data2);
+        }
+        else
+        {
+         
+           
+           const dataChange=  data2.filter(seance =>   moment(seance.date).isSame(dateNow) )
+
+         
+          setData(dataChange);
+        }
         setSize( e.target.value );
+        console.log( e.target.value)
       };
 
  const calendarChange = (e) => {
-       console.log(e);
+  setSize('any')
+
+   if(e && e[0]&&e[1])
+   {
+    const a = moment('2022-05-2').isBetween(e[0], e[1]);
+    const dataChange=  data2.filter(seance =>   moment(seance.date).isBetween(e[0], e[1]) )
+
+         
+    setData(dataChange);
+    console.log(a);
+   }
+  //range = moment().range(startDate, endDate);
+//console.log(e[0]);
       };   
 
 
@@ -99,27 +170,12 @@ const onJoueurChange = value => {
        <div class="container mt-5 ">    
          <button type="button" onClick={ajouter} class="btn btn-primary">Ajouter une Seance</button>
 
-        {loading && (<>
-        <div class="d-flex justify-content-center">
-        <Space size="middle">
-        <Spin size="large" />
-        </Space>
-        </div>    
-        </>)
-        }
-
-        {data.length==0 &&!loading &&(<>
-       
-        
-        <Empty />
-        </>)}
-        {!data.length==0 &&!loading &&(<>
         <div className='mt-5 mb-5'>
         <center>
         <Radio.Group style={{ width: '40%' }} value={size} onChange={buttonChange}>
-           <Radio.Button style={{ width: '50%' }} value="default">toutes les Séances</Radio.Button>
+           <Radio.Button style={{ width: '50%' }} value="all">toutes les Séances</Radio.Button>
 
-          <Radio.Button style={{ width: '50%' }} value="large"> Séances d'aujourd'huit</Radio.Button>
+          <Radio.Button style={{ width: '50%' }} value="now"> Séances d'aujourd'huit</Radio.Button>
            
 
         
@@ -136,13 +192,28 @@ const onJoueurChange = value => {
     </Select>
     <Select   placeholder="Selectionner le lieu" style={{ width: "20%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (
-            <Option key={lieu}>{lieu}</Option>
-            ))}
+              <Option key={lieu}>{lieu}</Option>
+              ))}
         </Select>
 
 
         </center>
         </div>
+              {loading && (<>
+              <div class="d-flex justify-content-center">
+              <Space size="middle">
+              <Spin size="large" />
+              </Space>
+              </div>    
+              </>)
+              }
+      
+              {data.length==0 &&!loading &&(<>
+             
+              
+              <Empty />
+              </>)}
+        {!data.length==0 &&!loading &&(<>
         <Table className="mt-5" columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y:600}} />,
         
         </>)}
