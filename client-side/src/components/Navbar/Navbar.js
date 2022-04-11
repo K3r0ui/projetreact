@@ -47,6 +47,14 @@ const NavbarApp = () => {
                   <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
                   <NavDropdown.Item href="/invitation">Invitation</NavDropdown.Item>
                 </NavDropdown>
+
+                <NavDropdown title="Joueur" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="/joueur/events">Evennements</NavDropdown.Item>
+
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
+                </NavDropdown>
               </Nav>
               <Nav>
                 <Nav.Link href="#deets">More deets</Nav.Link>
