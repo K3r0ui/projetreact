@@ -50,7 +50,7 @@ const joueurSchema = new mongoose.Schema(
     },
     orientation: {
       type: String,
-      enum: ["droit", "Gauche"]
+      enum: ["droitier", "gaucher"]
     },
     nbscweek: {
       type: Number

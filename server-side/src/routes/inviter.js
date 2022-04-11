@@ -15,7 +15,7 @@ router.post("/", verifyCoach, async (req, res) => {
 
     const nb = invits.map((invit) => {
         const nbr = 0
-        if (invit.etat != "refuser" && invit.etat != "supprimer") {
+        if (invit.etat != "Refuser" && invit.etat != "Supprimer") {
             return nbr + 1
         }
     })
@@ -32,17 +32,18 @@ router.post("/", verifyCoach, async (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             dob: req.body.dob,
+            pod: req.body.pod,
             coach: req.user.id,
             sexe: req.body.sexe,
             job: req.body.job,
             ville: req.body.ville,
-            telephone: req.body.ville,
+            telephone: req.body.telephone,
             price: req.body.price,
             taille: req.body.taille,
+            poid: req.body.poid,
             orientation: req.body.orientation,
             nbscweek: req.body.nbscweek,
             price: req.body.price,
-            nbscweek: req.body.nbscweek
         });
 
         joueur = await joueur.save();
@@ -85,8 +86,8 @@ router.post("/", verifyCoach, async (req, res) => {
             </ul>
            </div>
            <div>
-           <a href="http://localhost:3000/accepter/?idjoueur=${joueur._id}"> accepter </a>
-           <a href="http://localhost:3000/annuler/?idjoueur=${joueur._id}"> refuser </a>`,
+           <a href="http://localhost:3000/accepter/?idjoueur=${joueur._id}"> Accepter </a>
+           <a href="http://localhost:3000/annuler/?idjoueur=${joueur._id}"> Refuser </a>`,
         };
 
         smtpTransport.sendMail(mailOptions, (error, res) => {
@@ -102,7 +103,7 @@ router.post("/", verifyCoach, async (req, res) => {
         res.send(joueur)
 
     } catch (error) {
-        res.status(400).send({ "error": error })
+        res.status(400).send({ "error to inviter": error })
     }
 
 });
@@ -113,7 +114,7 @@ router.put("/refuser/:id", async (req, res) => {
         await Invitation.findOneAndUpdate(
             { joueur: req.params.id },
             {
-                $set: { etat: "refuser" }
+                $set: { etat: "Refuser" }
             },
             { new: true }
         );
@@ -128,14 +129,14 @@ router.put("/refuser/:id", async (req, res) => {
 router.put("/accepter/:id", async (req, res) => {
     try {
         const joueur = await Joueur.findById(req.params.id)
-        if (joueur.invitation.etat == "supprimer") {
+        if (joueur.invitation.etat == "Supprimer") {
             res.send("this invitation has been deleted")
         }
         else {
             await Invitation.findOneAndUpdate(
                 { joueur: req.params.id },
                 {
-                    $set: { etat: "accepter" }
+                    $set: { etat: "Accepter" }
                 },
                 { new: true }
             );
@@ -153,7 +154,7 @@ router.put("/updatejoueur/:id", async (req, res) => {
     try {
         const invitation = await Invitation.findOne({ joueur: req.params.id })
 
-        if (invitation.etat != "accepter") {
+        if (invitation.etat != "Accepter") {
             res.status(400).send("invitation is wrong")
         }
         else if (!req.body.password) {
@@ -177,7 +178,7 @@ router.put("/updatejoueur/:id", async (req, res) => {
             await Invitation.findOneAndUpdate(
                 { joueur: req.params.id },
                 {
-                    etat: "termenated"
+                    etat: "Termenated"
                 },
                 { new: true }
             )
@@ -196,7 +197,7 @@ router.put("/delete/:id", verifyCoach, async (req, res) => {
         if (invit.etat != "En attente") {
             res.status(500).send("this invitation is not en attente")
         } else {
-            invit.etat = "supprimer"
+            invit.etat = "Supprimer"
             invit = await invit.save();
             res.send(invit);
         }
@@ -211,7 +212,7 @@ router.get("/all", verifyCoach, async (req, res) => {
     try {
         const invitations = await Invitation.find({ coach: req.user.id }).populate("joueur");
         const invits = invitations.map(invit => {
-            if (invit.etat != "supprimer") {
+            if (invit.etat != "Supprimer") {
                 return invit;
             }
         })
