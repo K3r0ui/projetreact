@@ -9,8 +9,17 @@ import {
 import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsJoueurPage from '../../pages/EventsJoueurPage/EventsJoueurPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
+<<<<<<< HEAD
+=======
+
+import CompentencePage from '../../pages/compentencePage/compentencePage';
+import StatPage from '../../pages/statPage/statPage';
+
+>>>>>>> inviter_joueur
 import HomePage from '../../pages/HomePage/HomePage';
 import SeancePage from '../../pages/SeancePage/SeancePage';
+
+import InvitationPage from '../../pages/invitationPage/invitationPage.js';
 
 
 
@@ -19,6 +28,7 @@ const NavbarApp = () => {
 <>
 <BrowserRouter>
 
+<<<<<<< HEAD
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
   <Container>
   <Navbar.Brand href="/"  >Godfadher</Navbar.Brand>
@@ -32,6 +42,37 @@ const NavbarApp = () => {
         <NavDropdown.Item href="/defis">defis</NavDropdown.Item>
         <NavDropdown.Item href="/events">Evennements</NavDropdown.Item>
         <NavDropdown.Item href="/seances">Séances</NavDropdown.Item>
+=======
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand href="/"  >Godfadher</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <NavDropdown title="Coach" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="/defis">defis</NavDropdown.Item>
+                  <NavDropdown.Item href="/events">Evennements</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/compentence">Compentence</NavDropdown.Item>
+                  <NavDropdown.Item href="/stat">Statistique</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
+                  <NavDropdown.Item href="/invitation">Invitation</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+              <Nav>
+                <Nav.Link href="#deets">More deets</Nav.Link>
+                <Nav.Link eventKey={2} href="#memes">
+                  Dank memes
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+>>>>>>> inviter_joueur
 
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Equipes</NavDropdown.Item>
@@ -61,6 +102,7 @@ const NavbarApp = () => {
       <Route path="joueur/events" element={<EventsJoueurPage/>} />
 
 
+<<<<<<< HEAD
       <Route path="events" element={<EventsPage/>} />
       <Route path="http://localhost:3000/*"element={
         <main style={{ padding: "1rem" }}>
@@ -71,6 +113,21 @@ const NavbarApp = () => {
      
     </Routes>
   </BrowserRouter>
+=======
+          <Route path="compentence" element={<CompentencePage />} />
+          <Route path="stat" element={<StatPage />} />
+
+          <Route path="invitation" element={<InvitationPage />} />
+          <Route path="http://localhost:3000/*" element={
+            <main style={{ padding: "1rem" }}>
+              <center><h3>Il n'y a rien ici !</h3></center>
+            </main>
+          } />
+
+
+        </Routes>
+      </BrowserRouter>
+>>>>>>> inviter_joueur
 
 
 
