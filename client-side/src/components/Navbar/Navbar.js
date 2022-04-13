@@ -24,6 +24,8 @@ import ProgramSeance from '../../pages/programSeance/programSeance';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 
+import LieuPage from '../../pages/LieuPage/LieuPage';
+
 const NavbarApp = () => {
    return (
       <>
@@ -79,6 +81,10 @@ const NavbarApp = () => {
                               Evennements
                            </NavDropdown.Item>
 
+                           <NavDropdown.Item href='/lieu'>
+                              Lieu
+                           </NavDropdown.Item>
+
                            <NavDropdown.Divider />
                            <NavDropdown.Item href='#action/3.4'>
                               Equipes
@@ -100,10 +106,9 @@ const NavbarApp = () => {
                <Route path='defis' element={<DefiPage />} />
                <Route path='seances' element={<SeancePage />} />
                <Route path='joueur/events' element={<EventsJoueurPage />} />
-
+               <Route path='lieu' element={<LieuPage />} />
                <Route path='compentence' element={<CompentencePage />} />
                <Route path='stat' element={<StatPage />} />
-
                <Route path='invitation' element={<InvitationPage />} />
                <Route path='events' element={<EventsPage />} />
                <Route path='prorammes' element={<ProgramSeance />} />
