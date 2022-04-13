@@ -1,28 +1,12 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import SigninForm from '../../components/SignInComponents/SignInForm';
+import { login } from '../../services/register.service';
+
 const LoginPage = () => {
-   const [msg, setMsg] = useState('');
-
-   useEffect(() => {
-      const fetchData = async () => {
-         const { data } = await axios.get(
-            //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-            'http://localhost:8080/',
-            {
-               headers: {
-                  api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-               },
-            }
-         );
-         setMsg(data);
-      };
-      fetchData();
-   }, []);
-
+   const navigate = useNavigate();
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -39,41 +23,21 @@ const LoginPage = () => {
       e.preventDefault();
 
       try {
-         const { data } = await axios.post(
-            'http://localhost:8080/coach/login',
-            {
-               email,
-               password,
-            }
-         );
-
-         toast.success('Log In successfully');
-         if (typeof window !== 'undefined') {
-            localStorage.setItem('token', JSON.stringify(data));
-         }
-
-         if (data.success === true) {
-            setValues({
-               email: '',
-               password: '',
-            });
-         }
-         /* if (signUser.data.success === true) {
-            setValue({
-               firstName: '',
-               lastName: '',
-               email: '',
-               dob: '',
-               password: '',
-            }); 
-         }*/
+         const res = await login(email, password);
+         message.success('Log In successfully');
+         localStorage.setItem('token', res.token);
+         setValues({
+            email: '',
+            password: '',
+         });
+         navigate('/');
       } catch (err) {
-         toast.error(err.response.data);
+         console.error(err.message);
+         message.error('login failed!');
       }
    };
    return (
       <>
-         <ToastContainer />
          <div class='container p-4 mt-4'>
             <div class='row justify-content-evenly mt-4'>
                <div class='col-lg-6 col-md-12 mt-4'>
@@ -99,7 +63,8 @@ const LoginPage = () => {
                         />
                         <div class='d-flex justify-content-between'>
                            <button
-                              type='submit'
+                              type='values.
+                              values.submit'
                               onClick={handleSubmit}
                               class='btn btn-outline-primary'>
                               Sign In <i class='fa-solid fa-floppy-disk'></i>

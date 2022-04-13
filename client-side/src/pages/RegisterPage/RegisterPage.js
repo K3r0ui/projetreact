@@ -1,27 +1,11 @@
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import SignupForm from '../../components/SignupComponents/SignupForm';
+import { register } from '../../services/register.service';
 const RegisterPage = () => {
-   const [msg, setMsg] = useState('');
-
-   useEffect(() => {
-      const fetchData = async () => {
-         const { data1 } = await axios.get(
-            //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-            'http://localhost:8080/',
-            {
-               headers: {
-                  api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-               },
-            }
-         );
-         setMsg(data1);
-      };
-      fetchData();
-   }, []);
+   const navigate = useNavigate();
    const [values, setValues] = useState({
       firstName: '',
       lastName: '',
@@ -29,55 +13,33 @@ const RegisterPage = () => {
       dob: '',
       password: '',
    });
+
    const { firstName, lastName, email, dob, password } = values;
+
    const handleChange = (firstName) => (e) => {
-      //console.log(e.target.value);
       setValues({ ...values, [firstName]: e.target.value });
    };
 
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-         const { data } = await axios.post(
-            'http://localhost:8080/coach/signup',
-            {
-               firstName,
-               lastName,
-               email,
-               dob,
-               password,
-            }
-         );
-         toast.success('Sign up succesffully , Please Login Now');
-
-         if (data.success === true) {
-            console.log(data.success);
-            setValues({
-               firstName: '',
-               lastName: '',
-               email: '',
-               dob: '',
-               password: '',
-            });
-         }
-         /* if (signUser.data.success === true) {
-            setValue({
-               firstName: '',
-               lastName: '',
-               email: '',
-               dob: '',
-               password: '',
-            }); 
-         }*/
+         await register(firstName, lastName, email, password, dob);
+         message.success('Sign up succesffully , Please Login Now');
+         setValues({
+            firstName: '',
+            lastName: '',
+            email: '',
+            dob: '',
+            password: '',
+         });
+         navigate('/login');
       } catch (err) {
-         console.log(err);
-
-         toast.error(err.response.data);
+         console.error(err.message);
+         message.error('register failed!');
       }
    };
    return (
       <>
-         <ToastContainer />
          <div class='container p-4 mt-4'>
             <div class='row justify-content-evenly mt-4'>
                <div class='col-lg-6 col-md-12 mt-4'>

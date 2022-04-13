@@ -2,8 +2,7 @@ import axios from 'axios';
 const config = {
    headers: {
       api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-      'x-auth-token':
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZWE1N2U5NDM4N2RlY2FmMTMxNyIsImlhdCI6MTY0OTgwNjk0NywiZXhwIjoxNjQ5ODQyOTQ3fQ.LteyUIDJISIY2bNnahnmNfomiNS1hMu2hgPJZKI08k0',
+      'x-auth-token': localStorage.getItem('token'),
    },
 };
 
