@@ -18,26 +18,20 @@ import StatPage from '../../pages/statPage/statPage';
 
 import HomePage from '../../pages/HomePage/HomePage';
 import SeancePage from '../../pages/SeancePage/SeancePage';
-<<<<<<< HEAD
 
 import InvitationPage from '../../pages/invitationPage/invitationPage.js';
 import ProgramSeance from '../../pages/programSeance/programSeance';
-
-=======
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
->>>>>>> 362c5a9 (Register/Login)
+
 const NavbarApp = () => {
    return (
       <>
          <BrowserRouter>
             <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
                <Container>
-<<<<<<< HEAD
-                  <Navbar.Brand href='/'>Godfadher</Navbar.Brand>
-=======
-                  <Navbar.Brand href='/'>KING</Navbar.Brand>
->>>>>>> 362c5a9 (Register/Login)
+                  <Navbar.Brand href='/'>Accueil</Navbar.Brand>
+
                   <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                   <Navbar.Collapse id='responsive-navbar-nav'>
                      <Nav className='me-auto'>
@@ -53,7 +47,6 @@ const NavbarApp = () => {
                            <NavDropdown.Item href='/events'>
                               Evennements
                            </NavDropdown.Item>
-<<<<<<< HEAD
                            <NavDropdown.Item href='/prorammes'>
                               Programme Seance
                            </NavDropdown.Item>
@@ -93,10 +86,8 @@ const NavbarApp = () => {
                         </NavDropdown>
                      </Nav>
                      <Nav>
-                        <Nav.Link href='#deets'>More deets</Nav.Link>
-                        <Nav.Link eventKey={2} href='#memes'>
-                           Dank memes
-                        </Nav.Link>
+                        <Nav.Link href='/login'>Login</Nav.Link>
+                        <Nav.Link href='/register'>Register</Nav.Link>
                      </Nav>
                   </Navbar.Collapse>
                </Container>
@@ -104,6 +95,8 @@ const NavbarApp = () => {
 
             <Routes>
                <Route path='/' element={<HomePage />} />
+               <Route path='/login' element={<LoginPage />} />
+               <Route path='/register' element={<RegisterPage />} />
                <Route path='defis' element={<DefiPage />} />
                <Route path='seances' element={<SeancePage />} />
                <Route path='joueur/events' element={<EventsJoueurPage />} />
@@ -130,49 +123,4 @@ const NavbarApp = () => {
    );
 };
 
-=======
-                           <NavDropdown.Item href='/seances'>
-                              Séances
-                           </NavDropdown.Item>
-
-                           <NavDropdown.Divider />
-                           <NavDropdown.Item href='#action/3.4'>
-                              Equipes
-                           </NavDropdown.Item>
-                        </NavDropdown>
-                     </Nav>
-                     <Nav>
-                        <Nav.Link href='/login'>Login</Nav.Link>
-                        <Nav.Link href='/register'>Register</Nav.Link>
-                     </Nav>
-                  </Navbar.Collapse>
-               </Container>
-            </Navbar>
-
-            <Routes>
-               <Route path='/' element={<HomePage />} />
-               <Route path='/login' element={<LoginPage />} />
-               <Route path='/register' element={<RegisterPage />} />
-               <Route path='defis' element={<DefiPage />} />
-               <Route path='seances' element={<SeancePage />} />
-
-               <Route path='events' element={<EventsPage />} />
-
-               <Route
-                  path='http://localhost:3000/*'
-                  element={
-                     <main style={{ padding: '1rem' }}>
-                        <center>
-                           <h3>Il n'y a rien ici !</h3>
-                        </center>
-                     </main>
-                  }
-               />
-            </Routes>
-         </BrowserRouter>
-      </>
-   );
-};
-
->>>>>>> 362c5a9 (Register/Login)
 export default NavbarApp;
