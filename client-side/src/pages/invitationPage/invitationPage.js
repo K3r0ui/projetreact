@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Space, Modal, Empty } from 'antd';
+import { Spin, Space, Modal, Empty, message } from 'antd';
 
 import { getAllInviation, addInvitation, deleteInvitation } from '../../services/invitation.service';
 import InvitationForm from '../../components/invitationComponents/invitationForm/invitationForm';
@@ -26,9 +26,15 @@ const InvitationPage = () => {
     }, []);
 
 
-    const handleDeleteInvitation = (id) => {
-        deleteInvitation(id);
-        setData(data.filter(invitation => invitation._id !== id));
+    const handleDeleteInvitation = async (id) => {
+        try {
+            const res = await deleteInvitation(id);
+            setData(data.filter((invitation) => invitation._id !== res));
+            message.success('delete success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('delete failed!');
+        }
     }
 
 
@@ -45,12 +51,16 @@ const InvitationPage = () => {
 
 
     const finish = async (firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek) => {
-        const response = await addInvitation(firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek);
-        setVisible(false);
-        console.log(response.status && response.status == 200);
-        if (response.status && response.status == 200) {
-            setData([...data, response.data]);
+        try {
 
+            const response = await addInvitation(firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek);
+
+            setVisible(false);
+            setData([...data, response.data]);
+            message.success('Submit success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('Submit failed!');
         }
 
     }
