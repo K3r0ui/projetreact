@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
 
   const token = await coach.generateJWT();
 
-  res.send(token);
+  res.send({ coach, token });
 });
 
 router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
@@ -50,7 +50,7 @@ router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
 
     res.send(result);
   } catch {
-    res.status(500).send("there is some error")
+    res.status(500).send("there is some error");
   }
 });
 
@@ -65,7 +65,7 @@ router.put("/alert", [verifyCoach, firstAuthMid], async (req, res) => {
     );
     res.send(result);
   } catch {
-    res.status(500).send("there is some error")
+    res.status(500).send("there is some error");
   }
 });
 
@@ -81,59 +81,57 @@ router.put("/alert", [verifyCoach, firstAuthMid], async (req, res) => {
     );
     res.send(result);
   } catch {
-    res.status(500).send("there is some error")
+    res.status(500).send("there is some error");
   }
 });
 
-//get list of here joueur 
+//get list of here joueur
 router.get("/alljoueurs", verifyCoach, async (req, res) => {
   try {
-    const joueurs = await Joueur.find({ "coach": req.user.id });
+    const joueurs = await Joueur.find({ coach: req.user.id });
     if (!joueurs) {
-      res.status(400).send("you don't have a joueurs")
+      res.status(400).send("you don't have a joueurs");
     }
-    res.send(joueurs)
+    res.send(joueurs);
   } catch {
-    res.status(500).send("there is something wrong ")
-  }
-})
-
-//get profile
-router.get('/profile', verifyCoach, async (req, res) => {
-  try {
-    const coach = await Coach.findById(req.user.id);
-    res.send(coach)
-  } catch {
-    res.status(500).send("there is something wrong ")
+    res.status(500).send("there is something wrong ");
   }
 });
 
-
+//get profile
+router.get("/profile", verifyCoach, async (req, res) => {
+  try {
+    const coach = await Coach.findById(req.user.id);
+    res.send(coach);
+  } catch {
+    res.status(500).send("there is something wrong ");
+  }
+});
 
 router.put("/payerabonnement", verifyCoach, async (req, res) => {
   let coach;
   try {
-    const co = await Coach.findById(req.user.id)
-    let nb = 0
+    const co = await Coach.findById(req.user.id);
+    let nb = 0;
     if (req.body.type == "free") {
-      nb = co.abonnement.nbjoueur + 3
-    }
-    else if (req.body.type == "basic") {
-      nb = co.abonnement.nbjoueur + 10
+      nb = co.abonnement.nbjoueur + 3;
+    } else if (req.body.type == "basic") {
+      nb = co.abonnement.nbjoueur + 10;
     } else {
-      nb = -1
+      nb = -1;
     }
     coach = await Coach.findOneAndUpdate(
       { _id: req.user.id },
       {
-        $set: { abonnement: { type: req.body.type, doc: new Date(), nbjoueur: nb } },
+        $set: {
+          abonnement: { type: req.body.type, doc: new Date(), nbjoueur: nb },
+        },
       },
       { new: true }
     );
   } catch {
-    res.status(500).send("there is something wrong ")
+    res.status(500).send("there is something wrong ");
   }
-})
-
+});
 
 export default router;

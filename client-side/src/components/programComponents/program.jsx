@@ -1,32 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Popconfirm, Modal } from 'antd';
-import { message } from 'antd';
-import EventForm from '../EventForm/EventForm';
-const Event = (props) => {
-   const { event, handleDeleteEventById, handleUpdateEvent, setData } = props;
+import ProgrammForm from './programForm';
+
+export default function Program({
+   program,
+   onDeleteProgram,
+   onUpdateProgram,
+   index,
+}) {
    const [visible, setVisible] = useState(false);
 
-   //fonctions pour formulaire
-
    //faire la mise a jour
-   const finish = (name, description, etat) => {
-      handleUpdateEvent(event._id, name, description, etat);
-
+   const finish = (name, description, image, videoLink) => {
+      onUpdateProgram(program._id, name, description, image, videoLink);
       setVisible(false);
-      console.log('Received values of form: ', values);
    };
-
-   const onFinishFailed = () => {
-      message.error('Submit failed!');
+   //--fonctions pour confirmer la suppression
+   const confirm = async () => {
+      await onDeleteProgram(program._id);
    };
-   //--fonctions pour confirmer la ssuppression
-   const confirm = () =>
-      new Promise((resolve) => {
-         setTimeout(() => resolve(), 2000);
-         const result = handleDeleteEventById(event._id);
-         console.log(result);
-      });
-
    // fonction pour popup
    const modifier = () => {
       setVisible(true);
@@ -41,10 +33,11 @@ const Event = (props) => {
    return (
       <>
          <tr>
-            <th scope='row'>1</th>
-            <td>{event.description}</td>
-            <td>{event.name}</td>
-            <td> {event.etat}</td>
+            <th scope='row'>{index + 1}</th>
+            <td>{program.name}</td>
+            <td>{program.description}</td>
+            <td>{program.image}</td>
+            <td>{program.videoLink}</td>
             <td>
                <div
                   class='btn-group'
@@ -74,17 +67,16 @@ const Event = (props) => {
             onOk={handleOk}
             onCancel={handleCancel}
             okButtonProps={{ disabled: true }}>
-            <EventForm
+            <ProgrammForm
                finish={finish}
                initialValues={{
-                  name: event.name,
-                  description: event.description,
-                  etat: event.etat,
+                  name: program.name,
+                  description: program.description,
+                  image: program.image,
+                  videoLink: program.videoLink,
                }}
             />
          </Modal>
       </>
    );
-};
-
-export default Event;
+}

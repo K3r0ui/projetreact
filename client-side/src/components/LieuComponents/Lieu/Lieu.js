@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Popconfirm, Modal } from 'antd';
 import { message } from 'antd';
-import EventForm from '../EventForm/EventForm';
-const Event = (props) => {
-   const { event, handleDeleteEventById, handleUpdateEvent, setData } = props;
+import LieuForm from '../LieuForm/LieuForm';
+const Lieu = (props) => {
+   const { lieu, handleDeleteLieuById, handleUpdateLieu, setData } = props;
    const [visible, setVisible] = useState(false);
 
    //fonctions pour formulaire
 
    //faire la mise a jour
-   const finish = (name, description, etat) => {
-      handleUpdateEvent(event._id, name, description, etat);
+   const finish = (name, city, country, address) => {
+      handleUpdateLieu(lieu._id, name, city, country, address);
 
       setVisible(false);
       console.log('Received values of form: ', values);
@@ -23,7 +23,7 @@ const Event = (props) => {
    const confirm = () =>
       new Promise((resolve) => {
          setTimeout(() => resolve(), 2000);
-         const result = handleDeleteEventById(event._id);
+         const result = handleDeleteLieuById(lieu._id);
          console.log(result);
       });
 
@@ -42,9 +42,10 @@ const Event = (props) => {
       <>
          <tr>
             <th scope='row'>1</th>
-            <td>{event.description}</td>
-            <td>{event.name}</td>
-            <td> {event.etat}</td>
+            <td>{lieu.name}</td>
+            <td>{lieu.city}</td>
+            <td> {lieu.country}</td>
+            <td> {lieu.address}</td>
             <td>
                <div
                   class='btn-group'
@@ -69,17 +70,17 @@ const Event = (props) => {
          </tr>
 
          <Modal
-            title='Modifier un evennement'
+            title='Modifier un Lieu'
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
             okButtonProps={{ disabled: true }}>
-            <EventForm
+            <LieuForm
                finish={finish}
                initialValues={{
-                  name: event.name,
-                  description: event.description,
-                  etat: event.etat,
+                  name: lieu.name,
+                  description: lieu.description,
+                  etat: lieu.etat,
                }}
             />
          </Modal>
@@ -87,4 +88,4 @@ const Event = (props) => {
    );
 };
 
-export default Event;
+export default Lieu;
