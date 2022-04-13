@@ -3,7 +3,7 @@ const config = {
    headers: {
       api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
       'x-auth-token':
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTI0ODk5NWFiYzRhYWJjYzZlOTkyOCIsImlhdCI6MTY0OTU4NTI2OCwiZXhwIjoxNjQ5NjIxMjY4fQ.6pNcZ9IHv4pk4MfmPNsr5yeqBfliF9Q5XY3F88IQO70',
+         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTYyNTM0OSwiZXhwIjoxNjQ5NjYxMzQ5fQ.zPn_xDPv2AHptd-avSaPKGBsDwYjYkRRuOJewHPIocA',
    },
 };
 const url = 'http://localhost:8080/lieu/coach';
