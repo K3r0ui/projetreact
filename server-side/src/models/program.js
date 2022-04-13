@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { ObjectId } = mongoose.Schema.Types;
 
 const programSchema = new mongoose.Schema(
   {
@@ -18,30 +19,7 @@ const programSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Coach",
     },
-    competences: [
-      {
-        competence: {
-          type: ObjectId,
-          ref: "Competence",
-        },
-        done: {
-          type: Boolean,
-          default: false,
-        },
-      },
-    ],
-    statistiques: [
-      {
-        statistique: {
-          type: ObjectId,
-          ref: "Stat",
-        },
-        done: {
-          type: Boolean,
-          default: false,
-        },
-      },
-    ],
+
     seances: [
       {
         type: ObjectId,
