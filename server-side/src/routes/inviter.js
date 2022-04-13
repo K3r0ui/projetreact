@@ -191,7 +191,7 @@ router.put("/updatejoueur/:id", async (req, res) => {
     }
 });
 
-router.put("/delete/:id", verifyCoach, async (req, res) => {
+router.put("/delete/:id", async (req, res) => {
     try {
         let invit = await Invitation.findById(req.params.id)
         if (invit.etat != "En attente") {
@@ -199,7 +199,7 @@ router.put("/delete/:id", verifyCoach, async (req, res) => {
         } else {
             invit.etat = "Supprimer"
             invit = await invit.save();
-            res.send(invit);
+            res.send(invit.id);
         }
 
     } catch {
@@ -216,6 +216,7 @@ router.get("/all", verifyCoach, async (req, res) => {
                 return invit;
             }
         })
+
         res.send(invits)
     } catch {
         res.status(500).send(" somthing is wrong")

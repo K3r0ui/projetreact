@@ -6,14 +6,13 @@ import { useNavigate, } from "react-router-dom";
 
 
 
-const InvitationForm = (props) => {
+const InvitationForm = ({ finish, initialValues }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [isVisible, setVisible] = useState(false)
 
     const onFinish = (values) => {
-        props.finish(values.firstName, values.lastName, values.email, values.dob, values.pob, values.sexe, values.job, values.ville, values.telephone, values.price, values.taille, values.poid, values.orientation, values.nbscweek);
-        message.success('Submit success!');
+        finish(values.firstName, values.lastName, values.email, values.dob, values.pob, values.sexe, values.job, values.ville, values.telephone, values.price, values.taille, values.poid, values.orientation, values.nbscweek);
     };
 
     const onFinishFailed = () => {
@@ -23,7 +22,7 @@ const InvitationForm = (props) => {
     return (
         <div className="container mt-5">
             <Form
-                initialValues={props.initialValues}
+                initialValues={initialValues}
 
                 form={form}
                 layout="vertical"
@@ -183,4 +182,4 @@ const InvitationForm = (props) => {
     );
 };
 
-export default InvitationForm;
+export default InvitationForm; 
