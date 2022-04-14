@@ -1,31 +1,21 @@
 import React from 'react';
-import {
-   Navbar,
-   NavDropdown,
-   Container,
-   Form,
-   FormControl,
-   Button,
-   Nav,
-} from 'react-bootstrap';
+import { Navbar, NavDropdown, Container, Nav } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DefiPage from '../../pages/DefiPage/DefiPage';
 import EventsJoueurPage from '../../pages/EventsJoueurPage/EventsJoueurPage';
 import EventsPage from '../../pages/EventsPage/EventsPage';
-
 import CompentencePage from '../../pages/compentencePage/compentencePage';
 import StatPage from '../../pages/statPage/statPage';
-
 import HomePage from '../../pages/HomePage/HomePage';
 import SeancePage from '../../pages/SeancePage/SeancePage';
-
 import InvitationPage from '../../pages/invitationPage/invitationPage.js';
 import ProgramSeance from '../../pages/programSeance/programSeance';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
-
 import LieuPage from '../../pages/LieuPage/LieuPage';
 import ProfilejcPage from '../../pages/ProfilejcPage/ProfilejcPage';
+import PricingPage from '../../pages/PricingPage/pricingPage';
+
 const NavbarApp = () => {
    return (
       <>
@@ -38,7 +28,7 @@ const NavbarApp = () => {
                   <Navbar.Collapse id='responsive-navbar-nav'>
                      <Nav className='me-auto'>
                         <Nav.Link href='#features'>Features</Nav.Link>
-                        <Nav.Link href='#pricing'>Pricing</Nav.Link>
+                        <Nav.Link href='pricing'>Pricing</Nav.Link>
                         <NavDropdown title='Coach' id='collasible-nav-dropdown'>
                            <NavDropdown.Item href='#action/3.1'>
                               Action
@@ -106,6 +96,7 @@ const NavbarApp = () => {
                <Route path='/' element={<HomePage />} />
                <Route path='/login' element={<LoginPage />} />
                <Route path='/register' element={<RegisterPage />} />
+               <Route path='/pricing' element={<PricingPage />} />
                <Route path='defis' element={<DefiPage />} />
                <Route path='seances' element={<SeancePage />} />
                <Route path='joueur/events' element={<EventsJoueurPage />} />
