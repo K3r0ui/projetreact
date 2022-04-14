@@ -13,17 +13,17 @@ router.post("/", verifyCoach, async (req, res) => {
 
     const invits = await Invitation.find({ coach: req.user.id })
 
-    const nb = invits.map((invit) => {
-        const nbr = 0
-        if (invit.etat != "Refuser" && invit.etat != "Supprimer") {
-            return nbr + 1
-        }
-    })
+    // const nb = invits.map((invit) => {
+    //     const nbr = 0
+    //     if (invit.etat != "Refuser" && invit.etat != "Supprimer") {
+    //         return nbr + 1
+    //     }
+    // })
 
-    const coach = await Coach.findById(req.user.id)
-    if (coach.abonnement.nbjoueur <= nb) {
-        res.status(400).send("Abonnement insufisant")
-    }
+    //const coach = await Coach.findById(req.user.id)
+    // if (coach.abonnement.nbjoueur <= nb) {
+    //     res.status(400).send("Abonnement insufisant")
+    // }
     let joueur;
     let invitation;
     try {
