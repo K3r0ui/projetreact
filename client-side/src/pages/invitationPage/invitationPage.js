@@ -29,7 +29,8 @@ const InvitationPage = () => {
     const handleDeleteInvitation = async (id) => {
         try {
             const res = await deleteInvitation(id);
-            setData(data.filter((invitation) => invitation._id !== res));
+            console.log("resr", res);
+            setData(data.filter((invitation) => invitation._id !== res._id));
             message.success('delete success!');
         } catch (error) {
             console.log(error.message);
