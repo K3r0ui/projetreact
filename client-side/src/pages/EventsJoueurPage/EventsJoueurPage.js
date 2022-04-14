@@ -68,10 +68,10 @@ const EventsJoueurPage = () => {
         </>)
         }
 
-        {data.length==0 &&!loading &&(<>
+        {(!data || (data && data.length==0)) &&!loading &&(<>
         <Empty />
         </>)}
-        {data.length!=0 &&!loading &&(<>
+        {(data && data.length!=0) &&!loading &&(<>
         <EventsListJoueur   data={data} setData={setData} />
         </>)
         }
