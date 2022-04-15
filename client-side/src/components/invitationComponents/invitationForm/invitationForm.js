@@ -4,8 +4,6 @@ import 'antd/dist/antd.css';
 import { useState } from 'react';
 import { useNavigate, } from "react-router-dom";
 
-
-
 const InvitationForm = ({ finish, initialValues }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
@@ -20,7 +18,7 @@ const InvitationForm = ({ finish, initialValues }) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-1">
             <Form
                 initialValues={initialValues}
 
@@ -72,14 +70,14 @@ const InvitationForm = ({ finish, initialValues }) => {
                 )}
                 {isVisible && (
                     <>
-                        <Form.Item name="dob" label="Date de naissence">
+                        <Form.Item name="dob" label="Date de Naissance">
                             <DatePicker />
                         </Form.Item>
                         <Form.Item
                             name="pob"
-                            label="Lieu de Naissence"
+                            label="Lieu de Naissance"
                         >
-                            <Input placeholder="Lieu de naissance" />
+                            <Input placeholder="Lieu de Naissance" />
 
                         </Form.Item>
                         <Form.Item
@@ -94,9 +92,9 @@ const InvitationForm = ({ finish, initialValues }) => {
 
                         <Form.Item
                             name="job"
-                            label="Post de travaille"
+                            label="Poste de travail"
                         >
-                            <Input placeholder="Post de Travaille" />
+                            <Input placeholder="Poste de Travail" />
 
                         </Form.Item>
                         <Form.Item
@@ -112,28 +110,19 @@ const InvitationForm = ({ finish, initialValues }) => {
                         >
                             <Input placeholder="Telephone" />
                         </Form.Item>
-
-                        <Form.Item
-                            name="price"
-                            label="Prix de seance"
-                        >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;DT</div>
-
-                        </Form.Item>
                         <Form.Item
                             name="taille"
-                            label="Taille"
+                            label="Taille (CM)"
                         >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;CM</div>
+                            <InputNumber placeholder="0" min={0} />
+
                         </Form.Item>
                         <Form.Item
                             name="poid"
-                            label="Poid"
+                            label="Poid (KG)"
                         >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;KG</div>
+                            <InputNumber placeholder="0" min={0} />
+
                         </Form.Item>
                         <Form.Item
                             name="orientation"
@@ -149,6 +138,12 @@ const InvitationForm = ({ finish, initialValues }) => {
                             label="nombre de seance par une semaine"
                         >
                             <InputNumber placeholder="0" min={1} />
+                        </Form.Item>
+                        <Form.Item
+                            name="price"
+                            label="Prix de seance (DT)"
+                        >
+                            <InputNumber placeholder="0" min={0} />
                         </Form.Item>
 
                         <Form.Item>
