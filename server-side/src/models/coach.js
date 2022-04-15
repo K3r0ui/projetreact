@@ -45,10 +45,15 @@ const coachSchema = new mongoose.Schema(
         type: Date,
         default: new Date(),
       },
-      nbjoueur: {
+      joueurterminer: {
         type: Number,
+<<<<<<< HEAD
         default: 3,
       },
+=======
+        default: 0
+      }
+>>>>>>> 6b28c23 (fix inviter joueur backend)
     },
   },
   { timestamps: true }
