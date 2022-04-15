@@ -24,7 +24,6 @@ const coachSchema = new mongoose.Schema(
     discipline: {
       type: ObjectId,
       ref: "Discipline",
-      
     },
     firstAuth: {
       type: Boolean,
@@ -32,26 +31,25 @@ const coachSchema = new mongoose.Schema(
     },
     alert: {
       type: ObjectId,
-      ref: "Alert"
+      ref: "Alert",
     },
     nbsc: {
       type: Number,
-      
     },
     abonnement: {
       type: {
         type: String,
-        default: "free"
+        default: "free",
       },
       doc: {
         type: Date,
-        default: new Date()
+        default: new Date(),
       },
       nbjoueur: {
         type: Number,
-        default: 3
-      }
-    }
+        default: 3,
+      },
+    },
   },
   { timestamps: true }
 );
@@ -68,7 +66,7 @@ coachSchema.methods.generateJWT = async function () {
 
 coachSchema.pre("save", async function (next) {
   const user = this;
-  const salt = await bcrypt.genSalt(parseInt(process.env.JWTSECRETKEY_C));
+  const salt = await bcrypt.genSalt(parseInt(process.env.SALT_FACTOR));
   user.password = await bcrypt.hash(user.password, salt);
   next();
 });

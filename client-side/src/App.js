@@ -1,15 +1,15 @@
-import './App.css';
 import React from 'react';
 import NavbarApp from './components/Navbar/Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import UserProvider from './UserProvider';
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
    return (
       <UserProvider isCoach={localStorage.getItem('isCoach')}>
-         <div className='App'>
+         <BrowserRouter>
             <NavbarApp />
-         </div>
+         </BrowserRouter>
       </UserProvider>
    );
 }
