@@ -57,7 +57,7 @@ const NavbarApp = () => {
                            Equipes
                         </NavDropdown.Item>
                         <NavDropdown.Item href='/invitation'>
-                           Invitation
+                           Inviter Joueurs
                         </NavDropdown.Item>
                      </NavDropdown>
 

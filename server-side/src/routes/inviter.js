@@ -26,61 +26,13 @@ router.post("/", verifyCoach, async (req, res) => {
   let joueur;
   let invitation;
   try {
-<<<<<<< HEAD
-    joueur = new Joueur({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      dob: req.body.dob,
-      pob: req.body.pob,
-      coach: req.user.id,
-      sexe: req.body.sexe,
-      job: req.body.job,
-      ville: req.body.ville,
-      telephone: req.body.telephone,
-      price: req.body.price,
-      taille: req.body.taille,
-      poid: req.body.poid,
-      orientation: req.body.orientation,
-      nbscweek: req.body.nbscweek,
-      price: req.body.price,
-    });
-
-    joueur = await joueur.save();
-    invitation = new Invitation({
-      joueur: joueur._id,
-      coach: req.user.id,
-    });
-
-    invitation = await invitation.save();
-
-    await Joueur.findOneAndUpdate(
-      { email: req.body.email },
-      { invitation: invitation._id },
-      { new: true }
-    );
-
-    let smtpTransport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "nodeisamm@gmail.com",
-        pass: "otaku666",
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
     const coach = await Coach.findById(req.user.id);
-
-    let mailOptions = {
-      from: "nodeisamm@gmail.com",
-      to: `${req.body.email}`,
-      subject: `Invitation from COACH: ${coach.firstName} ${coach.lastName} to join a session`,
-      text: "test",
-      html: `<h3> YOUR INFO </h3> 
-=======
-    const coach = await Coach.findById(req.user.id);
-    if ((coach.abonnement.type == "free" && coach.abonnement.joueurterminer >= 3) || (coach.abonnement.type == "basic" && coach.abonnement.joueurterminer >= 10)) {
+    if (
+      (coach.abonnement.type == "free" &&
+        coach.abonnement.joueurterminer >= 3) ||
+      (coach.abonnement.type == "basic" &&
+        coach.abonnement.joueurterminer >= 10)
+    ) {
       res.status(400).send("check abonnement");
     } else {
       joueur = new Joueur({
@@ -133,7 +85,6 @@ router.post("/", verifyCoach, async (req, res) => {
         subject: `Invitation from COACH: ${coach.firstName} ${coach.lastName} to join a session`,
         text: "test",
         html: `<h3> YOUR INFO </h3> 
->>>>>>> 6b28c23 (fix inviter joueur backend)
           <div>
             <ul>
                 <li>Name : ${req.body.firstName} </li>
@@ -143,21 +94,6 @@ router.post("/", verifyCoach, async (req, res) => {
            <div>
            <a href="http://localhost:3000/accepter?idjoueur=${joueur._id}"> Accepter </a>
            <a href="http://localhost:3000/annuler?idjoueur=${joueur._id}"> Refuser </a>`,
-<<<<<<< HEAD
-    };
-
-    smtpTransport.sendMail(mailOptions, (error, res) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send({ message: "Sucess", joueur });
-      }
-    });
-
-    smtpTransport.close();
-    invitation.joueur = joueur;
-    res.send(invitation);
-=======
       };
 
       smtpTransport.sendMail(mailOptions, (error, res) => {
@@ -172,7 +108,6 @@ router.post("/", verifyCoach, async (req, res) => {
       invitation.joueur = joueur;
       res.send(invitation);
     }
->>>>>>> 6b28c23 (fix inviter joueur backend)
   } catch (error) {
     res.status(400).send({ "error to inviter": error });
   }
@@ -228,11 +163,7 @@ router.put("/accepter/:id", async (req, res) => {
       res.send(joueur);
     }
   } catch {
-<<<<<<< HEAD
-    res.send(500).send("somthing is wrong");
-=======
     res.status(500).send("somthing is wrong");
->>>>>>> 6b28c23 (fix inviter joueur backend)
   }
 });
 
@@ -262,17 +193,14 @@ router.put("/updatejoueur/:id", async (req, res) => {
         },
         { new: true }
       );
-<<<<<<< HEAD
-=======
-      const coch = await Coach.findById(joueur.coach).populate('abonnement');
 
-      await Coach.findOneAndUpdate(
-        joueur.coach,
-        {
-          $set: { "abonnement.joueurterminer": coch.abonnement.joueurterminer + 1 }
-        }
-      )
->>>>>>> 6b28c23 (fix inviter joueur backend)
+      const coch = await Coach.findById(joueur.coach).populate("abonnement");
+
+      await Coach.findOneAndUpdate(joueur.coach, {
+        $set: {
+          "abonnement.joueurterminer": coch.abonnement.joueurterminer + 1,
+        },
+      });
 
       res.send(joueur);
     }

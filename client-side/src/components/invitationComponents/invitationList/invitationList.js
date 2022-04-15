@@ -4,8 +4,8 @@ const InvitationList = (props) => {
 
     const { handleDeleteInvitation, data, setData } = props;
 
-    return (<>
-
+    return (
+    <>
         <table className="table mt-3">
             <thead>
                 <tr>
@@ -19,17 +19,12 @@ const InvitationList = (props) => {
             </thead>
             <tbody>
                 {
-                    data.map((invitation) => (
-                        <><Invitation key={invitation._id} invitation={invitation} deleteInvitation={handleDeleteInvitation} setData={setData} /></>
+                    data.map((invitation, index) => (
+                        <><Invitation index={index + 1} key={invitation._id} invitation={invitation} deleteInvitation={handleDeleteInvitation} setData={setData} /></>
                     ))
-
                 }
-
             </tbody>
         </table>
-
-
-
     </>);
 }
 

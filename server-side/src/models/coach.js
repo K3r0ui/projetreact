@@ -47,13 +47,8 @@ const coachSchema = new mongoose.Schema(
       },
       joueurterminer: {
         type: Number,
-<<<<<<< HEAD
-        default: 3,
+        default: 0,
       },
-=======
-        default: 0
-      }
->>>>>>> 6b28c23 (fix inviter joueur backend)
     },
   },
   { timestamps: true }
