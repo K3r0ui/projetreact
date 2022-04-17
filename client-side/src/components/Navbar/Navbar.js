@@ -19,6 +19,8 @@ import Page404 from '../../pages/404Page/404Page';
 import Refused from '../../pages/invitationPage/refused';
 import Accepted from '../../pages/invitationPage/accepted';
 
+import ProfilePage from '../../pages/joueur/profilePage';
+
 const NavbarApp = () => {
    return (
       <>
@@ -75,6 +77,10 @@ const NavbarApp = () => {
                         </NavDropdown.Item>
 
                         <NavDropdown.Divider />
+                        <NavDropdown.Item href='/profile'>
+                           Profile
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
                         <NavDropdown.Item href='#action/3.4'>
                            Equipes
                         </NavDropdown.Item>
@@ -110,6 +116,10 @@ const NavbarApp = () => {
 
             <Route path='/annuler' element={<Refused />} />
             <Route path='/accepter' element={<Accepted />} />
+
+            {/* profile côté joueur */}
+
+            <Route path='/profile' element={<ProfilePage />} />
 
             <Route path='*' element={<Navigate to='/not-found' replace />} />
          </Routes>
