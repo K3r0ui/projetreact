@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Space, Modal, Empty } from 'antd';
+import { Spin, Space, Modal, Empty, message } from 'antd';
 
 import { getAllCompetence, addCompetence, updateCompetnece, deleteCompetence } from '../../services/competence.service';
 import CompetenceForm from '../../components/competenceComponents/competenceForm/competenceForm';
@@ -8,50 +8,49 @@ import CompetenceList from '../../components/competenceComponents/competenceList
 const CompentencePage = () => {
 
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true)
-            const data2 = await getAllCompetence();
-
-            if (data2) {
-                setData(data2);
+            const result = await getAllCompetence();
+            if (result) {
+                setData(result);
             }
-            setLoading(false)
-
+            setLoading(false);
         };
         fetchData();
     }, []);
 
 
-    const handleDeleteCompetence = (id) => {
-        deleteCompetence(id);
-        setData(data.filter(competence => competence._id !== id));
-
-    }
+    const handleDeleteCompetence = async (id) => {
+        try {
+            const res = await deleteCompetence(id);
+            setData(data.filter(competence => competence._id !== res));
+            message.success('delete success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('delete failed!');
+        }
+    };
 
     // fonction pour fair l'appdate
-    const handleUpdateCompetence = (id, title, description, lien) => {
-
-        updateCompetnece(id, title, description, lien);
-        const newData = data.map((competence) => {
-            if (competence._id === id) {
-                competence.title = title;
-                competence.description = description;
-                competence.link = lien;
-            }
-            return competence;
+    const handleUpdateCompetence = async (id, title, description, lien) => {
+        try {
+            const result = await updateCompetnece(id, title, description, lien);
+            const clonedData = [...data];
+            const index = clonedData.findIndex((el) => el._id === result._id);
+            clonedData[index] = result;
+            setData(clonedData);
+            message.success('update success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('update failed!');
         }
-        );
-        setData(newData);
-
     }
 
     const ajouter = () => {
         setVisible(true);
-
     }
     const handleOk = () => {
         setVisible(false);
@@ -60,24 +59,21 @@ const CompentencePage = () => {
         setVisible(false);
     }
 
-
     const finish = async (title, description, lien) => {
-
-        const response = await addCompetence(title, description, lien);
-        setVisible(false);
-        console.log(response.status && response.status == 200);
-        if (response.status && response.status == 200) {
-            setData([...data, response.data]);
-
+        try {
+            const response = await addCompetence(title, description, lien);
+            setVisible(false);
+            setData([response, ...data]);
+            message.success('Submit success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('Submit failed!');
         }
-
-    }
+    };
 
     return (
         <>
-
             <div className="container mt-5 ">      <button type="button" onClick={ajouter} className="btn btn-primary">Ajouter une Compentence</button>
-
                 {loading && (<>
                     <div className="d-flex justify-content-center">
                         <Space size="middle">
@@ -86,7 +82,6 @@ const CompentencePage = () => {
                     </div>
                 </>)
                 }
-
                 {data.length == 0 && !loading && (<>
                     <Empty />
                 </>)}
@@ -98,21 +93,13 @@ const CompentencePage = () => {
                 }
             </div>
 
-
-
-
             <Modal
 
                 title="Ajouter une Competence"
                 visible={visible}
                 onOk={handleOk}
-                onCancel={handleCancel}
-                okButtonProps={{ disabled: true }}
-
-            >
-
+                onCancel={handleCancel}>
                 <CompetenceForm finish={finish} initialValues={{ title: '', lien: '', description: '' }} />
-
             </Modal>
 
         </>);

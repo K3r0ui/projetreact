@@ -168,29 +168,22 @@ router.put("/coach/alterstatistiquejoueur/:id", verifyCoach, async (req, res) =>
     } catch {
         return res.status(400).send("statistique CANNOT BE modifi");
     }
-})
-
-
+});
 
 router.delete("/coach/:id", verifyCoach, async (req, res) => {
     try {
         const stat = await Stat.findById(req.params.id);
-
         stat.joueurs.forEach(async x => {
             let joueur = await Joueur.findById(x)
             const findIndex = joueur.statistiques.findIndex(x => x.statistique == req.params.id)
             joueur.statistiques.splice(findIndex, 1)
             await joueur.save()
         })
-
         await Stat.findByIdAndRemove(req.params.id);
-        res.status(200).send("SUCCESS")
+        res.status(200).send(stat.id)
     } catch {
         res.status(500).json("Error");
     };
 });
-
-
-
 
 export default router;
