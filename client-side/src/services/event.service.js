@@ -1,13 +1,12 @@
 import axios from 'axios';
 const config = {
-   headers: {
-      api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-      'x-auth-token':
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZWE1N2U5NDM4N2RlY2FmMTMxNyIsImlhdCI6MTY0OTgwNjk0NywiZXhwIjoxNjQ5ODQyOTQ3fQ.LteyUIDJISIY2bNnahnmNfomiNS1hMu2hgPJZKI08k0',
-   },
-};
+    headers:{
+        'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
+        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTQ1MDU2OCwiZXhwIjoxNjQ5NDg2NTY4fQ.hhRJDLhmNGT65Q06zkjD7hI18Xrwa6p7r3WKcGGsPgg'
+    }
+  };
+const url="http://localhost:8080/event/coach";  
 
-const url = 'http://localhost:8080/event/coach';
 
 export const getAllEvents = async () => {
    try {

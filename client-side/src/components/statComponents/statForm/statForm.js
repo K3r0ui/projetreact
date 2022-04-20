@@ -4,13 +4,11 @@ import 'antd/dist/antd.css';
 
 
 
-const StatForm = (props) => {
+const StatForm = ({ finish, initialValues, forUpdate, discipline }) => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        console.log(values.discipline);
-        props.finish(values.title, values.description, values.lien, values.type, values.unite, values.discipline);
-        message.success('Submit success!');
+        finish(values.title, values.description, values.lien, values.type, values.unite, values.discipline);
     };
 
     const onFinishFailed = () => {
@@ -18,10 +16,9 @@ const StatForm = (props) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-2">
             <Form
-                initialValues={props.initialValues}
-
+                initialValues={initialValues}
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
@@ -87,7 +84,7 @@ const StatForm = (props) => {
                     <Input placeholder="unite" />
                 </Form.Item>
 
-                {!props.forUpdate && (<Form.Item
+                {!forUpdate && (<Form.Item
                     name="discipline"
                     label="discipline"
                     rules={
@@ -96,14 +93,12 @@ const StatForm = (props) => {
                 >
                     <Select defaultValue="discipline">
                         <Select.Option value="discipline" disabled>Discipline</Select.Option>
-                        {props.discipline.map((discipline) => (
+                        {discipline.map((discipline) => (
                             <Select.Option value={discipline._id}> {discipline.description} </Select.Option>
                         ))}
 
                     </Select>
                 </Form.Item>)
-
-
                 }
                 <Form.Item>
                     <center>

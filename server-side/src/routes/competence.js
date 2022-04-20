@@ -175,7 +175,6 @@ router.put(
 router.delete("/coach/:id", verifyCoach, async (req, res) => {
   try {
     const compt = await Competence.findById(req.params.id);
-
     compt.joueurs.forEach(async (x) => {
       let joueur = await Joueur.findById(x);
       const findIndex = joueur.competences.findIndex(
@@ -186,7 +185,7 @@ router.delete("/coach/:id", verifyCoach, async (req, res) => {
     });
 
     await Competence.findByIdAndRemove(req.params.id);
-    res.status(200).send("SUCCESS");
+    res.status(200).send(compt.id);
   } catch {
     res.status(500).json("Error");
   }

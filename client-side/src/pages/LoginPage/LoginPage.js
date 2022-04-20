@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { message } from 'antd';
-import axios from 'axios';
 import SigninForm from '../../components/SignInComponents/SignInForm';
 import { login } from '../../services/register.service';
 
 const LoginPage = () => {
-   const navigate = useNavigate();
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -30,7 +28,9 @@ const LoginPage = () => {
             email: '',
             password: '',
          });
-         navigate('/');
+         localStorage.setItem('isCoach', true);
+         // navigate('/');
+         window.location = '/';
       } catch (err) {
          console.error(err.message);
          message.error('login failed!');

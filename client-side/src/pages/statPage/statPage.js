@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Space, Modal, Empty } from 'antd';
+import { Spin, Space, Modal, Empty, message } from 'antd';
 
 import { getAllStat, addStat, updateStat, deleteStat } from '../../services/stat.service';
 import { getAllDiscipline } from '../../services/discipline.service';
@@ -20,7 +20,6 @@ const StatPage = () => {
             if (data2) {
                 setData(data2);
             }
-
             const des = await getAllDiscipline();
             if (des) {
                 setDescipline(des);
@@ -32,29 +31,32 @@ const StatPage = () => {
     }, []);
 
 
-    const handleDeleteStat = (id) => {
-        deleteStat(id);
-        setData(data.filter(stat => stat._id !== id));
+    const handleDeleteStat = async (id) => {
+        try {
+            const res = await deleteStat(id);
+            setData(data.filter((program) => program._id !== res));
+            message.success('delete success!');
 
+        } catch (error) {
+            console.log(error.message);
+            message.error('delete failed!');
+        }
     }
 
     // fonction pour fair l'appdate
-    const handleUpdateStat = (id, title, description, lien, type, unite) => {
+    const handleUpdateStat = async (id, title, description, lien, type, unite) => {
+        try {
+            const result = await updateStat(id, title, description, lien, type, unite);
+            const clonedData = [...data];
+            const index = clonedData.findIndex((el) => el._id === result._id);
+            clonedData[index] = result;
+            setData(clonedData);
+            message.success('update success!');
 
-        updateStat(id, title, description, lien, type, unite);
-        const newData = data.map((stat) => {
-            if (stat._id === id) {
-                stat.title = title;
-                stat.description = description;
-                stat.lien = lien;
-                stat.type = type;
-                stat.unite = unite
-            }
-            return stat;
+        } catch (error) {
+            console.log(error.message);
+            message.error('update failed!');
         }
-        );
-        setData(newData);
-
     }
 
     const ajouter = () => {
@@ -70,19 +72,19 @@ const StatPage = () => {
 
 
     const finish = async (title, description, lien, type, unite, discipline) => {
-
-        const response = await addStat(title, description, lien, type, unite, discipline);
-        setVisible(false);
-        console.log(response.status && response.status == 200);
-        if (response.status && response.status == 200) {
-            setData([...data, response.data]);
+        try {
+            const response = await addStat(title, description, lien, type, unite, discipline);
+            setVisible(false);
+            setData([response, ...data]);
+            message.success('Submit success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('Submit failed!');
         }
-
     }
 
     return (
         <>
-
             <div className="container mt-5 ">      <button type="button" onClick={ajouter} className="btn btn-primary">Ajouter une Statistique</button>
 
                 {loading && (<>
@@ -105,21 +107,12 @@ const StatPage = () => {
                 }
             </div>
 
-
-
-
             <Modal
-
                 title="Ajouter une Statistique"
                 visible={visible}
                 onOk={handleOk}
-                onCancel={handleCancel}
-                okButtonProps={{ disabled: true }}
-
-            >
-
+                onCancel={handleCancel}>
                 <StatForm forUpdate={false} discipline={discipline} finish={finish} initialValues={{ title: '', lien: '', description: '' }} />
-
             </Modal>
 
         </>);

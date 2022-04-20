@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Spin, Space, Modal, Empty } from 'antd';
+import React, { useContext, useEffect, useState } from 'react'
+import { Spin, Space, Modal, Empty, message } from 'antd';
 
 import { getAllInviation, addInvitation, deleteInvitation } from '../../services/invitation.service';
 import InvitationForm from '../../components/invitationComponents/invitationForm/invitationForm';
 import InvitationList from '../../components/invitationComponents/invitationList/invitationList';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../UserProvider';
 
 const InvitationPage = () => {
 
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const navig = useNavigate();
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
+
+    const [upgradeModel, setUpgradeModel] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,31 +32,51 @@ const InvitationPage = () => {
     }, []);
 
 
-    const handleDeleteInvitation = (id) => {
-        deleteInvitation(id);
-        setData(data.filter(invitation => invitation._id !== id));
+    const handleDeleteInvitation = async (id) => {
+        try {
+            const res = await deleteInvitation(id);
+            console.log("resr", res);
+            setData(data.filter((invitation) => invitation._id !== res._id));
+            message.success('delete success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('delete failed!');
+        }
     }
 
 
     const ajouter = () => {
-        setVisible(true);
-
+        if ((currentUser.abonnement.type == "free" && currentUser.abonnement.joueurterminer >= 3) || (currentUser.abonnement.type == "basic" && currentUser.abonnement.joueurterminer >= 10)) {
+            setUpgradeModel(true);
+        } else {
+            setVisible(true);
+        }
     }
     const handleOk = () => {
         setVisible(false);
+        setUpgradeModel(false);
     }
     const handleCancel = () => {
         setVisible(false);
+        setUpgradeModel(false);
+    }
+    const navigate = () => {
+        setUpgradeModel(false);
+        navig("/pricing");
     }
 
 
     const finish = async (firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek) => {
-        const response = await addInvitation(firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek);
-        setVisible(false);
-        console.log(response.status && response.status == 200);
-        if (response.status && response.status == 200) {
-            setData([...data, response.data]);
+        try {
 
+            const response = await addInvitation(firstName, lastName, email, dob, pob, sexe, job, ville, telephone, price, taille, poid, orientation, nbscweek);
+
+            setVisible(false);
+            setData([...data, response.data]);
+            message.success('Submit success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('Submit failed!');
         }
 
     }
@@ -81,20 +107,26 @@ const InvitationPage = () => {
             </div>
 
             <Modal
-
                 title="Inviter Joueur"
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okButtonProps={{ disabled: true }}
-
             >
+                <InvitationForm finish={finish} initialValues={{}} />
+            </Modal>
 
-                <InvitationForm finish={finish} initialValues={{
-                    firstName: '', lastName: '', email: '', dob: '', pob: '', sexe: '', job: '', ville: '', telephone: '', price: "",
-                    taille: "", poid: "", orientation: '', nbscweek: ''
-                }} />
-
+            <Modal
+                title="Payer Abonnement"
+                visible={upgradeModel}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okButtonProps={{ disabled: false }}
+            >
+                <div>
+                    <center><h1> Changer abonnement</h1>
+                        <button className="btn btn-primary mt-4" type="button" onClick={navigate}> Payer</button></center>
+                </div>
             </Modal>
 
         </>);

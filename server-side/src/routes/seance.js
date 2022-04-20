@@ -20,6 +20,42 @@ route.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
+route.post("/", verifyCoach, async (req, res) => {
+  let seance;
+  try {
+    seance = new Seance({
+      titre: req.body.titre,
+      date: req.body.date,
+      etat: 'en cours',
+      coach: req.user.id,
+      lieu: req.body.lieu,
+      joueur: req.body.joueur,
+      competences:req.body.competences,
+      statistiques:req.body.statistiques
+
+    });
+    await seance.save();
+    res.status(200).send(seance);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+route.get("/", verifyToken, async (req, res) => {
+  try {
+    const prog = await Seance.find({ couch: req.user.id })
+      .populate("competences")
+      .populate("statistiques.statistique")
+      .populate("lieu")
+      .populate("program");
+    res.send(prog);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
+
+
 export default route;
 
 /*

@@ -4,16 +4,13 @@ import 'antd/dist/antd.css';
 import { useState } from 'react';
 import { useNavigate, } from "react-router-dom";
 
-
-
-const InvitationForm = (props) => {
+const InvitationForm = ({ finish, initialValues }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [isVisible, setVisible] = useState(false)
 
     const onFinish = (values) => {
-        props.finish(values.firstName, values.lastName, values.email, values.dob, values.pob, values.sexe, values.job, values.ville, values.telephone, values.price, values.taille, values.poid, values.orientation, values.nbscweek);
-        message.success('Submit success!');
+        finish(values.firstName, values.lastName, values.email, values.dob, values.pob, values.sexe, values.job, values.ville, values.telephone, values.price, values.taille, values.poid, values.orientation, values.nbscweek);
     };
 
     const onFinishFailed = () => {
@@ -21,9 +18,9 @@ const InvitationForm = (props) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-1">
             <Form
-                initialValues={props.initialValues}
+                initialValues={initialValues}
 
                 form={form}
                 layout="vertical"
@@ -73,14 +70,14 @@ const InvitationForm = (props) => {
                 )}
                 {isVisible && (
                     <>
-                        <Form.Item name="dob" label="Date de naissence">
+                        <Form.Item name="dob" label="Date de Naissance">
                             <DatePicker />
                         </Form.Item>
                         <Form.Item
                             name="pob"
-                            label="Lieu de Naissence"
+                            label="Lieu de Naissance"
                         >
-                            <Input placeholder="Lieu de naissance" />
+                            <Input placeholder="Lieu de Naissance" />
 
                         </Form.Item>
                         <Form.Item
@@ -95,9 +92,9 @@ const InvitationForm = (props) => {
 
                         <Form.Item
                             name="job"
-                            label="Post de travaille"
+                            label="Poste de travail"
                         >
-                            <Input placeholder="Post de Travaille" />
+                            <Input placeholder="Poste de Travail" />
 
                         </Form.Item>
                         <Form.Item
@@ -113,28 +110,19 @@ const InvitationForm = (props) => {
                         >
                             <Input placeholder="Telephone" />
                         </Form.Item>
-
-                        <Form.Item
-                            name="price"
-                            label="Prix de seance"
-                        >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;DT</div>
-
-                        </Form.Item>
                         <Form.Item
                             name="taille"
-                            label="Taille"
+                            label="Taille (CM)"
                         >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;CM</div>
+                            <InputNumber placeholder="0" min={0} />
+
                         </Form.Item>
                         <Form.Item
                             name="poid"
-                            label="Poid"
+                            label="Poid (KG)"
                         >
-                            <div><InputNumber placeholder="0" min={0} />
-                                &nbsp;KG</div>
+                            <InputNumber placeholder="0" min={0} />
+
                         </Form.Item>
                         <Form.Item
                             name="orientation"
@@ -150,6 +138,12 @@ const InvitationForm = (props) => {
                             label="nombre de seance par une semaine"
                         >
                             <InputNumber placeholder="0" min={1} />
+                        </Form.Item>
+                        <Form.Item
+                            name="price"
+                            label="Prix de seance (DT)"
+                        >
+                            <InputNumber placeholder="0" min={0} />
                         </Form.Item>
 
                         <Form.Item>
@@ -183,4 +177,4 @@ const InvitationForm = (props) => {
     );
 };
 
-export default InvitationForm;
+export default InvitationForm; 

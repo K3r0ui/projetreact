@@ -11,6 +11,7 @@ import event from "./routes/event";
 import lieu from "./routes/lieu";
 import discipline from "./routes/discipline";
 import program from "./routes/program";
+import seance from "./routes/seance"
 
 import configDB from "./config/db";
 //import { Discipline } from "./models/discipline";
@@ -40,6 +41,8 @@ app.use("/lieu", lieu);
 app.use("/discipline", discipline);
 
 app.use("/program", program);
+app.use("/coach/seance", seance);
+
 
 // const discipline = new Discipline({
 //   description: "football",

@@ -3,7 +3,7 @@ const config = {
    headers: {
       api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
       'x-auth-token':
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTYyNTM0OSwiZXhwIjoxNjQ5NjYxMzQ5fQ.zPn_xDPv2AHptd-avSaPKGBsDwYjYkRRuOJewHPIocA',
+      localStorage.getItem('token'),
    },
 };
 const url = 'http://localhost:8080/lieu/coach';
