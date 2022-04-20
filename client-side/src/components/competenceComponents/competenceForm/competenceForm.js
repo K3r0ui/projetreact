@@ -5,14 +5,11 @@ import { useNavigate, } from "react-router-dom";
 
 
 
-const CompetenceForm = (props) => {
-    const navigate = useNavigate();
+const CompetenceForm = ({ finish, initialValues }) => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-
-        props.finish(values.title, values.description, values.lien);
-        message.success('Submit success!');
+        finish(values.title, values.description, values.lien);
     };
 
     const onFinishFailed = () => {
@@ -20,10 +17,9 @@ const CompetenceForm = (props) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-2">
             <Form
-                initialValues={props.initialValues}
-
+                initialValues={initialValues}
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}

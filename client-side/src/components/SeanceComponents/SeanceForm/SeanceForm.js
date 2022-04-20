@@ -1,14 +1,53 @@
 import { Row, Col,Form, Input, message, Button, Space,Select,DatePicker, TimePicker } from 'antd';
 import { useEffect, useState } from 'react';
+import { getAllCompetence } from '../../../services/competence.service';
+import { getAllPrograms } from '../../../services/programSeance.service';
+import { getAllLieus } from '../../../services/lieu.service';
+import { getAllStat } from '../../../services/stat.service';
+import { getAllPlayers } from '../../../services/joueur.service';
 
 const SeanceForm = (props) => {
     const [form] = Form.useForm();
     const [data, setData] = useState([]);
     const [programmes, setProgrammes] = useState(['programme1','programme2']);
-    const [lieux, SetLieux] = useState(['lieu1','lieu2']);
-    const [joueurs, SetJoueurs] = useState(['joueur1','joueur2']);
+    const [lieux, setLieux] = useState(['lieu1','lieu2']);
+    const [joueurs, setJoueurs] = useState(['joueur1','joueur2']);
+    const [competances,setCompetances]=useState([])
+    const [statistiques,setStatistiques]=useState([])
 
-    
+
+  
+    useEffect(() => {
+      const fetchData = async () => {
+          const resultComp = await getAllCompetence();
+          if (resultComp) {
+              setCompetances(resultComp);
+              console.log('resultComp',resultComp);
+          }
+          const resultStat = await getAllStat();
+          if (resultStat) {
+              setStatistiques(resultStat);
+              console.log('resultStat',resultStat)
+          }
+          const resultJoueur = await getAllPlayers();
+          if (resultJoueur) {
+              setJoueurs(resultJoueur);
+              console.log('resultJoueur',resultJoueur)
+          }
+          const resultLieu = await getAllLieus();
+          if (resultLieu) {
+              setLieux(resultLieu);
+              console.log('resultLieu',resultLieu)
+          }
+          const resultProg = await getAllPrograms();
+          if (resultProg) {
+              setProgrammes(resultProg);
+              console.log('resultProg',resultProg)
+          }
+         
+      };
+      fetchData();
+  }, []); 
     
     
 
@@ -16,7 +55,7 @@ const SeanceForm = (props) => {
 
     // onsubmit 
     const onFinish = (values) => {
-           console.log(values.statistiques);
+           console.log(values.statistiquesList);
            form.resetFields();
 
         //props.finish(values.description,values.lien);
@@ -31,22 +70,13 @@ const SeanceForm = (props) => {
       }; 
       const { Option } = Select;
 
-      const listStatistiques = [];
-      for (let i = 10; i < 36; i++) {
-        listStatistiques.push(<Option  key={"statistique"+i.toString(36) + i}>{"statistique"+i.toString(36) + i}</Option>);
-      }
-
-
-      const listCompetances = [];
-      for (let i = 10; i < 36; i++) {
-        listCompetances.push(<Option  key={"competance"+i.toString(36) + i}>{"competance"+i.toString(36) + i}</Option>);
-      }
-      
+    
 
       //lorsque select competance change
       function handleChangeStatistique(value) {
-          setData(value);
-        console.log(`selected `,value);
+       
+        setData(value);
+        console.log(`selected stat `,value);
       }  
 
       function handleChangeCompetance(value) {
@@ -122,7 +152,9 @@ const SeanceForm = (props) => {
         placeholder="Selectionner les statistiques"
         onChange={handleChangeCompetance}
         >
-        {listCompetances}
+             {competances.map(competance => (
+          <Option key={competance._id}>{competance.title}</Option>
+        ))}
         </Select>
     </Form.Item>
 
@@ -135,12 +167,18 @@ const SeanceForm = (props) => {
         <Select
         mode="multiple"
         allowClear
+        labelInValue={true}
         
         style={{ width: '100%' }}
         placeholder="Selectionner les statistiques"
         onChange={handleChangeStatistique}
         >
-        {listStatistiques}
+        {
+          statistiques.map(statistique=>(
+            <Option key={statistique._id}>{statistique.title}</Option>
+
+          ))
+        }
         </Select>
     </Form.Item>   
 
@@ -155,8 +193,8 @@ const SeanceForm = (props) => {
             <Col className="gutter-row" span={4}>
             
                 <Form.Item
-                name={['statistiques', field]}
-                label={field}
+                name={['statistiquesList', field.key]}
+                label={field.label}
             
                 rules={[{ required: true, message: 'Street is required' }]}
             >
@@ -175,7 +213,7 @@ const SeanceForm = (props) => {
         
         <Select  placeholder="Selectionner un joueur" style={{ width: '80%' }} onChange={onJoueurChange}>
         {joueurs.map(joueur => (
-          <Option key={joueur}>{joueur}</Option>
+          <Option key={joueur._id}>{joueur.lastName+" "+joueur.firstName}</Option>
         ))}
 
 
@@ -190,7 +228,7 @@ const SeanceForm = (props) => {
         
         <Select  placeholder="Selectionner un programme" style={{ width: "50%" }} onChange={onProgrammeChange}>
         {programmes.map(programme => (
-          <Option key={programme}>{programme}</Option>
+          <Option key={programme._id}>{programme.name}</Option>
         ))}
 
 
@@ -198,7 +236,7 @@ const SeanceForm = (props) => {
 
         <Select   placeholder="Selectionner le lieu" style={{ width: "50%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (
-            <Option key={lieu}>{lieu}</Option>
+            <Option key={lieu._id}>{lieu.name}</Option>
             ))}
         </Select>
    

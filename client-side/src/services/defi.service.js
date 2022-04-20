@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
@@ -63,16 +63,11 @@ export const updateDefi=async(id,description,lien)=>{
 
 
 export const deleteDefiById = async (id) => {
-
- try {   
-    await axios.delete('http://localhost:8080/defi/coach/'+id,
-   config);
-    return true ;
-   // setData(data.filter(defi=>defi._id !== id))    )
-    
-    } catch (error) {
-        
-    console.log('error')      }
-
-
-  }
+   try {
+      await axios.delete('http://localhost:8080/defi/coach/' + id, config);
+      return true;
+      // setData(data.filter(defi=>defi._id !== id))    )
+   } catch (error) {
+      console.log('error');
+   }
+};
