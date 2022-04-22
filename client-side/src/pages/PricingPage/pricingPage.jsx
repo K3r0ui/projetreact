@@ -64,7 +64,7 @@ export default function PricingPage() {
                <button
                   type='button'
                   onClick={() => payer('free')}
-                  class='btn btn-primary'>
+                  className='btn btn-primary'>
                   payer
                </button>
             </Card>
@@ -80,7 +80,7 @@ export default function PricingPage() {
                <button
                   type='button'
                   onClick={() => payer('basic')}
-                  class='btn btn-primary'>
+                  className='btn btn-primary'>
                   payer
                </button>
             </Card>
@@ -99,7 +99,7 @@ export default function PricingPage() {
                <button
                   type='button'
                   onClick={() => payer('premium')}
-                  class='btn btn-primary'>
+                  className='btn btn-primary'>
                   payer
                </button>
             </Card>

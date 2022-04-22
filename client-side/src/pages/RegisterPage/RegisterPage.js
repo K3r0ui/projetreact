@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import SignupForm from '../../components/SignupComponents/SignupForm';
 import { register } from '../../services/register.service';
-const RegisterPage = () => {
+const RegisterPage = ({ user }) => {
    const navigate = useNavigate();
    const [values, setValues] = useState({
       firstName: '',
@@ -38,6 +38,7 @@ const RegisterPage = () => {
          message.error('register failed!');
       }
    };
+   if (user) return <Navigate to='/' replace />;
    return (
       <>
          <div class='container p-4 mt-4'>
