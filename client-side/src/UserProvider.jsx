@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import React, { createContext, useEffect, useState } from 'react';
+import { getProfile } from './services/joueur.service';
 import { getCurrentCoachProfile } from './services/profile.service';
 
 export const UserContext = createContext(null);
@@ -10,11 +11,14 @@ const UserProvider = ({ children, isCoach }) => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            if (isCoach) {
-               const result = await getCurrentCoachProfile();
-               setCurrentUser(result);
-               message.success('fetch user success');
+            let result;
+            if (isCoach == 'true') {
+               result = await getCurrentCoachProfile();
+            } else {
+               result = await getProfile();
             }
+            setCurrentUser(result);
+            message.success('fetch user success');
          } catch (error) {
             message.error('fetch user failed');
          }

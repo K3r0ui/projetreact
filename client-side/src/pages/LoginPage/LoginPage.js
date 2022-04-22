@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { message } from 'antd';
 import SigninForm from '../../components/SignInComponents/SignInForm';
 import { login } from '../../services/register.service';
 
-const LoginPage = () => {
+const LoginPage = ({ user }) => {
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -36,6 +36,7 @@ const LoginPage = () => {
          message.error('login failed!');
       }
    };
+   if (user) return <Navigate to='/' replace />;
    return (
       <>
          <div class='container p-4 mt-4'>
