@@ -1,17 +1,33 @@
-import React from 'react';
-import NavbarApp from './components/Navbar/Navbar';
-import UserProvider from './UserProvider';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import UserProvider, { UserContext } from './UserProvider';
+import NavbarApp from './components/Navbar/Navbar';
+import AppRoutes from './components/AppRoutes/appRoutes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
    return (
       <UserProvider isCoach={localStorage.getItem('isCoach')}>
-         <BrowserRouter>
-            <NavbarApp />
-         </BrowserRouter>
+         <MainWrapper />
       </UserProvider>
    );
 }
 
 export default App;
+
+const MainWrapper = () => {
+   const { currentUser } = useContext(UserContext);
+   const [user, setUser] = useState(null);
+
+   useEffect(() => {
+      setUser(currentUser);
+   }, [currentUser]);
+
+   return (
+      <BrowserRouter>
+         {user && <NavbarApp />}
+
+         <AppRoutes user={user} />
+      </BrowserRouter>
+   );
+};

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table} from 'antd';
 import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm';
 import moment from "moment";
+import { getAllSeances } from '../../services/seance.service';
 
 
 const SeancePage = () => {
@@ -10,9 +11,34 @@ const SeancePage = () => {
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
     const [size, setSize] = useState('all');
-    const [lieux, SetLieux] = useState(['lieu1','lieu2','lieu3','lieu4']);
-    const [joueurs, SetJoueurs] = useState(['joueur1','joueur2']);
+    const [lieux, SetLieux] = useState([]);
+    const [joueurs, SetJoueurs] = useState([]);
+    const [seances, setSeances] = useState([]);
+
+
     let dateNow = moment().format("YYYY-MM-DD")
+
+
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true)
+        const data2 = await getAllSeances();
+        if(data2)
+        {
+          setSeances(data2);
+          console.log('seances',data2)
+  
+        }
+        setLoading(false)
+  
+      };
+      fetchData();
+    }, []);
+    
+
+
+
 
 
     //fonction for table 
@@ -45,11 +71,16 @@ const SeancePage = () => {
         {
           title: 'Statistiques',
           dataIndex: 'statistiques',
-          width: 150,
+          width: 200,
         },
         {
           title: 'Competances',
           dataIndex: 'competances',
+          width: 200,
+        },
+        {
+          title: 'Action',
+          dataIndex: 'Action',
           width: 150,
         },
        

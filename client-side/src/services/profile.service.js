@@ -12,6 +12,8 @@ export const getCurrentCoachProfile = async () => {
    return data;
 };
 
+// export const getCurrentJoueurProfile = () => {} // implemented within joueur.service
+
 export const getAllJoueurs = async () => {
    try {
       const result = await axios.get(url + 'alljoueurs', config);
