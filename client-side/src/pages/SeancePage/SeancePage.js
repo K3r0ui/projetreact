@@ -5,10 +5,14 @@ import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
 import { getAllLieus } from '../../services/lieu.service';
 import { getAllPlayers } from '../../services/joueur.service';
+import { addSeance } from '../../services/seance.service';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const SeancePage = () => {
     const { RangePicker } = DatePicker;
+    const navigate = useNavigate();
 
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
@@ -23,7 +27,23 @@ const SeancePage = () => {
     let dateNow = moment().format("YYYY-MM-DD")
 
 
+     const formatStatComp=(competences,statistiques)=>{
+      let chComp="";
+            
+    competences.map((competence , index)=>{
+        chComp+="["+index+" : "+competence.title+"]  "
+      });
+      let chStat="";
+     statistiques.map((statistique , index)=>{
+        chStat+="["+statistique.statistique.title+ " : "+statistique.valeur+"]  "
+      });
+      return {
+        chComp:chComp,
+        chStat:chStat
 
+      }
+
+     }
     useEffect(() => {
       const fetchData = async () => {
         setLoading(true)
@@ -36,15 +56,9 @@ const SeancePage = () => {
           data2.map((seance,index)=>{
 
 
-            let chComp="";
+            let resultFormat =formatStatComp(seance.competences,seance.statistiques)
             
-            seance.competences.map((competence , index)=>{
-              chComp+="["+index+" : "+competence.title+"]  "
-            });
-            let chStat="";
-            seance.statistiques.map((statistique , index)=>{
-              chStat+="["+statistique.statistique.title+ " : "+statistique.valeur+"]  "
-            });
+          
 
             dataTable.push(
 
@@ -56,8 +70,8 @@ const SeancePage = () => {
                     joueur:seance.joueur.firstName+" "+seance.joueur.lastName,
                     etat:seance.etat,
                     programme:seance.program.name,
-                    competences:chComp,
-                    statistiques:chStat
+                    competences:resultFormat.chComp,
+                    statistiques:resultFormat.chStat
 
                   
                 }
@@ -209,16 +223,37 @@ const onJoueurChange = value => {
   setData(dataChange);
 };     
     
-  const finish=async(name,description,etat)=>{
+  const finish=async(name,joueur,lieu,programme,date,competences,stat)=>{
+
     
       setVisible(false);
-      //const response = await addEvent(name,description,etat);
-   /* console.log(response.status&&response.status==200);
-    if( response.status&&response.status==200)
-    {
-      setData([...data, response.data]);
+      const seance =await addSeance(name,joueur,lieu,programme,date,competences,stat)
+     
+      console.log(seance);
+      if (seance.status && seance.status===200)
+      {
+        let resultFormat =formatStatComp(seance.data.competences,seance.data.statistiques)
+        const newSeance={
+          key:5666,
+          titre:seance.data.titre,
+          date:seance.data.date,
+          lieu:seance.data.lieu.name,
+          joueur:seance.data.joueur.firstName+" "+seance.data.joueur.lastName,
+          etat:seance.data.etat,
+          programme:seance.data.program.name,
+          competences:resultFormat.chComp,
+          statistiques:resultFormat.chStat
 
-    }*/
+
+        }
+        const newData=[...allData, newSeance]
+         setAllData(newData);
+         setData(newData);
+       
+         
+      }
+     // navigate("/seances");
+
     
   }
   //bouton tous les seance et seance aujourd'huit
@@ -235,7 +270,7 @@ const onJoueurChange = value => {
       
           }
            
-           const dataChange=  data.filter(dateDay)
+           const dataChange=  allData.filter(dateDay)
            console.log("data now ",dataChange);
            
          
@@ -257,7 +292,7 @@ const onJoueurChange = value => {
       return moment(date).isBetween(e[0], e[1])
 
     }
-    const dataChange=  data.filter(datBetween )
+    const dataChange=  allData.filter(datBetween )
 
          
     setData(dataChange);
@@ -318,7 +353,7 @@ const onJoueurChange = value => {
               <Empty />
               </>)}
         {!data.length==0 &&!loading &&(<>
-        <Table className="mt-5" columns={columns} dataSource={data} pagination={{ pageSize: 50 }} scroll={{ y:600}} />,
+        <Table className="mt-5" columns={columns} dataSource={data} pagination={{ pageSize: 30 }} scroll={{ y:600}} />,
         
         </>)}
 
@@ -339,7 +374,7 @@ const onJoueurChange = value => {
   
 >
 
-    <SeanceForm finish={finish} />
+    <SeanceForm finish={finish} joueurs={joueurs} lieux={lieux}/>
 
     </Modal>
     

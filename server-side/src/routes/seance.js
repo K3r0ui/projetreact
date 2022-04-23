@@ -36,7 +36,13 @@ route.post("/", verifyCoach, async (req, res) => {
 
     });
     await seance.save();
-    res.status(200).send(seance);
+    const seance2 =await Seance.findById(seance._id)
+    .populate("competences")
+    .populate("statistiques.statistique")
+    .populate("lieu")
+    .populate("program")
+    .populate("joueur");
+    res.status(200).send(seance2);
   } catch (error) {
     res.status(500).send(error);
   }

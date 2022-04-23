@@ -2,17 +2,13 @@ import { Row, Col,Form, Input, message, Button, Space,Select,DatePicker, TimePic
 import { useEffect, useState } from 'react';
 import { getAllCompetence } from '../../../services/competence.service';
 import { getAllPrograms } from '../../../services/programSeance.service';
-import { getAllLieus } from '../../../services/lieu.service';
 import { getAllStat } from '../../../services/stat.service';
-import { getAllPlayers } from '../../../services/joueur.service';
-import { addSeance } from '../../../services/seance.service';
 
 const SeanceForm = (props) => {
+  const {finish,joueurs,lieux}=props;
     const [form] = Form.useForm();
     const [data, setData] = useState([]);
     const [programmes, setProgrammes] = useState(['programme1','programme2']);
-    const [lieux, setLieux] = useState(['lieu1','lieu2']);
-    const [joueurs, setJoueurs] = useState(['joueur1','joueur2']);
     const [competances,setCompetances]=useState([])
     const [statistiques,setStatistiques]=useState([])
 
@@ -30,16 +26,7 @@ const SeanceForm = (props) => {
               setStatistiques(resultStat);
               console.log('resultStat',resultStat)
           }
-          const resultJoueur = await getAllPlayers();
-          if (resultJoueur) {
-              setJoueurs(resultJoueur);
-              console.log('resultJoueur',resultJoueur)
-          }
-          const resultLieu = await getAllLieus();
-          if (resultLieu) {
-              setLieux(resultLieu);
-              console.log('resultLieu',resultLieu)
-          }
+         
           const resultProg = await getAllPrograms();
           if (resultProg) {
               setProgrammes(resultProg);
@@ -73,7 +60,7 @@ const SeanceForm = (props) => {
       //(titre,joueur,lieu,program,date,competences ,statistiques)
       
 
-           addSeance(values.name,values.joueur,values.lieu,values.programme,values.date.format("YYYY-MM-DD h:mm:ss"),values.competencess,stat)
+           finish(values.name,values.joueur,values.lieu,values.programme,values.date.format("YYYY-MM-DD h:mm:ss"),values.competencess,stat)
            console.log("new stats",stat)
 
         //props.finish(values.description,values.lien);
@@ -133,7 +120,7 @@ const SeanceForm = (props) => {
     >
     <Form.Item
           name="name"
-          label="Nom de l'évènnement"
+          label="Nom de la séance"
           rules={[
             {
               required: true,
@@ -146,7 +133,7 @@ const SeanceForm = (props) => {
             },
           ]}
         >
-          <Input placeholder="Nom de l'évènnement" />
+          <Input placeholder="Nom de la séance" />
         </Form.Item>
 
    <Form.Item 
@@ -214,9 +201,9 @@ const SeanceForm = (props) => {
                 name={['statistiquesList', field.key]}
                 label={field.label}
             
-                rules={[{ required: true, message: 'Street is required' }]}
+                rules={[{ required: true, message: 'entrer une valeur' }]}
             >
-                <Input style={{ width: '50%' }} placeholder="Input street" />
+                <Input style={{ width: '50%' }} placeholder="Valeur" />
             </Form.Item>
             
             </Col>
