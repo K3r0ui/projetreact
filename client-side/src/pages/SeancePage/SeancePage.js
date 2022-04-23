@@ -3,6 +3,8 @@ import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table} from 'antd';
 import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm';
 import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
+import { getAllLieus } from '../../services/lieu.service';
+import { getAllPlayers } from '../../services/joueur.service';
 
 
 const SeancePage = () => {
@@ -11,8 +13,8 @@ const SeancePage = () => {
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
     const [size, setSize] = useState('all');
-    const [lieux, SetLieux] = useState([]);
-    const [joueurs, SetJoueurs] = useState([]);
+    const [lieux, setLieux] = useState([]);
+    const [joueurs, setJoueurs] = useState([]);
     const [seances, setSeances] = useState([]);
     const [data,setData]=useState([]);
     const [allData,setAllData]=useState([]);
@@ -29,23 +31,7 @@ const SeancePage = () => {
         if(data2)
         {
           setSeances(data2);
-          console.log('seances',data2)
-
-
-       /*   for (let i = 0; i < 5; i++) {
-            data2.push({
-              key: i+100,
-              nom: `Seance ${i}`,
-              date: dateNow,
-              lieu: `lieu${i}`,
-              joueur: `joueur${i}`,
-    
-              statistiques:"['stat1','stat2']",
-              competances:"['comp1','competance2']"
-            });
-            
-          }*/
-          
+          console.log('seances',data2)     
           const dataTable = [];
           data2.map((seance,index)=>{
 
@@ -60,9 +46,6 @@ const SeancePage = () => {
               chStat+="["+statistique.statistique.title+ " : "+statistique.valeur+"]  "
             });
 
-          
-            
-
             dataTable.push(
 
                 {
@@ -76,8 +59,6 @@ const SeancePage = () => {
                     competences:chComp,
                     statistiques:chStat
 
-
-
                   
                 }
 
@@ -89,6 +70,16 @@ const SeancePage = () => {
         setData(dataTable);
         setAllData(dataTable)
   
+        }
+        const resultJoueur = await getAllPlayers();
+        if (resultJoueur) {
+            setJoueurs(resultJoueur);
+            console.log('resultJoueur',resultJoueur)
+        }
+        const resultLieu = await getAllLieus();
+        if (resultLieu) {
+            setLieux(resultLieu);
+            console.log('resultLieu',resultLieu)
         }
         setLoading(false)
   
@@ -203,7 +194,7 @@ const SeancePage = () => {
   }
   const onLieuChange = value => {
     console.log(`selected `,value);
-    const dataChange=  data2.filter(seance => seance.lieu ===value )
+    const dataChange=  allData.filter(seance => seance.lieu ===value )
     setSize('any')
    
      setData(dataChange);
@@ -213,7 +204,7 @@ const SeancePage = () => {
 
 const onJoueurChange = value => {
   setSize('any')
-  const dataChange=  data.filter(seance => seance.joueur ===value )
+  const dataChange=  allData.filter(seance => seance.joueur ===value )
    
   setData(dataChange);
 };     
@@ -298,14 +289,14 @@ const onJoueurChange = value => {
     <RangePicker  onCalendarChange={calendarChange} style={{ width: '20%' }} showTime />
     <Select  placeholder="Selectionner un joueur" style={{ width: '20%' }} onChange={onJoueurChange}>
         {joueurs.map(joueur => (
-          <Option key={joueur}>{joueur}</Option>
+          <Option key={joueur.firstName+" "+joueur.lastName}>{joueur.firstName}</Option>
         ))}
 
 
     </Select>
     <Select   placeholder="Selectionner le lieu" style={{ width: "20%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (
-              <Option key={lieu}>{lieu}</Option>
+              <Option key={lieu.name}>{lieu.name}</Option>
               ))}
         </Select>
 

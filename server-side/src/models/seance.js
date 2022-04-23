@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-
-
-
 const seanceSchema = new mongoose.Schema(
   {
     titre: {
