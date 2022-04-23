@@ -14,6 +14,8 @@ const SeancePage = () => {
     const [lieux, SetLieux] = useState([]);
     const [joueurs, SetJoueurs] = useState([]);
     const [seances, setSeances] = useState([]);
+    const [data,setData]=useState([]);
+    const [allData,setAllData]=useState([]);
 
 
     let dateNow = moment().format("YYYY-MM-DD")
@@ -28,6 +30,64 @@ const SeancePage = () => {
         {
           setSeances(data2);
           console.log('seances',data2)
+
+
+       /*   for (let i = 0; i < 5; i++) {
+            data2.push({
+              key: i+100,
+              nom: `Seance ${i}`,
+              date: dateNow,
+              lieu: `lieu${i}`,
+              joueur: `joueur${i}`,
+    
+              statistiques:"['stat1','stat2']",
+              competances:"['comp1','competance2']"
+            });
+            
+          }*/
+          
+          const dataTable = [];
+          data2.map((seance,index)=>{
+
+
+            let chComp="";
+            
+            seance.competences.map((competence , index)=>{
+              chComp+="["+index+" : "+competence.title+"]  "
+            });
+            let chStat="";
+            seance.statistiques.map((statistique , index)=>{
+              chStat+="["+statistique.statistique.title+ " : "+statistique.valeur+"]  "
+            });
+
+          
+            
+
+            dataTable.push(
+
+                {
+                    key:index,
+                    titre:seance.titre,
+                    date:seance.date,
+                    lieu:seance.lieu.name,
+                    joueur:seance.joueur.firstName+" "+seance.joueur.lastName,
+                    etat:seance.etat,
+                    programme:seance.program.name,
+                    competences:chComp,
+                    statistiques:chStat
+
+
+
+                  
+                }
+
+            )
+
+          })
+         console.log(dataTable);
+
+        setData(dataTable);
+        setAllData(dataTable)
   
         }
         setLoading(false)
@@ -50,12 +110,12 @@ const SeancePage = () => {
     const columns = [
         {
           title: 'Nom de seance',
-          dataIndex: 'nom',
+          dataIndex: 'titre',
           width: 150,
         },
         {
-          title: 'Date de seance',
-          dataIndex: 'date',
+          title: 'Etat',
+          dataIndex: 'etat',
           width: 150,
         },
         {
@@ -64,19 +124,30 @@ const SeancePage = () => {
           width: 150,
         },
         {
+          title: 'Date',
+          dataIndex: 'date',
+          width: 150,
+        },
+        {
           title: 'Joueur',
           dataIndex: 'joueur',
           width: 150,
         },
         {
-          title: 'Statistiques',
-          dataIndex: 'statistiques',
-          width: 200,
+          title: 'Programme',
+          dataIndex: 'programme',
+          width: 150,
+        },
+      
+        {
+          title: 'Competences',
+          dataIndex: 'competences',
+          width: 300,
         },
         {
-          title: 'Competances',
-          dataIndex: 'competances',
-          width: 200,
+          title: 'Statistiques',
+          dataIndex: 'statistiques',
+          width: 300,
         },
         {
           title: 'Action',
@@ -87,7 +158,7 @@ const SeancePage = () => {
       ];
       
       const data2 = [];
-      for (let i = 0; i < 100; i++) {
+     /* for (let i = 0; i < 100; i++) {
         data2.push({
           key: i,
           nom: `Seance ${i}`,
@@ -113,7 +184,7 @@ const SeancePage = () => {
         });
         
       }
-      const [data, setData] = useState(data2);
+    const [data, setData] = useState(data2);*/
 
 //-------------------------------------------      
 
@@ -142,7 +213,7 @@ const SeancePage = () => {
 
 const onJoueurChange = value => {
   setSize('any')
-  const dataChange=  data2.filter(seance => seance.joueur ===value )
+  const dataChange=  data.filter(seance => seance.joueur ===value )
    
   setData(dataChange);
 };     
@@ -163,14 +234,19 @@ const onJoueurChange = value => {
   const buttonChange = (e) => {
         if(e.target.value==="all")
         {
-          setData(data2);
+          setData(allData);
         }
         else
         {
-         
+          const dateDay=(element)=>{
+            const date =element.date.substring(0, 10);
+            return  moment(date).isSame(dateNow) 
+      
+          }
            
-           const dataChange=  data2.filter(seance =>   moment(seance.date).isSame(dateNow) )
-
+           const dataChange=  data.filter(dateDay)
+           console.log("data now ",dataChange);
+           
          
           setData(dataChange);
         }
@@ -183,16 +259,22 @@ const onJoueurChange = value => {
 
    if(e && e[0]&&e[1])
    {
-    const a = moment('2022-05-2').isBetween(e[0], e[1]);
-    const dataChange=  data2.filter(seance =>   moment(seance.date).isBetween(e[0], e[1]) )
+   // const a = moment('2022-05-2').isBetween(e[0], e[1]);
+    
+    const datBetween=(element)=>{
+      const date =element.date.substring(0, 10);
+      return moment(date).isBetween(e[0], e[1])
+
+    }
+    const dataChange=  data.filter(datBetween )
 
          
     setData(dataChange);
-    console.log(a);
+    console.log("data",data);
    }
   //range = moment().range(startDate, endDate);
 //console.log(e[0]);
-      };   
+       };   
 
 
       

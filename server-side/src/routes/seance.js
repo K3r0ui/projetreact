@@ -31,7 +31,8 @@ route.post("/", verifyCoach, async (req, res) => {
       lieu: req.body.lieu,
       joueur: req.body.joueur,
       competences:req.body.competences,
-      statistiques:req.body.statistiques
+      statistiques:req.body.statistiques,
+      program:req.body.program
 
     });
     await seance.save();
@@ -47,7 +48,8 @@ route.get("/", verifyToken, async (req, res) => {
       .populate("competences")
       .populate("statistiques.statistique")
       .populate("lieu")
-      .populate("program");
+      .populate("program")
+      .populate("joueur");
     res.send(prog);
   } catch (error) {
     res.status(500).send("something wrong happened!");

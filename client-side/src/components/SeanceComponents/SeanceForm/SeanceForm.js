@@ -5,6 +5,7 @@ import { getAllPrograms } from '../../../services/programSeance.service';
 import { getAllLieus } from '../../../services/lieu.service';
 import { getAllStat } from '../../../services/stat.service';
 import { getAllPlayers } from '../../../services/joueur.service';
+import { addSeance } from '../../../services/seance.service';
 
 const SeanceForm = (props) => {
     const [form] = Form.useForm();
@@ -55,8 +56,25 @@ const SeanceForm = (props) => {
 
     // onsubmit 
     const onFinish = (values) => {
-           console.log(values.statistiquesList);
-           form.resetFields();
+      console.log(Object.entries(values.statistiquesList));
+      form.resetFields();
+      console.log(values);
+      let stats =Object.entries(values.statistiquesList);
+      let stat=[];
+      stats.map((statistique)=>{
+        let statVal={
+          statistique:statistique[0],
+          valeur:statistique[1]
+          
+        }
+        stat.push(statVal);
+      })
+      console.log(values.date.format("YYYY-MM-DD h:mm:ss"))
+      //(titre,joueur,lieu,program,date,competences ,statistiques)
+      
+
+           addSeance(values.name,values.joueur,values.lieu,values.programme,values.date.format("YYYY-MM-DD h:mm:ss"),values.competencess,stat)
+           console.log("new stats",stat)
 
         //props.finish(values.description,values.lien);
         message.success('Submit success!');
@@ -209,6 +227,7 @@ const SeanceForm = (props) => {
         </Row>
     <div className='container'>  
     <Form.Item
+    name="joueur"
      >   
         
         <Select  placeholder="Selectionner un joueur" style={{ width: '80%' }} onChange={onJoueurChange}>
@@ -223,25 +242,37 @@ const SeanceForm = (props) => {
    
 
     </Form.Item>   
+    <Row>
+    <Col span={12}>
+
     <Form.Item
+     name="programme"
      >   
         
-        <Select  placeholder="Selectionner un programme" style={{ width: "50%" }} onChange={onProgrammeChange}>
+        <Select name="programme" placeholder="Selectionner un programme" style={{ width: "80%" }} onChange={onProgrammeChange}>
         {programmes.map(programme => (
           <Option key={programme._id}>{programme.name}</Option>
         ))}
 
 
         </Select>
+        </Form.Item>
 
-        <Select   placeholder="Selectionner le lieu" style={{ width: "50%"}}  onChange={onLieuChange}>
+
+      </Col>  
+      <Col span={12}>
+
+        <Form.Item
+        name="lieu">  
+        <Select  name="lieu"  placeholder="Selectionner le lieu" style={{ width: "80%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (
             <Option key={lieu._id}>{lieu.name}</Option>
             ))}
         </Select>
-   
-
-    </Form.Item>            
+        </Form.Item>
+        </Col>  
+      
+    </Row>         
     </div>             
   
     <Form.Item>
