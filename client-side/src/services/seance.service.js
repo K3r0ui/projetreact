@@ -49,3 +49,42 @@ export const addSeance = async(titre,joueur,lieu,program,date,competences ,stati
 
 
 }
+export const updateEtatSeance=async(id,etat)=>{
+    
+  try {
+      const data={
+          'etat': etat,
+        
+      }
+      const result = await axios.put(
+          //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+            url+'/etat/'+id, data, config
+          );
+          console.log(result);
+      
+  } catch (error) {
+      console.log(error);
+      
+  }
+
+}
+export const feedbackSeance=async(id,feedback,goal)=>{
+    
+  try {
+      const data={
+          'feedback':feedback,
+          'goal':goal,
+        
+      }
+      const result = await axios.put(
+          //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+            url+'/feedback/'+id, data, config
+          );
+          console.log(result);
+      
+  } catch (error) {
+      console.log(error);
+      
+  }
+
+}
