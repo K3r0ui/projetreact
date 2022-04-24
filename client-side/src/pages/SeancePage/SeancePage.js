@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table} from 'antd';
+import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table,Button} from 'antd';
 import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm';
 import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
@@ -44,6 +44,10 @@ const SeancePage = () => {
       }
 
      }
+     const annulerSeance=(id)=>{
+       console.log('id seance',id);
+
+     }
     useEffect(() => {
       const fetchData = async () => {
         setLoading(true)
@@ -71,7 +75,11 @@ const SeancePage = () => {
                     etat:seance.etat,
                     programme:seance.program.name,
                     competences:resultFormat.chComp,
-                    statistiques:resultFormat.chStat
+                    statistiques:resultFormat.chStat,
+                    Action:<>
+                            <Button onClick={()=>annulerSeance(seance._id)} style={{ width: "80%"}} type="primary">Annuler</Button>
+                            <Button  style={{ width: "80%"}} type="danger">Feedback</Button> 
+                              </>
 
                   
                 }
