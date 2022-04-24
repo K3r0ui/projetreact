@@ -62,6 +62,58 @@ route.get("/", verifyToken, async (req, res) => {
   }
 });
 
+route.put("/coach/:id", verifyCoach, async (req, res) => {
+  try {
+    const prog = await Program.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        description: req.body.description,
+        image: req.body.image,
+        videoLink: req.body.videoLink,
+      },
+      { new: true }
+    );
+    res.send(prog);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
+
+route.put("/etat/:id", verifyCoach, async (req, res) => {
+  try {
+    const seance = await Seance.findByIdAndUpdate(
+      req.params.id,
+      {
+        etat: req.body.etat,
+     
+      },
+      { new: true }
+    );
+    res.send(seance);
+  } catch (error) {
+    res.status(500).send("erreur de modification");
+  }
+});
+
+route.put("/feedback/:id", verifyCoach, async (req, res) => {
+  try {
+    const seance = await Seance.findByIdAndUpdate(
+      req.params.id,
+      {
+        goal: req.body.goal,
+        feedback: req.body.feedback
+     
+      },
+      { new: true }
+    );
+    res.send(seance);
+  } catch (error) {
+    res.status(500).send("erreur de modification");
+  }
+});
+
 
 
 export default route;
