@@ -5,8 +5,9 @@ import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
 import { getAllLieus } from '../../services/lieu.service';
 import { getAllPlayers } from '../../services/joueur.service';
-import { addSeance ,updateEtatSeance} from '../../services/seance.service';
+import { addSeance ,updateEtatSeance,feedbackSeance} from '../../services/seance.service';
 import { useNavigate } from 'react-router-dom';
+import FeedbackForm from '../../components/SeanceComponents/FeedbackForm/FeedbackForm';
 
 
 
@@ -14,26 +15,29 @@ import { useNavigate } from 'react-router-dom';
 const SeancePage = () => {
     const { RangePicker } = DatePicker;
     const navigate = useNavigate();
-
+    
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
+    const [visibleFeedback, setVisibleFeedback] = useState(false);
+    
     const [change, setChange] = useState(false);
-
+    
     const [size, setSize] = useState('all');
     const [lieux, setLieux] = useState([]);
     const [joueurs, setJoueurs] = useState([]);
     const [seances, setSeances] = useState([]);
     const [data,setData]=useState([]);
     const [allData,setAllData]=useState([]);
-
-
+    const [idS,setIdS]=useState([]);
+    
+  
     let dateNow = moment().format("YYYY-MM-DD")
-
-
-     const formatStatComp=(competences,statistiques)=>{
+    
+    
+    const formatStatComp=(competences,statistiques)=>{
       let chComp="";
-            
-    competences.map((competence , index)=>{
+      
+      competences.map((competence , index)=>{
         chComp+="["+index+" : "+competence.title+"]  "
       });
       let chStat="";
@@ -43,86 +47,86 @@ const SeancePage = () => {
       return {
         chComp:chComp,
         chStat:chStat
-
+        
       }
-
-     }
-     useEffect(() => {
-       const fetchData = async () => {
-         setLoading(true)
-         const data2 = await getAllSeances();
-        if(data2)
-        {
-          setSeances(data2);
-          console.log('seances',data2)     
-          const dataTable = [];
-          data2.map((seance,index)=>{
-            
-
-            let resultFormat =formatStatComp(seance.competences,seance.statistiques)
-            
-          
-
-            dataTable.push(
-              
-                {
-                    key:seance._id,
-                    titre:seance.titre,
-                    date:seance.date,
-                    lieu:seance.lieu.name,
-                    joueur:seance.joueur.firstName+" "+seance.joueur.lastName,
-                    etat:seance.etat,
-                    programme:seance.program.name,
-                    competences:resultFormat.chComp,
-                    statistiques:resultFormat.chStat,
-                    Action:<>
-                     <Popconfirm
-                      title="Title"
-                      onConfirm={()=>annulerSeance(seance._id)}
-                      onVisibleChange={() => console.log('visible change')}
-                    >
-                            <Button style={{ width: "80%"}} type="primary">Annuler</Button>
-                      </Popconfirm>      
-                            <Button  style={{ width: "80%"}} type="danger">Feedback</Button> 
-                              </>
-
-
-                }
-                
-                )
-                
-          })
-         console.log(dataTable);
-
-        setData(dataTable);
-        setAllData(dataTable)
-  
-      }
-        const resultJoueur = await getAllPlayers();
-        if (resultJoueur) {
-            setJoueurs(resultJoueur);
-            console.log('resultJoueur',resultJoueur)
-          }
-          const resultLieu = await getAllLieus();
-          if (resultLieu) {
-            setLieux(resultLieu);
-            console.log('resultLieu',resultLieu)
-          }
-          setLoading(false)
-          
-      };
-      fetchData();
-      console.log("change")
-        }, [change]);
+      
+    }
     
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true)
+        const data2 = await getAllSeances();
+       if(data2)
+       {
+         setSeances(data2);
+         console.log('seances',data2)     
+         const dataTable = [];
+         data2.map((seance,index)=>{
+           
+
+           let resultFormat =formatStatComp(seance.competences,seance.statistiques)
+           
+         
+
+           dataTable.push(
+             
+               {
+                   key:seance._id,
+                   titre:seance.titre,
+                   date:seance.date,
+                   lieu:seance.lieu.name,
+                   joueur:seance.joueur.firstName+" "+seance.joueur.lastName,
+                   etat:seance.etat,
+                   programme:seance.program.name,
+                   competences:resultFormat.chComp,
+                   statistiques:resultFormat.chStat,
+                   Action:<>
+                    <Popconfirm
+                     title="Title"
+                     onConfirm={()=>annulerSeance(seance._id)}
+                     onVisibleChange={() => console.log('visible change')}
+                   >
+                           <Button style={{ width: "80%"}} type="primary">Annuler</Button>
+                     </Popconfirm>      
+                           <Button  onClick={()=>{setVisibleFeedback(true);setIdS(seance._id)}} style={{ width: "80%"}} type="danger">Feedback</Button> 
+                             </>
+
+
+               }
+               
+               )
+               
+         })
+        console.log(dataTable);
+
+       setData(dataTable);
+       setAllData(dataTable)
+ 
+     }
+       const resultJoueur = await getAllPlayers();
+       if (resultJoueur) {
+           setJoueurs(resultJoueur);
+           console.log('resultJoueur',resultJoueur)
+         }
+         const resultLieu = await getAllLieus();
+         if (resultLieu) {
+           setLieux(resultLieu);
+           console.log('resultLieu',resultLieu)
+         }
+         setLoading(false)
+         
+     };
+     fetchData();
+     console.log("change")
+       }, [change]);
     const annulerSeance=async (id)=>{
       const result = await updateEtatSeance(id,"Annuler");
          console.log('all',allData)
          console.log('all',data)
          setChange(!change);
 
-    
-    }
+        }
+        
     
     
 
@@ -184,7 +188,6 @@ const SeancePage = () => {
        
       ];
       
-      const data2 = [];
      /* for (let i = 0; i < 100; i++) {
         data2.push({
           key: i,
@@ -215,19 +218,43 @@ const SeancePage = () => {
 
 //-------------------------------------------      
 
-      //-------------fonction pour poupup-----
+  //-------------fonction pour poupup-----
 
   const ajouter =()=>{
     setVisible(true);
-
   }
-
+   //fonction pour le popup d'ajout
   const handleOk=()=>{
     setVisible(false);
   }
   const handleCancel=()=>{
     setVisible(false);
   }
+
+
+//------------------------------
+
+
+
+ //fonction pour le popup Feedback
+ const handleOkFeedback=()=>{
+  setVisibleFeedback(false);
+}
+const handleCancelFeedback=()=>{
+  setVisibleFeedback(false);
+}
+ const finishFeedback=(feedback,goal)=>{
+ 
+   const result =feedbackSeance(idS,feedback,goal);
+     console.log("done");
+     setVisibleFeedback(false);
+     setChange(!change);
+
+
+ }
+
+//------------------------------
+
   const onLieuChange = value => {
     console.log(`selected `,value);
     const dataChange=  allData.filter(seance => seance.lieu ===value )
@@ -278,7 +305,7 @@ const onJoueurChange = value => {
        
          
       }
-     // navigate("/seances");
+    
 
     
   }
@@ -403,10 +430,24 @@ const onJoueurChange = value => {
     <SeanceForm finish={finish} joueurs={joueurs} lieux={lieux}/>
 
     </Modal>
+
+
+    <Modal
+    
+    title="Ajouter une séance"
+    visible={visibleFeedback}
+    onOk={handleOkFeedback}
+    onCancel={handleCancelFeedback}
+    width={700}
+    okButtonProps={{ disabled: true }}>
+
+    <FeedbackForm finishFeedback={finishFeedback}/>
+
+    </Modal>  
     
        
     
     </> );
 }
- 
+
 export default SeancePage;
