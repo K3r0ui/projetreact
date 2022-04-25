@@ -5,8 +5,9 @@ import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
 import { getAllLieus } from '../../services/lieu.service';
 import { getAllPlayers } from '../../services/joueur.service';
-import { addSeance } from '../../services/seance.service';
+import { addSeance ,updateEtatSeance} from '../../services/seance.service';
 import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -44,30 +45,26 @@ const SeancePage = () => {
       }
 
      }
-     const annulerSeance=(id)=>{
-       console.log('id seance',id);
-
-     }
-    useEffect(() => {
-      const fetchData = async () => {
-        setLoading(true)
-        const data2 = await getAllSeances();
+     useEffect(() => {
+       const fetchData = async () => {
+         setLoading(true)
+         const data2 = await getAllSeances();
         if(data2)
         {
           setSeances(data2);
           console.log('seances',data2)     
           const dataTable = [];
           data2.map((seance,index)=>{
-
+            
 
             let resultFormat =formatStatComp(seance.competences,seance.statistiques)
             
           
 
             dataTable.push(
-
+              
                 {
-                    key:index,
+                    key:seance._id,
                     titre:seance.titre,
                     date:seance.date,
                     lieu:seance.lieu.name,
@@ -81,36 +78,61 @@ const SeancePage = () => {
                             <Button  style={{ width: "80%"}} type="danger">Feedback</Button> 
                               </>
 
-                  
+
                 }
-
-            )
-
+                
+                )
+                
           })
          console.log(dataTable);
 
         setData(dataTable);
         setAllData(dataTable)
   
-        }
+      }
         const resultJoueur = await getAllPlayers();
         if (resultJoueur) {
             setJoueurs(resultJoueur);
             console.log('resultJoueur',resultJoueur)
-        }
-        const resultLieu = await getAllLieus();
-        if (resultLieu) {
+          }
+          const resultLieu = await getAllLieus();
+          if (resultLieu) {
             setLieux(resultLieu);
             console.log('resultLieu',resultLieu)
-        }
-        setLoading(false)
-  
+          }
+          setLoading(false)
+          
       };
       fetchData();
-    }, []);
+    }, [setAllData,setData]);
     
+    const annulerSeance=async (id)=>{
+      const result = await updateEtatSeance(id,"Annuler");
+         console.log('all',allData)
+         console.log('all',data)
 
-
+       /* navigate("/seances");*/
+       const newSeance= seances.map((s)=>{
+         console.log(s._id);
+         if(s._id===id)
+         {
+           s.etat="Annuler"
+         }
+       
+          return s;
+        })
+        setSeances(newSeance);
+       // setData(allData);
+     
+    
+      
+      console.log('id seance',id);
+     console.log('resultat',newSeance);
+    
+    
+    }
+    
+    
 
 
 
@@ -242,7 +264,7 @@ const onJoueurChange = value => {
       {
         let resultFormat =formatStatComp(seance.data.competences,seance.data.statistiques)
         const newSeance={
-          key:5666,
+          key:seance._id,
           titre:seance.data.titre,
           date:seance.data.date,
           lieu:seance.data.lieu.name,

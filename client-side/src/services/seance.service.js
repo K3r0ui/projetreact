@@ -60,6 +60,7 @@ export const updateEtatSeance=async(id,etat)=>{
           //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
             url+'/etat/'+id, data, config
           );
+          return result;
           console.log(result);
       
   } catch (error) {
@@ -80,6 +81,8 @@ export const feedbackSeance=async(id,feedback,goal)=>{
           //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
             url+'/feedback/'+id, data, config
           );
+          return result;
+
           console.log(result);
       
   } catch (error) {
