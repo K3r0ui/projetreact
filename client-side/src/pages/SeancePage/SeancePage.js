@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table,Button} from 'antd';
+import { Spin, Space ,Modal,Empty,Radio,DatePicker,Select,Table,Button,Popconfirm} from 'antd';
 import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm';
 import moment from "moment";
 import { getAllSeances } from '../../services/seance.service';
@@ -17,6 +17,8 @@ const SeancePage = () => {
 
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
+    const [change, setChange] = useState(false);
+
     const [size, setSize] = useState('all');
     const [lieux, setLieux] = useState([]);
     const [joueurs, setJoueurs] = useState([]);
@@ -74,7 +76,13 @@ const SeancePage = () => {
                     competences:resultFormat.chComp,
                     statistiques:resultFormat.chStat,
                     Action:<>
-                            <Button onClick={()=>annulerSeance(seance._id)} style={{ width: "80%"}} type="primary">Annuler</Button>
+                     <Popconfirm
+                      title="Title"
+                      onConfirm={()=>annulerSeance(seance._id)}
+                      onVisibleChange={() => console.log('visible change')}
+                    >
+                            <Button style={{ width: "80%"}} type="primary">Annuler</Button>
+                      </Popconfirm>      
                             <Button  style={{ width: "80%"}} type="danger">Feedback</Button> 
                               </>
 
@@ -104,31 +112,15 @@ const SeancePage = () => {
           
       };
       fetchData();
-    }, [setAllData,setData]);
+      console.log("change")
+        }, [change]);
     
     const annulerSeance=async (id)=>{
       const result = await updateEtatSeance(id,"Annuler");
          console.log('all',allData)
          console.log('all',data)
+         setChange(!change);
 
-       /* navigate("/seances");*/
-       const newSeance= seances.map((s)=>{
-         console.log(s._id);
-         if(s._id===id)
-         {
-           s.etat="Annuler"
-         }
-       
-          return s;
-        })
-        setSeances(newSeance);
-       // setData(allData);
-     
-    
-      
-      console.log('id seance',id);
-     console.log('resultat',newSeance);
-    
     
     }
     
@@ -264,7 +256,7 @@ const onJoueurChange = value => {
       {
         let resultFormat =formatStatComp(seance.data.competences,seance.data.statistiques)
         const newSeance={
-          key:seance._id,
+          key:seance.data._id,
           titre:seance.data.titre,
           date:seance.data.date,
           lieu:seance.data.lieu.name,
@@ -272,7 +264,11 @@ const onJoueurChange = value => {
           etat:seance.data.etat,
           programme:seance.data.program.name,
           competences:resultFormat.chComp,
-          statistiques:resultFormat.chStat
+          statistiques:resultFormat.chStat,
+          Action:<>
+          <Button onClick={()=>annulerSeance(seance.data._id)} style={{ width: "80%"}} type="primary">Annuler</Button>
+          <Button  style={{ width: "80%"}} type="danger">Feedback</Button> 
+            </>
 
 
         }
