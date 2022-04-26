@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { message } from 'antd';
-import SigninForm from '../../components/SignInComponents/SignInForm';
+import "antd/dist/antd.css";
 import { login } from '../../services/register.service';
-
+import SigninForm from '../../components/SignInComponents/SignInForm';
 const LoginPage = ({ user }) => {
+
+   
+
+
+
+
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -13,11 +19,12 @@ const LoginPage = ({ user }) => {
    const { email, password } = values;
 
    const handleChange = (email) => (e) => {
-      //console.log(e.target.value);
+      console.log(e.target.value);
       setValues({ ...values, [email]: e.target.value });
    };
-
+    
    const handleSubmit = async (e) => {
+      console.log(values)
       e.preventDefault();
 
       try {
@@ -39,7 +46,8 @@ const LoginPage = ({ user }) => {
    if (user) return <Navigate to='/' replace />;
    return (
       <>
-         <div class='container p-4 mt-4'>
+        <SigninForm handleSubmit={handleSubmit} handleChange={handleChange} />
+         {/* <div class='container p-4 mt-4'>
             <div class='row justify-content-evenly mt-4'>
                <div class='col-lg-6 col-md-12 mt-4'>
                   <div class='d-flex'>
@@ -76,7 +84,7 @@ const LoginPage = ({ user }) => {
                   </div>
                </div>
             </div>
-         </div>
+         </div> */}
       </>
    );
 };
