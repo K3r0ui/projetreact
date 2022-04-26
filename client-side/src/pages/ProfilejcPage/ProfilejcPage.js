@@ -16,7 +16,7 @@ const ProfilejcPage = () => {
 
          if (data2) {
             setJoueur(data2);
-            console.log(data2);
+            console.log("joeur",data2);
          }
          setLoading(false);
       };
@@ -42,7 +42,24 @@ const ProfilejcPage = () => {
    };
 
    //-----------
-
+   const formatStatComp=(competences,statistiques)=>{
+      let chComp="";
+      
+      competences.map((competence , index)=>{
+        chComp+="["+index+" : "+competence.title+"]  "
+      });
+      let chStat="";
+     statistiques.map((statistique , index)=>{
+        chStat+="["+statistique.statistique.title+ " : "+statistique.valeur+"]  "
+      });
+      return {
+        chComp:chComp,
+        chStat:chStat
+        
+      }
+      
+    }
+    
    return (
       <>
          <table class='table mt-3'>
@@ -68,7 +85,9 @@ const ProfilejcPage = () => {
                      <td>{joueur.email}</td>
                      <td>{joueur.job}</td>
                      <td>{joueur.orientation}</td>
-                     <td>{joueur.competences}</td>
+                     <td>{joueur.competences.map(x => {
+                        x._id
+                     })}</td>
                      <td>{joueur.statistiques}</td>
                      <td>
                         <div

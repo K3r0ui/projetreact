@@ -25,6 +25,9 @@ export default function CoachDropMenu() {
          <NavDropdown.Item as={Link} to='/stat'>
             Statistique
          </NavDropdown.Item>
+         <NavDropdown.Item as={Link} to='/profilejoueur'>
+            profile joueur
+         </NavDropdown.Item>
          <NavDropdown.Divider />
          <NavDropdown.Item href='#action/3.4'>Equipes</NavDropdown.Item>
          <NavDropdown.Item as={Link} to='/invitation'>
