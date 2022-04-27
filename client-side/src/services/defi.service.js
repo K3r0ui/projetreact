@@ -71,3 +71,28 @@ export const deleteDefiById = async (id) => {
       console.log('error');
    }
 };
+// Service pour assigner defi
+export const assignerDefi = async (id,joueur,delai) => {
+    try {
+        await joueur.map(j => {
+            
+            const ad = {
+                'joueur':j,
+                'delai':delai,
+            }
+            console.log("gvrfzef",ad)
+            const rs =  axios.put('http://localhost:8080/defi/coach/assigned/'+id,ad,config);
+            
+        })
+            
+    
+    
+    return "success";
+    }catch(err){
+        console.log(err);
+
+    }
+};
+
+
+

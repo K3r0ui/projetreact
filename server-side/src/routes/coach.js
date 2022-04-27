@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { Coach } from "../models/coach";
 import verifyCoach, { firstAuthMid } from "../middlewares/verifyCoach";
 import { Joueur } from "../models/joueur";
-
+import { Invitation } from "../models/invitation";
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
@@ -84,11 +84,10 @@ router.put("/alert", [verifyCoach, firstAuthMid], async (req, res) => {
     res.status(500).send("there is some error");
   }
 });
-
 //get list of here joueur
 router.get("/alljoueurs", verifyCoach, async (req, res) => {
   try {
-    const joueurs = await Joueur.find({ coach: req.user.id });
+    const joueurs = await Joueur.find({ coach: req.user.id })
     if (!joueurs) {
       res.status(400).send("you don't have a joueurs");
     }
@@ -97,6 +96,28 @@ router.get("/alljoueurs", verifyCoach, async (req, res) => {
     res.status(500).send("there is something wrong ");
   }
 });
+const gg = (ee) => {
+if (ee.invitation.etat === "Termenated"){
+  return ee;
+}}
+
+router.get("/alljoueursI", verifyCoach, async (req, res) => {
+
+  try {
+
+    const joueurs = await Joueur.find({ coach: req.user.id }).populate("invitation");
+    const newJr = joueurs.filter(gg);
+    if (!joueurs) {
+      res.status(400).send("you don't have a joueurs");
+    }
+    res.send(newJr);
+  } catch {
+    res.status(500).send("there is something wrong ");
+  }
+});
+
+
+
 
 //get profile
 router.get("/profile", verifyCoach, async (req, res) => {

@@ -28,6 +28,19 @@ export const getAllPlayers = async () => {
     }
 };
 
+
+export const getAllPlayersI = async () => {
+   try {
+       const { data } = await axios.get(
+           'http://localhost:8080/coach/alljoueursI',
+           configCoach
+       );
+       return data;
+   } catch (error) {
+       console.log('error');
+   }
+};
+
 export const getProfile = async () => {
    try {
       const { data } = await axios.get(

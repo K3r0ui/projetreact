@@ -2,7 +2,7 @@
 import Defi from '../Defi/Defi';
 const DefiList = (props) => {
 
-const {handleDeleteDefiById,handleUpdateDefi,data,setData} = props;
+const {handleDeleteDefiById,handleUpdateDefi, handleAssignerDefi,data,setData} = props;
   
     return ( <>
     
@@ -19,7 +19,7 @@ const {handleDeleteDefiById,handleUpdateDefi,data,setData} = props;
     <tbody>
     {
         data.map((defi)=>(
-            <><Defi key={defi._id} defi={defi} deleteDefi={handleDeleteDefiById} handleUpdateDefi={handleUpdateDefi} setData={setData} /></>
+            <><Defi key={defi._id} defi={defi} deleteDefi={handleDeleteDefiById} handleUpdateDefi={handleUpdateDefi} handleAssignerDefi={handleAssignerDefi} setData={setData} /></>
             ))
             
     }
