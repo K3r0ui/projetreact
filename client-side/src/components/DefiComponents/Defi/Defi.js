@@ -8,6 +8,7 @@ const Defi = (props) => {
      //destractering
     const {defi,handleUpdateDefi,handleAssignerDefi} =props;
     const [visible, setVisible] = useState(false);
+    const [visibleAss, setVisibleAss] = useState(false);
 
     //fonctions pour formulaire
     const [form] = Form.useForm();
@@ -28,7 +29,7 @@ const Defi = (props) => {
       
           handleAssignerDefi(defi._id,joueur,delai);
          
-          setVisible(false);
+          setVisibleAss(false);
           
           
         };
@@ -70,10 +71,10 @@ const Defi = (props) => {
     }
     // ASSIGNER
     const handleOkAss=()=>{
-      setVisible(false);
+      setVisibleAss(false);
     }
     const handleCancelAss=()=>{
-      setVisible(false);
+      setVisibleAss(false);
     }
 
     
@@ -112,7 +113,7 @@ const Defi = (props) => {
         </Modal>
         <Modal
           title="Assigner un defi"
-          visible={visible}
+          visible={visibleAss}
           onOk={handleOkAss}
           onCancel={handleCancelAss}
           okButtonProps={{ disabled: true }}
