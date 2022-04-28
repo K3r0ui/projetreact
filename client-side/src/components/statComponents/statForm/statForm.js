@@ -1,19 +1,29 @@
 
-import { Form, Input, message, Button, Space, Select } from 'antd';
-import 'antd/dist/antd.css';
+import { Form, Input, message, Button, Space, Radio, Switch, Row, Col } from 'antd';
+import { useState } from 'react';
 
 
 
-const StatForm = ({ finish, initialValues, forUpdate, discipline }) => {
+const StatForm = ({ finish, initialValues }) => {
     const [form] = Form.useForm();
+    const [visible, setVisible] = useState(initialValues.isVisible);
+    const [alert, setAlert] = useState(initialValues.alert);
 
     const onFinish = (values) => {
-        finish(values.title, values.description, values.lien, values.type, values.unite, values.discipline);
+        values.isVisible = visible
+        values.alert = alert
+        finish(values);
     };
 
     const onFinishFailed = () => {
         message.error('Submit failed!');
     };
+    function onChange(checked) {
+        setVisible(checked)
+    }
+    function onChangeA(checked) {
+        setAlert(checked)
+    }
 
     return (
         <div className="container mt-2">
@@ -76,7 +86,7 @@ const StatForm = ({ finish, initialValues, forUpdate, discipline }) => {
 
                 <Form.Item
                     name="unite"
-                    label="unite"
+                    label="Unité"
                     rules={
                         [{ required: true, message: 'Entrer une unité' }]
                     }
@@ -84,22 +94,39 @@ const StatForm = ({ finish, initialValues, forUpdate, discipline }) => {
                     <Input placeholder="unite" />
                 </Form.Item>
 
-                {!forUpdate && (<Form.Item
-                    name="discipline"
-                    label="discipline"
+                <Form.Item
+                    name="max"
+                    label="Maximiser Ou Minimiser"
                     rules={
-                        [{ required: true, message: 'select un discipline' }]
+                        [{ required: true, message: 'Maximiser Ou Minimiser is required' }]
                     }
                 >
-                    <Select defaultValue="discipline">
-                        <Select.Option value="discipline" disabled>Discipline</Select.Option>
-                        {discipline.map((discipline) => (
-                            <Select.Option value={discipline._id}> {discipline.description} </Select.Option>
-                        ))}
+                    <Radio.Group >
+                        <Radio value={"Maximiser"}>Maximiser</Radio>
+                        <Radio value={"Minimiser"}>Minimiser</Radio>
+                    </Radio.Group>
+                </Form.Item>
+                <Row gutter={16}>
+                    <Col span={12}>
+                        <Form.Item
+                            name="isVisible"
+                            label="Visible"
+                        >
+                            <Switch onChange={onChange} defaultChecked={initialValues.isVisible} />
 
-                    </Select>
-                </Form.Item>)
-                }
+                        </Form.Item>
+                    </Col>
+                    <Form.Item
+                        name="alert"
+                        label="Alert"
+                    >
+                        <Switch onChange={onChangeA} defaultChecked={initialValues.alert} />
+
+                    </Form.Item>
+
+                </Row>
+
+
                 <Form.Item>
                     <center>
                         <Space>

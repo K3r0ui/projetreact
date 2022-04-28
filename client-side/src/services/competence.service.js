@@ -6,7 +6,7 @@ const config = {
 };
 export const getAllCompetence = async () => {
     try {
-        const {data} = await axios.get(
+        const { data } = await axios.get(
             'http://localhost:8080/competence/coach', config
         );
         return data;
@@ -15,34 +15,24 @@ export const getAllCompetence = async () => {
     }
 }
 
-export const addCompetence = async (title, description, lien) => {
-        const input = {
-            'title': title,
-            'description': description,
-            'link': lien
-        }
-        const {data} = await axios.post(
-            'http://localhost:8080/competence/coach', input, config
-        );
+export const addCompetence = async (input) => {
+    const { data } = await axios.post(
+        'http://localhost:8080/competence/coach', input, config
+    );
 
-        return data;
+    return data;
 };
 
-export const updateCompetnece = async (id, title, description, lien) => {
-        const input = {
-            'title': title,
-            'description': description,
-            'link': lien
-        }
-        const {data} = await axios.put(
-            'http://localhost:8080/competence/coach/' + id, input, config
-        );
-        return data;
+export const updateCompetnece = async (id, input) => {
+    const { data } = await axios.put(
+        'http://localhost:8080/competence/coach/' + id, input, config
+    );
+    return data;
 }
 
 export const deleteCompetence = async (id) => {
-        const {data} = await axios.delete('http://localhost:8080/competence/coach/' + id,
-            config);
-        return data;
+    const { data } = await axios.delete('http://localhost:8080/competence/coach/' + id,
+        config);
+    return data;
 
 }

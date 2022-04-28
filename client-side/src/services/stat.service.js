@@ -14,28 +14,14 @@ export const getAllStat = async () => {
         console.log('error')
     }
 }
-export const addStat = async (title, description, lien, type, unite, discipline) => {
-    const input = {
-        'title': title,
-        'description': description,
-        'lien': lien,
-        'type': type,
-        'unite': unite,
-        'discipline': discipline
-    }
+export const addStat = async (input) => {
     const { data } = await axios.post(
         'http://localhost:8080/stat/coach', input, config
     );
+    console.log(data);
     return data;
 }
-export const updateStat = async (id, title, description, lien, type, unite) => {
-    const input = {
-        'title': title,
-        'description': description,
-        'lien': lien,
-        'type': type,
-        'unite': unite
-    }
+export const updateStat = async (id, input) => {
     const { data } = await axios.put(
         'http://localhost:8080/stat/coach/' + id, input, config
     );

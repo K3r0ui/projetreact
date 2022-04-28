@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Popconfirm, Modal } from 'antd';
-import { Form, Input, message, Button, Space } from 'antd';
+import { Popconfirm, Modal, Switch } from 'antd';
 import StatForm from '../statForm/statForm';
 
 
@@ -8,19 +7,12 @@ const Stat = ({ stat, handleUpdateStat, index, deleteStat }) => {
     //destractering
     const [visible, setVisible] = useState(false);
 
-    //fonctions pour formulaire
-    const [form] = Form.useForm();
-
-
     //faire la mise a jour 
-    const finish = (title, description, lien, type, unite) => {
-        handleUpdateStat(stat._id, title, description, lien, type, unite);
+    const finish = (values) => {
+        handleUpdateStat(stat._id, values);
         setVisible(false);
     };
 
-    const onFinishFailed = () => {
-        message.error('Submit failed!');
-    }
     //--fonctions pour confirmer la ssuppression 
     const confirm = async () => await deleteStat(stat._id);
 
@@ -44,12 +36,13 @@ const Stat = ({ stat, handleUpdateStat, index, deleteStat }) => {
                 <td>{stat.description}</td>
                 <td>{stat.type}</td>
                 <td>{stat.unite}</td>
-                <td>{stat.discipline.description}</td>
-                <td>{stat.lien}</td>
-                <td> <iframe src={stat.lien} title="YouTube video" allowFullScreen></iframe></td>
+                <td ><div style={{ "marginLeft": "15%" }}>{stat.max}</div></td>
+                <td><Switch disabled={true} checked={stat.isVisible} /></td>
+                <td><Switch disabled={true} checked={stat.alert} /></td>
+                <td> <a href={stat.lien} target="_blank">{stat.lien}</a></td>
                 <td>
                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" onClick={modifier} className="btn btn-secondary">modifier</button>
+                        <button type="button" onClick={modifier} className="btn btn-secondary mx-2">modifier</button>
                         <Popconfirm
                             title="Title"
                             onConfirm={confirm}>
@@ -64,7 +57,7 @@ const Stat = ({ stat, handleUpdateStat, index, deleteStat }) => {
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel} >
-                <StatForm forUpdate={true} finish={finish} initialValues={{ title: stat.title, lien: stat.lien, description: stat.description, type: stat.type, unite: stat.unite }} />
+                <StatForm forUpdate={true} finish={finish} initialValues={stat} />
             </Modal>
 
 
