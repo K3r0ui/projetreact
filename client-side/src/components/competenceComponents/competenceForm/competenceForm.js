@@ -7,14 +7,14 @@ import { useState } from 'react';
 
 const CompetenceForm = ({ finish, initialValues }) => {
     const [form] = Form.useForm();
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(initialValues.isVisible);
 
     const onFinish = (values) => {
         values.isVisible = visible
         finish(values);
     };
 
-    const onFinishFailed = (values) => {
+    const onFinishFailed = () => {
         message.error('Submit failed!');
     };
     function onChange(checked) {
