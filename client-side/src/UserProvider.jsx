@@ -20,6 +20,7 @@ const UserProvider = ({ children, isCoach }) => {
             setCurrentUser(result);
             message.success('fetch user success');
          } catch (error) {
+            localStorage.clear();
             message.error('fetch user failed');
          }
       };
