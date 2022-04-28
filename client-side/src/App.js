@@ -16,18 +16,19 @@ function App() {
 export default App;
 
 const MainWrapper = () => {
-   const { currentUser } = useContext(UserContext);
-   const [user, setUser] = useState(null);
+   // FIXES ROUTES
+   // const { currentUser } = useContext(UserContext);
+   // // const [user, setUser] = useState(null);
 
-   useEffect(() => {
-      setUser(currentUser);
-   }, [currentUser]);
-
+   // useEffect(() => {
+   //    setUser(currentUser);
+   // }, [currentUser]);
+ 
    return (
       <BrowserRouter>
          {user && <NavbarApp />}
 
-         <AppRoutes user={user} />
+         <AppRoutes user={localStorage.getItem('token')} />
       </BrowserRouter>
    );
 };
