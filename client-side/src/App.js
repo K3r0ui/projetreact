@@ -17,12 +17,12 @@ export default App;
 
 const MainWrapper = () => {
    // FIXES ROUTES
-   // const { currentUser } = useContext(UserContext);
-   // // const [user, setUser] = useState(null);
+    const { currentUser } = useContext(UserContext);
+    const [user, setUser] = useState(null);
 
-   // useEffect(() => {
-   //    setUser(currentUser);
-   // }, [currentUser]);
+    useEffect(() => {
+       setUser(currentUser);
+    }, [currentUser]);
  
    return (
       <BrowserRouter>
