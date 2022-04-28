@@ -13,7 +13,7 @@ import { Discipline } from "../models/discipline";
 //All Static of Coach
 router.get("/coach", verifyCoach, async (req, res) => {
     try {
-        const stats = await Stat.find({ coach: req.user.id }).populate("discipline");
+        const stats = await Stat.find({ coach: req.user.id });
         res.status(200).send(stats);
     } catch {
         res.status(500).send("Error")
@@ -43,21 +43,22 @@ router.get("/joueur", verifyJoueur, async (req, res) => {
 
 
 router.post("/coach", verifyCoach, async (req, res) => {
-    let newStat
+    let stat
     try {
-        const discipline = await Discipline.findById(req.body.discipline)
-        newStat = new Stat({
+        stat = new Stat({
             title: req.body.title,
             description: req.body.description,
             type: req.body.type,
             unite: req.body.unite,
             lien: req.body.lien,
-            discipline: req.body.discipline,
+            max: req.body.max,
+            isVisible: req.body.isVisible,
+            alert: req.body.alert,
             coach: req.user.id
+
         });
-        newStat = await newStat.save();
-        newStat.discipline = discipline
-        res.status(200).send(newStat);
+        stat = await stat.save()
+        res.status(200).send(stat);
     } catch {
         res.status(500).send("Stat Cannot be created");
     }
@@ -74,6 +75,9 @@ router.put("/coach/:id", verifyCoach, async (req, res) => {
                 type: req.body.type,
                 unite: req.body.unite,
                 lien: req.body.lien,
+                max: req.body.max,
+                isVisible: req.body.isVisible,
+                alert: req.body.alert,
             },
             { new: true }
         )
@@ -83,103 +87,9 @@ router.put("/coach/:id", verifyCoach, async (req, res) => {
     }
 });
 
-
-router.put("/coach/assigned/:id", verifyCoach, async (req, res) => {
-    try {
-        const stats = await Stat.findById(req.params.id)
-        const findIndex = stats.joueurs.findIndex(x => x == req.body.joueur);
-
-        if (findIndex !== -1) {
-            res.status(500).send("Joueur already have this stats")
-        } else {
-            await Joueur.findByIdAndUpdate(
-                req.body.joueur,
-                {
-                    $push: { statistiques: { statistique: req.params.id } }
-                }
-            )
-            const stat = await Stat.findByIdAndUpdate(
-                req.params.id,
-                {
-                    $push: { joueurs: req.body.joueur }
-                },
-                { new: true }
-            )
-            res.send(stat);
-        }
-
-    } catch {
-        return res.status(400).send("statistique CANNOT BE assigned");
-    }
-});
-
-
-router.put("/coach/alterstatistiquejoueur/:id", verifyCoach, async (req, res) => {
-    try {
-        const data = {
-            statistique: req.params.id,
-            changement: req.body.changement,
-            isVisible: req.body.isVisible
-        }
-        let joueur = await Joueur.findById(req.body.joueur)
-        const findIndex = joueur.statistiques.findIndex(x => x.statistique == req.params.id)
-        joueur.statistiques[findIndex] = data;
-
-
-
-        //send mail if this statistique is visible
-        if (data.isVisible) {
-
-            let smtpTransport = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: "nodeisamm@gmail.com",
-                    pass: "otaku666",
-                },
-                tls: {
-                    rejectUnauthorized: false
-                },
-            });
-            const coach = await Coach.findById(req.user.id)
-
-            let mailOptions = {
-                from: "nodeisamm@gmail.com",
-                to: `${joueur.email}`,
-                subject: `new Statistique from: ${coach.firstName} ${coach.lastName}`,
-                text: "test",
-                html: `<h3> You have a new statistique  </h3> 
-                <div>
-                  <b>To check this statistique please visit this link</b>
-                </div>
-                <div>
-                <a href="http://localhost:3000/"> clic here </a>
-                </div>
-                `,
-            };
-
-            smtpTransport.sendMail(mailOptions);
-            smtpTransport.close();
-
-        }
-
-
-        joueur = await joueur.save();
-        res.send(joueur);
-    } catch {
-        return res.status(400).send("statistique CANNOT BE modifi");
-    }
-});
-
 router.delete("/coach/:id", verifyCoach, async (req, res) => {
     try {
-        const stat = await Stat.findById(req.params.id);
-        stat.joueurs.forEach(async x => {
-            let joueur = await Joueur.findById(x)
-            const findIndex = joueur.statistiques.findIndex(x => x.statistique == req.params.id)
-            joueur.statistiques.splice(findIndex, 1)
-            await joueur.save()
-        })
-        await Stat.findByIdAndRemove(req.params.id);
+        const stat = await Stat.findByIdAndRemove(req.params.id);
         res.status(200).send(stat.id)
     } catch {
         res.status(500).json("Error");

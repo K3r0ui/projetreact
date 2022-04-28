@@ -18,13 +18,20 @@ const statSchema = new mongoose.Schema(
     lien: {
       type: String
     },
-    discipline: {
-      type: ObjectId,
-      ref: "Discipline",
+    max: {
+      type: String
+    },
+    isVisible: {
+      type: Boolean,
+      default: false
     },
     coach: {
       type: ObjectId,
       ref: "Coach",
+    },
+    alert: {
+      type: Boolean,
+      default: false
     },
     joueurs: [
       {

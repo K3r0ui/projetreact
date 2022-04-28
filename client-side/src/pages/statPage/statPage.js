@@ -44,9 +44,9 @@ const StatPage = () => {
     }
 
     // fonction pour fair l'appdate
-    const handleUpdateStat = async (id, title, description, lien, type, unite) => {
+    const handleUpdateStat = async (id, values) => {
         try {
-            const result = await updateStat(id, title, description, lien, type, unite);
+            const result = await updateStat(id, values);
             const clonedData = [...data];
             const index = clonedData.findIndex((el) => el._id === result._id);
             clonedData[index] = result;
@@ -71,9 +71,9 @@ const StatPage = () => {
     }
 
 
-    const finish = async (title, description, lien, type, unite, discipline) => {
+    const finish = async (values) => {
         try {
-            const response = await addStat(title, description, lien, type, unite, discipline);
+            const response = await addStat(values);
             setVisible(false);
             setData([response, ...data]);
             message.success('Submit success!');
@@ -85,7 +85,8 @@ const StatPage = () => {
 
     return (
         <>
-            <div className="container mt-5 ">      <button type="button" onClick={ajouter} className="btn btn-primary">Ajouter une Statistique</button>
+            <div className="container mt-5 ">      
+            <button type="button" onClick={ajouter} className="btn btn-primary">Ajouter une Statistique</button>
 
                 {loading && (<>
                     <div className="d-flex justify-content-center">
@@ -101,7 +102,7 @@ const StatPage = () => {
                 </>)}
                 {data.length != 0 && !loading && (<>
 
-                    <StatList handleUpdateStat={handleUpdateStat} handleDeleteStat={handleDeleteStat} data={data} setData={setData} />
+                    <StatList handleUpdateStat={handleUpdateStat} handleDeleteStat={handleDeleteStat} data={data}  />
 
                 </>)
                 }
@@ -112,7 +113,7 @@ const StatPage = () => {
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                <StatForm forUpdate={false} discipline={discipline} finish={finish} initialValues={{ title: '', lien: '', description: '' }} />
+                <StatForm  discipline={discipline} finish={finish} initialValues={{ isVisible: false, alert: false }} />
             </Modal>
 
         </>);

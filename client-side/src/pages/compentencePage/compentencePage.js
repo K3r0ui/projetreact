@@ -35,9 +35,9 @@ const CompentencePage = () => {
     };
 
     // fonction pour fair l'appdate
-    const handleUpdateCompetence = async (id, title, description, lien) => {
+    const handleUpdateCompetence = async (id, values) => {
         try {
-            const result = await updateCompetnece(id, title, description, lien);
+            const result = await updateCompetnece(id, values);
             const clonedData = [...data];
             const index = clonedData.findIndex((el) => el._id === result._id);
             clonedData[index] = result;
@@ -59,9 +59,9 @@ const CompentencePage = () => {
         setVisible(false);
     }
 
-    const finish = async (title, description, lien) => {
+    const finish = async (values) => {
         try {
-            const response = await addCompetence(title, description, lien);
+            const response = await addCompetence(values);
             setVisible(false);
             setData([response, ...data]);
             message.success('Submit success!');
@@ -87,19 +87,18 @@ const CompentencePage = () => {
                 </>)}
                 {data.length != 0 && !loading && (<>
 
-                    <CompetenceList handleUpdateCompetence={handleUpdateCompetence} handleDeleteCompetence={handleDeleteCompetence} data={data} setData={setData} />
+                    <CompetenceList handleUpdateCompetence={handleUpdateCompetence} handleDeleteCompetence={handleDeleteCompetence} data={data} />
 
                 </>)
                 }
             </div>
 
             <Modal
-
                 title="Ajouter une Competence"
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                <CompetenceForm finish={finish} initialValues={{ title: '', lien: '', description: '' }} />
+                <CompetenceForm finish={finish} initialValues={{ isVisible: false }} />
             </Modal>
 
         </>);
