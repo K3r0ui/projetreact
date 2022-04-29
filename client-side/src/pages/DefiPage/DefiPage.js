@@ -136,7 +136,6 @@ const DefiPage = () => {
 >
 
 <DefiForm finish={finish} initialValues={{ lien:'',description:'' }}/>
-<AssignedForm />
 
 </Modal>
 

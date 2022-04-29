@@ -59,7 +59,7 @@ const Defi = (props) => {
 
     }
     const assigner =()=>{
-      setVisible(true);
+      setVisibleAss(true);
 
     }
     // UPDATE

@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import { Coach } from "../models/coach";
 import verifyCoach, { firstAuthMid } from "../middlewares/verifyCoach";
 import { Joueur } from "../models/joueur";
-import { Invitation } from "../models/invitation";
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
@@ -96,11 +95,25 @@ router.get("/alljoueurs", verifyCoach, async (req, res) => {
     res.status(500).send("there is something wrong ");
   }
 });
+
+
+// get the player that terminated the inscription process
 const gg = (ee) => {
 if (ee.invitation.etat === "Termenated"){
   return ee;
 }}
 
+router.get("/alljoueursI/:id", verifyCoach, async (req, res) => {
+
+  try {
+    let joueurs = await Joueur.findOne({ _id: req.params.id }).populate("invitation");
+    res.send(joueurs);
+  } catch {
+    res.status(500).send("there is something wrong ");
+  }
+});
+
+// get list of players that terminated the inscription process  
 router.get("/alljoueursI", verifyCoach, async (req, res) => {
 
   try {
