@@ -1,9 +1,11 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { Spin, Space ,Modal,Empty} from 'antd';
-import { getAllDefis ,deleteDefiById, updateDefi, addDefi } from '../../services/defi.service';
+import { getAllDefis ,deleteDefiById, updateDefi, addDefi,assignerDefi } from '../../services/defi.service';
+
 import DefiList from '../../components/DefiComponents/DefiList/DefiList';
 import DefiForm from '../../components/DefiComponents/DefiForm/DefiForm';
+import AssignedForm from '../../components/DefiComponents/AssignedForm/AssignedForm';
 const DefiPage = () => {
   const [data, setData] = useState([]);
   const [loading,setLoading]=useState(false)
@@ -16,12 +18,14 @@ const DefiPage = () => {
     const fetchData = async () => {
       setLoading(true)
       const data2 = await getAllDefis();
+      
       if(data2)
       {
         setData(data2);
         console.log(data2)
 
       }
+
       setLoading(false)
 
     };
@@ -51,6 +55,14 @@ const DefiPage = () => {
    setData(newData);
 
   }
+  // fct pour assigner un défi 
+  const handleAssignerDefi=(id,joueur,delai)=>{
+    assignerDefi(id,joueur,delai);
+    
+
+
+  }
+  
 
   //-------------fonction pour poupup-----
 
@@ -65,7 +77,7 @@ const DefiPage = () => {
   const handleCancel=()=>{
     setVisible(false);
   }
-    
+  
   const finish=async(description,lien)=>{
     
     const response = await addDefi(description,lien);
@@ -87,7 +99,6 @@ const DefiPage = () => {
 
     return (<>
 <div class="container mt-5 ">      <button type="button" onClick={ajouter} class="btn btn-primary">Ajouter un défi</button>
-
 {loading && (<>
 <div class="d-flex justify-content-center">
   <Space size="middle">
@@ -102,7 +113,7 @@ const DefiPage = () => {
 </>)}
 {data.length!=0 &&!loading &&(<>
 
-<DefiList handleUpdateDefi={handleUpdateDefi} handleDeleteDefiById={handleDeleteDefiById} data={data} setData={setData} />
+<DefiList handleUpdateDefi={handleUpdateDefi} handleDeleteDefiById={handleDeleteDefiById} handleAssignerDefi={handleAssignerDefi} data={data} setData={setData} />
 
 </>)
 }

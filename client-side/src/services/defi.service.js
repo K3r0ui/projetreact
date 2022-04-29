@@ -1,8 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGE0NzRmMWZlOTI4ZWUwYmE3ZDNlNyIsImlhdCI6MTY0OTYyMjQwMCwiZXhwIjoxNjQ5NjU4NDAwfQ.OO6A9FeHsiecPPTaPD4PygZ081Nk2kx3O-8vOva_V_g'
+        'x-auth-token':localStorage.getItem('token')
     }
   };
 export const getAllDefis =async()=>{
@@ -63,16 +63,36 @@ export const updateDefi=async(id,description,lien)=>{
 
 
 export const deleteDefiById = async (id) => {
-
- try {   
-    await axios.delete('http://localhost:8080/defi/coach/'+id,
-   config);
-    return true ;
-   // setData(data.filter(defi=>defi._id !== id))    )
+   try {
+      await axios.delete('http://localhost:8080/defi/coach/' + id, config);
+      return true;
+      // setData(data.filter(defi=>defi._id !== id))    )
+   } catch (error) {
+      console.log('error');
+   }
+};
+// Service pour assigner defi
+export const assignerDefi = async (id,joueur,delai) => {
+    try {
+        await joueur.map(j => {
+            
+            const ad = {
+                'joueur':j,
+                'delai':delai,
+            }
+            console.log("gvrfzef",ad)
+            const rs =  axios.put('http://localhost:8080/defi/coach/assigned/'+id,ad,config);
+            
+        })
+            
     
-    } catch (error) {
-        
-    console.log('error')      }
+    
+    return "success";
+    }catch(err){
+        console.log(err);
+
+    }
+};
 
 
-  }
+

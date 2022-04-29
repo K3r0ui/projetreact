@@ -13,6 +13,15 @@ const competenceSchema = new mongoose.Schema(
       type: String,
       required: false
     },
+    stars: {
+      type: Number,
+      min: [0, 'Must be at least 0'],
+      max: [5, 'Must be at most 5']
+    },
+    isVisible: {
+      type: Boolean,
+      default: false
+    },
     coach: {
       type: ObjectId,
       ref: "Coach"

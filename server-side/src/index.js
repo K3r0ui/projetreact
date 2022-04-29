@@ -4,16 +4,17 @@ import home from "./routes/home";
 import coach from "./routes/coach";
 import competence from "./routes/competence";
 import stat from "./routes/stat";
-import inviter from "./routes/inviter"
-import joueur from "./routes/joueur"
-import defi from './routes/defi'
-import event from './routes/event'
-import lieu from './routes/lieu'
-import discipline from './routes/discipline'
+import inviter from "./routes/inviter";
+import joueur from "./routes/joueur";
+import defi from "./routes/defi";
+import event from "./routes/event";
+import lieu from "./routes/lieu";
+import discipline from "./routes/discipline";
+import program from "./routes/program";
+import seance from "./routes/seance"
 
 import configDB from "./config/db";
-import { Discipline } from "./models/discipline";
-
+//import { Discipline } from "./models/discipline";
 
 const app = express();
 app.use(cors());
@@ -24,20 +25,24 @@ app.use(express.json());
 // routes endpoints
 app.use("/", home);
 app.use("/coach", coach);
-//CRUD Competence 
-app.use('/competence', competence);
-app.use('/stat', stat);
+//CRUD Competence
+app.use("/competence", competence);
+app.use("/stat", stat);
 //Inviter Joueur
-app.use('/inviter', inviter);
+app.use("/inviter", inviter);
 
-app.use('/joueur', joueur);
+app.use("/joueur", joueur);
 
-app.use('/defi', defi);
-app.use('/event', event);
+app.use("/defi", defi);
+app.use("/event", event);
 
-app.use('/lieu', lieu)
+app.use("/lieu", lieu);
 
-app.use('/discipline', discipline)
+app.use("/discipline", discipline);
+
+app.use("/program", program);
+app.use("/coach/seance", seance);
+
 
 // const discipline = new Discipline({
 //   description: "football",

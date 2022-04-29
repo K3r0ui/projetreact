@@ -1,29 +1,30 @@
 
-import { Form, Input, message, Button, Space } from 'antd';
+import { Form, Input, message, Button, Space, Rate, Switch } from 'antd';
 import 'antd/dist/antd.css';
-import { useNavigate, } from "react-router-dom";
+import { useState } from 'react';
 
 
 
-const CompetenceForm = (props) => {
-    const navigate = useNavigate();
+const CompetenceForm = ({ finish, initialValues }) => {
     const [form] = Form.useForm();
+    const [visible, setVisible] = useState(initialValues.isVisible);
 
     const onFinish = (values) => {
-
-        props.finish(values.title, values.description, values.lien);
-        message.success('Submit success!');
+        values.isVisible = visible
+        finish(values);
     };
 
     const onFinishFailed = () => {
         message.error('Submit failed!');
     };
+    function onChange(checked) {
+        setVisible(checked)
+    }
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-2">
             <Form
-                initialValues={props.initialValues}
-
+                initialValues={initialValues}
                 form={form}
                 layout="vertical"
                 onFinish={onFinish}
@@ -39,7 +40,7 @@ const CompetenceForm = (props) => {
 
                 </Form.Item>
                 <Form.Item
-                    name="lien"
+                    name="link"
                     label="URL"
                     rules={[
                         {
@@ -66,10 +67,24 @@ const CompetenceForm = (props) => {
                     <Input.TextArea showCount maxLength={100} placeholder="Description" />
 
                 </Form.Item>
+                <Form.Item
+                    name="stars"
+                    label="Note"
+                    rules={[{ required: true, message: 'Entrer une note' }]}
+                >
+                    <Rate />
+
+                </Form.Item>
+                <Form.Item
+                    name="isVisible"
+                    label="Visible"
+                >
+                    <Switch onChange={onChange} defaultChecked={initialValues.isVisible} />
+
+                </Form.Item>
                 <Form.Item>
                     <center>
                         <Space>
-
                             <Button type="primary" className="btn btn-primary" htmlType="submit">
                                 Submit
                             </Button>

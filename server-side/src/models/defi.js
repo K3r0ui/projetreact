@@ -20,7 +20,7 @@ const defiSchema = new mongoose.Schema(
           ref: "Joueur"
         },
         delai: {
-          type: String
+          type: Date
         }
       }
     ],

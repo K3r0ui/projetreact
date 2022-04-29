@@ -3,7 +3,7 @@ FROM node:17
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install nodemon --save-dev
+# RUN npm install nodemon --save-dev
 
 RUN npm install
 

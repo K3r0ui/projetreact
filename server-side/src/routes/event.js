@@ -92,7 +92,7 @@ router.get("/joueur/private", verifyJoueur, async (req, res) => {
         const coachid = joueur.coach
         const events = await Event.find(
             { coach: coachid, etat: "privé" }
-        )
+        ).populate('joueurs.joueur')
         if (!events) {
             req.status(200).send("No event Found");
         }
@@ -110,7 +110,7 @@ router.get("/joueur/public", verifyJoueur, async (req, res) => {
     try {
         const events = await Event.find(
             { etat: "public" }
-        )
+        ).populate('joueurs.joueur')
         if (!events) {
             req.status(400).send("No event Found");
         }

@@ -1,27 +1,25 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 const HomePage = () => {
-    const [msg, setMsg] = useState('');
+   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(
-      //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-        'http://localhost:8080/', {
-        headers: {
-          'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+'
-        }
-      }
-      );
-      setMsg(data);
-    };
-    fetchData();
-  }, []);
+   const tokenExist = localStorage.getItem('token');
+   return (
+      <div className='container'>
+         <h3> This is the home page</h3>
+         {!tokenExist && (
+            <>
+               <Button onClick={() => navigate('/login')}>
+                  login as coach
+               </Button>
+               <Button onClick={() => navigate('/loginJoueur')}>
+                  login as joueur
+               </Button>
+            </>
+         )}
+      </div>
+   );
+};
 
-    return (<><h1>home page </h1>
-    <h1>welcome {msg} </h1>
-   </>  );
-    
-}
- 
 export default HomePage;
