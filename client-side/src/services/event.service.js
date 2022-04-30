@@ -2,7 +2,7 @@ import axios from 'axios';
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-        'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTAzZThmN2U5NDM4N2RlY2FmMTMxNSIsImlhdCI6MTY0OTQ1MDU2OCwiZXhwIjoxNjQ5NDg2NTY4fQ.hhRJDLhmNGT65Q06zkjD7hI18Xrwa6p7r3WKcGGsPgg'
+        'x-auth-token': localStorage.getItem('token')
     }
   };
 const url="http://localhost:8080/event/coach";  
@@ -73,8 +73,8 @@ export const deleteEventById = async (id) => {
 const configJoueur = {
    headers: {
       api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-      'x-auth-token':
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTFhNGY2ZDZlZGYxZmU0MzNkYjljNiIsImlhdCI6MTY0OTYyODE0MSwiZXhwIjoxNjQ5NjY0MTQxfQ.B5gHjSjFI4IDnPTTulpkZIug6q6NOKL8EMz_QQyV0fQ',
+      'x-auth-token':localStorage.getItem('token')
+         
    },
 };
 const urlJoueur = 'http://localhost:8080/event/joueur';
@@ -96,7 +96,6 @@ export const getPrivateEvents = async () => {
 export const getPublicEvents = async () => {
    try {
       const result = await axios.get(
-         //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
          urlJoueur + '/public',
          configJoueur
       );
@@ -104,5 +103,23 @@ export const getPublicEvents = async () => {
       return result.data;
    } catch (error) {
       console.log('error');
+   }
+};
+
+export const joinEvent = async (id,status) => {
+   try {
+      const data = {
+         status: status,
+        
+      };
+      const result = await axios.put(
+            urlJoueur + '/join/' + id,
+         data,
+         config
+      );
+      console.log(result);
+      return result;
+   } catch (error) {
+      console.log(error);
    }
 };

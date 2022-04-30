@@ -258,9 +258,9 @@ router.put('/joueur/join/:id', verifyJoueur, async (req, res) => {
         const joueur = await Joueur.findById(req.user.id);
         const index = joueur.events.findIndex((x) => x.event == req.params.id)
         if (index !== -1) {
-            res.status(400).send("you are ready join this event")
+            res.status(200).send("you are ready join this event")
         } else if (req.body.status != "interessé" && req.body.status != "participer" && req.body.status != "ne pas participer") {
-            res.status(400).send("status Error")
+            res.status(200).send("status Error")
         } else {
             const event = await Event.findByIdAndUpdate(
                 req.params.id,

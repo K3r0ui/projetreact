@@ -6,12 +6,12 @@ import {  useNavigate,} from "react-router-dom";
   
 
 const DefiForm = (props) => {
-const navigate = useNavigate();
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
    
      props.finish(values.description,values.lien);
+     form.resetFields();
      message.success('Submit success!');
   };
 

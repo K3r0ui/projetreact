@@ -17,9 +17,12 @@ const EventsJoueurPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-     setData3(await getPrivateEvents());
+      const data2=await getPrivateEvents()
+     setData3(await getPrivateEvents());;
      setData2(await getPublicEvents());
      setData(await getPublicEvents());
+     console.log("data",data2);
+
      
       setLoading(false)
 
@@ -29,8 +32,10 @@ const EventsJoueurPage = () => {
 
 
   const buttonChange = (e) => {
+
     if(e.target.value==="public")
     {
+
       setData(data2);
     }
     else
@@ -50,9 +55,9 @@ const EventsJoueurPage = () => {
         <div className='mt-5 mb-5'>
             <center>
                 <Radio.Group style={{ width: '40%' }} value={eventsType} onChange={buttonChange}>
-                <Radio.Button style={{ width: '50%' }} value="public">Evennements publi</Radio.Button>
+                <Radio.Button style={{ width: '50%' }} value="public">Evenement publiques</Radio.Button>
 
-                <Radio.Button style={{ width: '50%' }} value="privé"> Evennements privés</Radio.Button>
+                <Radio.Button style={{ width: '50%' }} value="privé"> Evenement privés</Radio.Button>
                 
 
                 

@@ -42,8 +42,8 @@ const Event = (props) => {
       <>
          <tr>
             <th scope='row'>1</th>
-            <td>{event.description}</td>
             <td>{event.name}</td>
+            <td>{event.description}</td>
             <td> {event.etat}</td>
             <td>
                <div

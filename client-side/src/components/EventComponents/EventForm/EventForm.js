@@ -8,6 +8,7 @@ const EventForm = (props) => {
 
     const onFinish = (values) => {
        props.finish(values.name,values.description,values.etat);
+       form.resetFields();
        message.success('Submit success!');
     };
   

@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
 
         const token = await joueur.generateJWT();
 
-        res.send(token);
+        res.send({token});
     } catch (error) {
         return res.status(200).send("erreur de serveur ");
 
