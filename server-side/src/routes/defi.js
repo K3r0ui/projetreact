@@ -34,7 +34,7 @@ router.get('/joueur', verifyJoueur, async (req, res) => {
 //Get defit By Id
 router.get('/joueur/:id', verifyToken, async (req, res) => {
     try {
-        let defi = await Defi.findOne({ _id: req.params.id }).populate("defis")
+        let defi = await Defi.findOne({ joueur: req.params.id }).populate("defis")
         res.status(200).send(defi)
     } catch {
         res.status(400).send("No Defi Trouved under Player")

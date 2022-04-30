@@ -21,6 +21,10 @@ const defiSchema = new mongoose.Schema(
         },
         delai: {
           type: Date
+        },
+        donejoueur:{
+          type: Boolean,
+          default: false
         }
       }
     ],

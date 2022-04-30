@@ -2,22 +2,27 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Popconfirm, Spin, Space, Modal, Empty } from 'antd';
 import ProfilejcForm from '../../components/ProfilejcComponents/ProfilejcForm/ProfilejcForm';
-import { getAllJoueurs } from '../../services/profile.service';
+import { getAllPlayersI,getOnePlayer} from '../../services/joueur.service';
+import { getSingleSeancePlayer} from '../../services/seance.service';
 const ProfilejcPage = () => {
-   const [data, setData] = useState([]);
+   const [data,setData]=useState([]);
    const [loading, setLoading] = useState(false);
    const [visible, setVisible] = useState(false);
    const [joueur, setJoueur] = useState([]);
-
+   const [ids, setIds] = useState('');
+   const [singleSeance, setSingleSeance ] = useState([]);
    useEffect(() => {
       const fetchData = async () => {
          setLoading(true);
-         const data2 = await getAllJoueurs();
+         const data2 = await getAllPlayersI();
+         const d3 = await getOnePlayer();
 
          if (data2) {
             setJoueur(data2);
             console.log("joeur",data2);
+            
          }
+         
          setLoading(false);
       };
       fetchData();
@@ -30,16 +35,16 @@ const ProfilejcPage = () => {
    const modifier = () => {
       setVisible(true);
    };
-   const ajouter = () => {
-      setVisible(true);
-   };
 
    const handleOk = () => {
       setVisible(false);
+      
    };
    const handleCancel = () => {
       setVisible(false);
+      
    };
+
 
    //-----------
    const formatStatComp=(competences,statistiques)=>{
@@ -68,27 +73,15 @@ const ProfilejcPage = () => {
                   <th scope='col'>#</th>
                   <th scope='col'>FirstName</th>
                   <th scope='col'>LastName</th>
-                  <th scope='col'>Email</th>
-                  <th scope='col'>job</th>
-                  <th scope='col'>orientation</th>
-                  <th scope='col'>competences</th>
-                  <th scope='col'>statistiques</th>
                   <th scope='col'>Action</th>
                </tr>
             </thead>
             <tbody>
                {joueur.map((joueur) => (
                   <tr>
-                     <th scope='row'>1</th>
+                     <th scope='row'>{joueur._id}</th>
                      <td>{joueur.firstName}</td>
                      <td>{joueur.lastName}</td>
-                     <td>{joueur.email}</td>
-                     <td>{joueur.job}</td>
-                     <td>{joueur.orientation}</td>
-                     <td>{joueur.competences.map(x => {
-                        x._id
-                     })}</td>
-                     <td>{joueur.statistiques}</td>
                      <td>
                         <div
                            class='btn-group'
@@ -96,7 +89,15 @@ const ProfilejcPage = () => {
                            aria-label='Basic mixed styles example'>
                            <button
                               type='button'
-                              onClick={modifier}
+                              onClick={async() =>             
+                                 {setVisible(true);
+                                 setIds(joueur._id)
+                                 ;console.log("f",ids)
+                                 const s =  await getOnePlayer(joueur._id);
+                                 const data85 = await getSingleSeancePlayer(joueur._id);
+                                  setData(s)
+                                  setSingleSeance(data85)
+                                  console.log("alojada",data85);}}
                               class='btn btn-secondary'>
                               Afficher profile
                            </button>
@@ -125,7 +126,7 @@ const ProfilejcPage = () => {
             onOk={handleOk}
             onCancel={handleCancel}
             okButtonProps={{ disabled: true }}>
-            <ProfilejcForm />
+            <ProfilejcForm data={data} singleSeance={singleSeance}/>
          </Modal>
       </>
    );

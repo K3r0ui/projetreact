@@ -20,6 +20,20 @@ const url = "http://localhost:8080/coach/seance"
    
 }
 
+export const getSingleSeancePlayer =async(id)=>{
+  try {
+  const result = await axios.get(
+      //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+        url+"/joueur/"+id, config
+      );
+      console.log(result.data);
+      return result.data;
+  } catch (error) {
+      
+   console.log('error')      }
+ 
+}
+
 export const addSeance = async(titre,joueur,lieu,program,date,competences ,statistiques)=>{
   try {
     const data={

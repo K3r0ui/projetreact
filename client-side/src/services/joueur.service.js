@@ -41,6 +41,20 @@ export const getAllPlayersI = async () => {
    }
 };
 
+export const getOnePlayer = async (id) => {
+   try {
+      
+       const { data } = await axios.get(
+           'http://localhost:8080/coach/alljoueursI/'+id,
+           configCoach
+       );
+       console.log(data);
+       return data;
+   } catch (error) {
+       console.log('error');
+   }
+};
+
 export const getProfile = async () => {
    try {
       const { data } = await axios.get(

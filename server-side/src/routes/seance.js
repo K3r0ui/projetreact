@@ -62,6 +62,21 @@ route.get("/", verifyToken, async (req, res) => {
   }
 });
 
+// get all seance of specefic joueur 
+route.get("/joueur/:id", verifyToken, async (req, res) => {
+  try {
+    const prog = await Seance.find({ joueur: req.params.id })
+      .populate("competences")
+      .populate("statistiques.statistique")
+      .populate("lieu")
+      .populate("program")
+      .populate("joueur");
+    res.send(prog);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
 route.put("/coach/:id", verifyCoach, async (req, res) => {
   try {
     const prog = await Program.findByIdAndUpdate(
