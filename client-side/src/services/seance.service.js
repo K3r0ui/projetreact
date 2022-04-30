@@ -20,45 +20,24 @@ export const getAllSeances = async () => {
    }
 };
 
-<<<<<<< HEAD
-export const getSingleSeancePlayer =async(id)=>{
-  try {
-  const result = await axios.get(
-      //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-        url+"/joueur/"+id, config
+export const getSingleSeancePlayer = async (id) => {
+   try {
+      const result = await axios.get(
+         //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
+         url + '/joueur/' + id,
+         config
       );
       console.log(result.data);
       return result.data;
-  } catch (error) {
-      
-   console.log('error')      }
- 
-}
+   } catch (error) {
+      console.log('error');
+   }
+};
 
-export const addSeance = async(titre,joueur,lieu,program,date,competences ,statistiques)=>{
-  try {
-    const data={
-        'titre': titre,
-        "joueur":joueur,
-        "lieu":lieu,
-        "program":program,
-        "date":date,
-        "competences":competences,
-        "statistiques":statistiques
-    
-    }
-    const result = await axios.post(
-        //  `http://${process.env.REACT_APP_BACKEND_DNS}:8080/`, {
-          url, data, config
-        );
-        console.log(result);
-        return result;
-=======
 export const getSeance = async (id) => {
    const { data } = await axios.get(url + `/${id}`, config);
    return data;
 };
->>>>>>> dbffb13 (modifier seance submission)
 
 export const addSeance = async (
    titre,
