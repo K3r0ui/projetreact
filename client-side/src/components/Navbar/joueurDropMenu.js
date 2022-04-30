@@ -10,9 +10,6 @@ export default function JoueurDropMenu() {
             Evennements
          </NavDropdown.Item>
 
-         <NavDropdown.Item as={Link} to='/lieu'>
-            Lieu
-         </NavDropdown.Item>
          <NavDropdown.Item as={Link} to='/profilejoueur'>
             profile joueur
          </NavDropdown.Item>

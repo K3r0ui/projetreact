@@ -18,6 +18,9 @@ export default function CoachDropMenu() {
          <NavDropdown.Item as={Link} to='/seances'>
             Séances
          </NavDropdown.Item>
+         <NavDropdown.Item as={Link} to='/lieu'>
+            Lieu
+         </NavDropdown.Item>
          <NavDropdown.Divider />
          <NavDropdown.Item as={Link} to='/compentence'>
             Compentence

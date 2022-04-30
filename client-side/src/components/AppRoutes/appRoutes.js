@@ -21,12 +21,14 @@ import Accepted from '../../pages/invitationPage/accepted';
 import ProfilePage from '../../pages/joueur/profilePage';
 import LoginJoueurPage from '../../pages/LoginPage/LoginJoueurPage';
 import PrivateRoute from './privateRoute';
+import SeanceDetail from '../../pages/SeancePage/SeanceDetail';
 
 export default function AppRoutes({ user }) {
    const routes = [
       { path: '/pricing', Component: <PricingPage /> },
       { path: '/defis', Component: <DefiPage /> },
       { path: '/seances', Component: <SeancePage /> },
+      { path: '/seance/:id', Component: <SeanceDetail /> },
       { path: '/joueur/events', Component: <EventsJoueurPage /> },
       { path: '/lieu', Component: <LieuPage /> },
       { path: '/compentence', Component: <CompentencePage /> },

@@ -13,7 +13,8 @@ route.get("/:id", verifyToken, async (req, res) => {
       .populate("competences")
       .populate("statistiques")
       .populate("lieu")
-      .populate("program");
+      .populate("program")
+      .populate("joueur");
     res.send(prog);
   } catch (error) {
     res.status(500).send("something wrong happened!");
@@ -26,31 +27,30 @@ route.post("/", verifyCoach, async (req, res) => {
     seance = new Seance({
       titre: req.body.titre,
       date: req.body.date,
-      etat: 'en cours',
+      etat: "en cours",
       coach: req.user.id,
       lieu: req.body.lieu,
       joueur: req.body.joueur,
-      competences:req.body.competences,
-      statistiques:req.body.statistiques,
-      program:req.body.program
-
+      competences: req.body.competences,
+      statistiques: req.body.statistiques,
+      program: req.body.program,
     });
     await seance.save();
-    const seance2 =await Seance.findById(seance._id)
-    .populate("competences")
-    .populate("statistiques.statistique")
-    .populate("lieu")
-    .populate("program")
-    .populate("joueur");
+    const seance2 = await Seance.findById(seance._id)
+      .populate("competences")
+      .populate("statistiques.statistique")
+      .populate("lieu")
+      .populate("program")
+      .populate("joueur");
     res.status(200).send(seance2);
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-route.get("/", verifyToken, async (req, res) => {
+route.get("/", verifyCoach, async (req, res) => {
   try {
-    const prog = await Seance.find({ couch: req.user.id })
+    const prog = await Seance.find({ coach: req.user.id })
       .populate("competences")
       .populate("statistiques.statistique")
       .populate("lieu")
@@ -95,14 +95,12 @@ route.put("/coach/:id", verifyCoach, async (req, res) => {
   }
 });
 
-
 route.put("/etat/:id", verifyCoach, async (req, res) => {
   try {
     const seance = await Seance.findByIdAndUpdate(
       req.params.id,
       {
         etat: req.body.etat,
-     
       },
       { new: true }
     );
@@ -118,8 +116,7 @@ route.put("/feedback/:id", verifyCoach, async (req, res) => {
       req.params.id,
       {
         goal: req.body.goal,
-        feedback: req.body.feedback
-     
+        feedback: req.body.feedback,
       },
       { new: true }
     );
@@ -129,7 +126,23 @@ route.put("/feedback/:id", verifyCoach, async (req, res) => {
   }
 });
 
-
+route.put("/:id", verifyCoach, async (req, res) => {
+  try {
+    const seance = await Seance.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    )
+      .populate("competences")
+      .populate("statistiques")
+      .populate("lieu")
+      .populate("program")
+      .populate("joueur");
+    res.send(seance);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 export default route;
 

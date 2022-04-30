@@ -41,16 +41,15 @@ const seanceSchema = new mongoose.Schema(
       },
     ],
     statistiques: [
-    {  statistique:{
-        type: ObjectId,
-        ref: "Stat",
+      {
+        statistique: {
+          type: ObjectId,
+          ref: "Stat",
+        },
+        valeur: {
+          type: String,
+        },
       },
-
-    valeur:{
-      type: String,
-    },
-
-    }  
     ],
     raisonannul: {
       type: String,
