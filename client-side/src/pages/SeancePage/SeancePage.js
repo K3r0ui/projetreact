@@ -299,11 +299,7 @@ const SeancePage = () => {
          );
          const newSeance = {
             key: seance.data._id,
-            titre: (
-               <Link to={'/seance/' + seance.data._id}>
-                  {seance.data.titre}
-               </Link>
-            ),
+            titre: <Link to={'/seance/' + seance.data._id}>{seance.data.titre}</Link>,
             date: seance.data.date,
             lieu: seance.data.lieu.name,
             joueur:

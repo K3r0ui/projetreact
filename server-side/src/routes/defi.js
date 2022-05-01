@@ -22,7 +22,7 @@ router.get('/coach', verifyCoach, async (req, res) => {
 })
 
 //Get List defi of joueur
-router.get('/joueur', verifyJoueur, async (req, res) => {
+router.get('/joueur/:id', verifyJoueur, async (req, res) => {
     try {
         const joueur = await Joueur.findById(req.user.id).populate("defis")
         res.status(200).send(joueur.defis)
@@ -32,14 +32,14 @@ router.get('/joueur', verifyJoueur, async (req, res) => {
 })
 
 //Get defit By Id
-router.get('/joueur/:id', verifyToken, async (req, res) => {
-    try {
-        let defi = await Defi.findOne({ joueur: req.params.id }).populate("defis")
-        res.status(200).send(defi)
-    } catch {
-        res.status(400).send("No Defi Trouved under Player")
-    }
-})
+// router.get('/joueur/:id', verifyToken, async (req, res) => {
+//     try {
+//         let defi = await Defi.findOne({ _id: req.params.id }).populate("defis")
+//         res.status(200).send(defi)
+//     } catch {
+//         res.status(400).send("No Defi Trouved under Player")
+//     }
+// })
 
 
 router.post('/coach', verifyCoach, async (req, res) => {
