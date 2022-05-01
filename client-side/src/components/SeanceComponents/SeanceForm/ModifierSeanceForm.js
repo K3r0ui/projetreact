@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { Form, Space, Col, Row, DatePicker, Input, Select, Button } from 'antd';
+import { Form, Col, Row, DatePicker, Input, Select, Button } from 'antd';
 import { getAllLieus } from '../../../services/lieu.service';
 import { getAllCompetence } from '../../../services/competence.service';
 import { getAllStat } from '../../../services/stat.service';
@@ -8,11 +8,12 @@ const { Option } = Select;
 
 export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
    const [form] = Form.useForm();
-   data.date = moment(new Date(data.date), 'DD/MM/YYYY');
    const [lieux, setLieux] = useState([]);
    const [competances, setCompetances] = useState([]);
    const [statistiques, setStatistiques] = useState([]);
    const [statsVls, setStatsVls] = useState([]);
+   const [seanceData] = useState({ ...data });
+   seanceData.date = moment(new Date(data.date), 'DD/MM/YYYY');
 
    useEffect(() => {
       const fetchData = async () => {
@@ -28,15 +29,18 @@ export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
          }
       };
       fetchData();
-      data.lieu = data.lieu._id;
-      data.competences = data.competences.map((c) => c._id);
-      const intialStatsIds = data.statistiques.map((c) => c.statistique);
-      const initialFields = data.statistiques.map((c) => ({
+      const dato = { ...data };
+      // setSeanceData(data);
+
+      seanceData.lieu = dato.lieu._id;
+      seanceData.competences = dato.competences.map((c) => c._id);
+      const intialStatsIds = dato.statistiques.map((c) => c.statistique);
+      const initialFields = dato.statistiques.map((c) => ({
          statistique: c.statistique,
          valeur: c.valeur,
       }));
       setStatsVls(initialFields);
-      data.statistiques = intialStatsIds;
+      seanceData.statistiques = intialStatsIds;
       form.resetFields();
    }, []);
 
@@ -83,7 +87,7 @@ export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
 
    return (
       <Form
-         initialValues={data}
+         initialValues={seanceData}
          form={form}
          layout='vertical'
          onFinish={finish}
@@ -191,7 +195,11 @@ export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
                   defaultValue='sj'
                   disabled>
                   <Option value='sj'>
-                     {data.joueur.lastName + ' ' + data.joueur.firstName}
+                     {seanceData
+                        ? seanceData.joueur.lastName +
+                          ' ' +
+                          seanceData.joueur.firstName
+                        : ''}
                   </Option>
                </Select>
             </Form.Item>
@@ -202,7 +210,9 @@ export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
                         placeholder='Selectionner un programme'
                         defaultValue='sp'
                         disabled>
-                        <Option value='sp'>{data.program.name}</Option>
+                        <Option value='sp'>
+                           {seanceData ? seanceData.program.name : ''}
+                        </Option>
                      </Select>
                   </Form.Item>
                </Col>
@@ -222,14 +232,12 @@ export default function ModifierSeanceForm({ onFinish, onFinishFailed, data }) {
 
          <Form.Item>
             <center>
-               <Space>
-                  <Button
-                     type='primary'
-                     className='btn btn-primary'
-                     htmlType='submit'>
-                     Submit
-                  </Button>
-               </Space>
+               <Button
+                  type='primary'
+                  className='btn btn-primary'
+                  htmlType='submit'>
+                  Submit
+               </Button>
             </center>
          </Form.Item>
       </Form>
