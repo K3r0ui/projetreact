@@ -26,12 +26,6 @@ const competenceSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Coach"
     },
-    joueurs: [
-      {
-        type: ObjectId,
-        ref: "Joueur"
-      }
-    ]
   },
   { timestamps: true }
 );
