@@ -32,13 +32,7 @@ const statSchema = new mongoose.Schema(
     alert: {
       type: Boolean,
       default: false
-    },
-    joueurs: [
-      {
-        type: ObjectId,
-        ref: "Joueur",
-      }
-    ],
+    }
   },
   { timestamps: true }
 );
