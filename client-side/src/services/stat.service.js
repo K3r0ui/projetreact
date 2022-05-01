@@ -14,6 +14,19 @@ export const getAllStat = async () => {
         console.log('error')
     }
 }
+
+export const getStatById = async (id) => {
+    try {
+        const { data } = await axios.get(
+            'http://localhost:8080/stat/'+id, config
+        );
+        return data;
+    } catch (error) {
+        console.log('error')
+    }
+}
+
+
 export const addStat = async (input) => {
     const { data } = await axios.post(
         'http://localhost:8080/stat/coach', input, config
