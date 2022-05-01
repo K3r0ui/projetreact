@@ -24,10 +24,6 @@ export default function SeanceDetail() {
       fetchData();
    }, []);
 
-   const modifier = () => {
-      setVisible(true);
-   };
-   //fonction pour le popup d'ajout
    const handleOk = () => {
       setVisible(false);
    };
@@ -56,7 +52,7 @@ export default function SeanceDetail() {
                {' '}
                titre : {data.titre} <br />
                etat : {data.etat} <br />
-               {/* date: {data.date} */}
+               date: {data.date.toString()}
                <br />
                lieu : {data.lieu.name} <br />
                statistiques: {data.statistiques.map(
