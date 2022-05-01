@@ -1,8 +1,9 @@
-import { message, Button, Modal } from 'antd';
+import { message, Button, Modal, Space, Card, Rate, Switch } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ModifierSeanceForm from '../../components/SeanceComponents/SeanceForm/ModifierSeanceForm';
 import { getSeance, updateSeance } from '../../services/seance.service';
+import StatDetail from './StatDetail'
 
 export default function SeanceDetail() {
    const { id } = useParams();
@@ -43,27 +44,70 @@ export default function SeanceDetail() {
       }
    };
 
-   const onFinishFailed = () => {};
+
+   const onFinishFailed = () => { };
 
    return (
       <div className='container'>
          {data && (
+
             <div>
-               {' '}
-               titre : {data.titre} <br />
-               etat : {data.etat} <br />
-               date: {data.date.toString()}
-               <br />
-               lieu : {data.lieu.name} <br />
-               statistiques: {data.statistiques.map(
-                  (s) => s.valeur + ' - '
-               )}{' '}
-               <br />
-               competences: {data.competences.map((c) => c.title + ' - ')}{' '}
-               <br />
-               prog : {data.program.name}{' '}
+               {data.etat == "Annuler" ? (<h2> Cette seance est annuler a la raison de {data.raisonannul} </h2>) : (
+                  <>
+                     <br />
+                     <Button onClick={() => setVisible(true)}>Modifier La seance</Button>
+                     <br />
+                     <br />
+                     <h5>titre : </h5>{data.titre} <br />
+
+                     <h5>date: </h5>le {new Date(data.date.toString()).getUTCDate()}/{new Date(data.date.toString()).getMonth() + 1}/{new Date(data.date.toString()).getFullYear()} &thinsp;
+                     à {new Date(data.date.toString()).getUTCHours()}:{new Date(data.date.toString()).getUTCMinutes()}:{new Date(data.date.toString()).getUTCSeconds()}
+                     <br />
+                     <h5>lieu : </h5>{data.lieu.name} <br />
+
+
+                     <h5>Programme: </h5>
+
+                     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                        <Card title={data.program.name} size="small">
+                           <p>{data.program.description}</p>
+                           <div style={{ display: 'flex', justifyContent: "space-around" }}>
+                              <img src={data.program.image} style={{ width: '250px', height: "200px" }} />
+                              <iframe src={data.program.videoLink} title="YouTube video" allowfullscreen></iframe>
+                           </div>
+                        </Card>
+                     </Space>
+
+                     <div className="mt-5" style={{ display: 'flex', justifyContent: "space-evenly" }}>
+                        <div >
+                           <center> <h5> Competences </h5></center>
+                           <Space direction="vertical" size="middle" style={{ display: 'flex', width: '400px' }}>
+                              {data.competences.map((c) => <Card title={c.title} size="small">
+                                 <p>{c.description}</p>
+                                 <p>{c.link}</p>
+                                 <Rate disabled value={c.stars} /> <br />
+                                 <Switch disabled={true} checked={c.isVisible} />
+                              </Card>)}{' '}
+
+                           </Space>
+                        </div>
+                        <div>
+                           <center><h5> Statistiques</h5></center>
+                           <Space direction="vertical" size="middle" style={{ display: 'flex', width: '400px' }}>
+                              {data.statistiques.map((s) => <StatDetail s={s} />)}{' '}
+
+                           </Space>
+                        </div>
+                     </div>
+                     <br />
+                  </>)}
+
             </div>
-         )}
+         )
+         }
+         <br />
+
+
          <Modal
             title='modifier une seance'
             visible={visible}
@@ -77,7 +121,7 @@ export default function SeanceDetail() {
                data={data}
             />
          </Modal>
-         <Button onClick={() => setVisible(true)}>Modifier La seance</Button>
-      </div>
+
+      </div >
    );
 }
