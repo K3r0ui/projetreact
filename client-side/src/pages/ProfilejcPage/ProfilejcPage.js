@@ -4,10 +4,13 @@ import { Popconfirm, Spin, Space, Modal, Empty } from 'antd';
 import ProfilejcForm from '../../components/ProfilejcComponents/ProfilejcForm/ProfilejcForm';
 import { getAllPlayersI,getOnePlayer} from '../../services/joueur.service';
 import { getSingleSeancePlayer} from '../../services/seance.service';
+import { getAllDefis } from '../../services/defi.service';
 const ProfilejcPage = () => {
    const [data,setData]=useState([]);
    const [loading, setLoading] = useState(false);
    const [visible, setVisible] = useState(false);
+   const [allDefis,setAllDefis]= useState([]);
+   const [etatDefi,setEtatDefi]= useState([]);
    const [joueur, setJoueur] = useState([]);
    const [ids, setIds] = useState('');
    const [singleSeance, setSingleSeance ] = useState([]);
@@ -95,9 +98,31 @@ const ProfilejcPage = () => {
                                  ;console.log("f",ids)
                                  const s =  await getOnePlayer(joueur._id);
                                  const data85 = await getSingleSeancePlayer(joueur._id);
+                                 const data95 = await getAllDefis();
+                                 
                                   setData(s)
                                   setSingleSeance(data85)
-                                  console.log("alojada",data85);}}
+                                  setAllDefis(data95)
+                                  const ay = (element)=> {
+                                     console.log("element" , element );
+                                     let test=false;
+                                      element.joueurs.map(e => { {console.log("gggggggggg",e.joueur) ;{if (joueur._id ===e.joueur) {test=true ; } }  ; } } )
+                                      console.log("test",test);
+                                      return test;
+                                    }
+                                  const filterdefi = (id1,id2)=>{
+                                       if( id1.joueur === joueur._id){
+                                          return true;
+                                       }
+                                     
+                                  }
+                                  const data101 = await data95.filter(ay);
+                                  const data100 = data95.map(x=>x.joueurs.filter(y=> filterdefi(y,joueur._id)));
+                                  setEtatDefi(data101);
+                                  console.log("alojada",data85);
+                                  console.log("FILER 1 ",data95.filter(ay));
+                                  console.log("ALO DEFI",data100);
+                                 }}
                               class='btn btn-secondary'>
                               Afficher profile
                            </button>
@@ -126,7 +151,7 @@ const ProfilejcPage = () => {
             onOk={handleOk}
             onCancel={handleCancel}
             okButtonProps={{ disabled: true }}>
-            <ProfilejcForm data={data} singleSeance={singleSeance}/>
+            <ProfilejcForm data={data} singleSeance={singleSeance} allDefis={allDefis} etatDefi={etatDefi}/>
          </Modal>
       </>
    );

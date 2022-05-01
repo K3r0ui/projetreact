@@ -106,7 +106,7 @@ if (ee.invitation.etat === "Termenated"){
 router.get("/alljoueursI/:id", verifyCoach, async (req, res) => {
 
   try {
-    let joueurs = await Joueur.findOne({ _id: req.params.id }).populate("invitation");
+    let joueurs = await Joueur.findOne({ _id: req.params.id }).populate("invitation").populate("defis");
     res.send(joueurs);
   } catch {
     res.status(500).send("there is something wrong ");
