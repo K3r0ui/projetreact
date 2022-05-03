@@ -25,7 +25,13 @@ export const updateCoach = async ({ dob, ...rest }) => {
    );
    return data;
 };
-
+// update password 
+export const updatePasswordCoach = async (oldPassword,newPassword)=>{
+   const {data} = await axios.put(
+      url+'modifierpassword',oldPassword,newPassword,config
+   );
+   return data;
+}
 // export const getCurrentJoueurProfile = () => {} // implemented within joueur.service
 
 export const getAllJoueurs = async () => {

@@ -3,8 +3,9 @@ import React from 'react'
 import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Space, } from 'antd';
 
 
-const PasswordForm = ({ finishPasswordUpdate }) => {
+const PasswordCoachForm = ({ finishPasswordUpdate }) => {
     const [form] = Form.useForm();
+    form.resetFields();
 
     const onFinish = (values) => {
         finishPasswordUpdate(values.oldPassword, values.newPassword);
@@ -89,4 +90,4 @@ const PasswordForm = ({ finishPasswordUpdate }) => {
     )
 }
 
-export default PasswordForm
+export default PasswordCoachForm

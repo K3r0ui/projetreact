@@ -4,7 +4,7 @@ import ProfileCoachForm from './ProfileCoachForm';
 import PasswordCoachForm from './PasswordCoachForm';
 import { Modal, message } from 'antd';
 import moment from 'moment';
-import { updateCoach } from '../../../services/profile.service';
+import { updateCoach , updatePasswordCoach} from '../../../services/profile.service';
 export default function ProfileCoach({profilecoach}) {
   const [data,setData] = useState(profilecoach);
   useEffect(() => {
@@ -12,8 +12,9 @@ export default function ProfileCoach({profilecoach}) {
       setData(profilecoach);
     };
   }, []);
-  
+  // variable state pour show more infos
   const [butt, setButt] = useState(false)
+  // variable state pour buttons
   const [visible, setVisible] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibleParametre, setVisibleParametre] = useState(false);
@@ -22,6 +23,7 @@ export default function ProfileCoach({profilecoach}) {
   }
   const editPassword = () => {
     setVisiblePassword(true)
+    console.log("GG")
 }
   const edit = () => {
     setVisible(true);
@@ -37,7 +39,7 @@ const handleCancel = () => {
   setVisiblePassword(false);
   setVisibleParametre(false);
 };
-
+// modifier profile coach
 const finish = async (values) => {
   try {
     const rs = await updateCoach(values)
@@ -52,6 +54,21 @@ const finish = async (values) => {
     message.error('Submit failed!');
   }
 }
+// modifier mot de passe coach
+const finishPasswordUpdate = async (oldPassword,newPassword)=>{
+  console.log('HIT')
+  try {
+    console.log('HITss')
+    const rs = await updatePasswordCoach(oldPassword,newPassword)
+    console.log('rs',rs)
+    setVisiblePassword(false);
+    setData({data,...rs});
+    message.success('Password avec success!');
+  } catch (error) {
+    message.error('Verifier Votre Mot de passe')
+  }
+}
+// calcul age
 const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
 
 const initialValues = data
@@ -113,7 +130,7 @@ const initialValues = data
                 visible={visiblePassword}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                {<PasswordCoachForm />}
+                {<PasswordCoachForm finishPasswordUpdate={finishPasswordUpdate}/>}
     </Modal>
     </>
     

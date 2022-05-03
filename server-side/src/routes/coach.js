@@ -154,8 +154,28 @@ router.put("/modifierprofile", verifyCoach, async (req, res) => {
       res.status(400).send("there is something wrong ")
   }
 });
+// modifier Profile Coach Password
+router.put("/modifierpassword", verifyCoach, async (req, res) => {
+  try {
+      const coach = await Coach.findByIdAndUpdate(req.user.id)
+      const compare = await bcrypt.compare(req.body.oldPassword, coach.password)
+      if (compare) {
+          const cc = await Coach.findByIdAndUpdate(
+              req.user.id,
+              {
+                  password: bcrypt.hashSync(req.body.newPassword, 8)
+              }
+              , { new: true }
+          )
+          res.send(cc)
+      } else {
+          res.status(400).send("Verifier votre password")
+      }
 
-
+  } catch {
+      res.status(500).send("there is something wrong ")
+  }
+});
 router.put("/payerabonnement", verifyCoach, async (req, res) => {
   let coach;
   try {
