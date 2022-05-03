@@ -1,15 +1,18 @@
-import {React,  useState } from 'react'
+import {React,  useState, useEffect } from 'react'
 import { Button, Label,Typography } from 'antd'
 import ProfileCoachForm from './ProfileCoachForm';
 import PasswordCoachForm from './PasswordCoachForm';
 import { Modal, message } from 'antd';
 import moment from 'moment';
+import { updateCoach } from '../../../services/profile.service';
 export default function ProfileCoach({profilecoach}) {
-  const objecttoarray =(gg)=>{
-    let vv = Object.values(gg) ;
-    console.log("GG",vv)
-     return vv;
-  }
+  const [data,setData] = useState(profilecoach);
+  useEffect(() => {
+    return () => {
+      setData(profilecoach);
+    };
+  }, []);
+  
   const [butt, setButt] = useState(false)
   const [visible, setVisible] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
@@ -34,42 +37,59 @@ const handleCancel = () => {
   setVisiblePassword(false);
   setVisibleParametre(false);
 };
-const initialValues = profilecoach
+
+const finish = async (values) => {
+  try {
+    const rs = await updateCoach(values)
+    console.log(profilecoach);
+    console.log("aaa",{data,...rs});
+    
+    setVisible(false);
+    setData({data,...rs});
+    message.success('Submit success!');
+  } catch (error) {
+    console.log(error.message);
+    message.error('Submit failed!');
+  }
+}
+const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
+
+const initialValues = data
         ? {
-            firstName: profilecoach.firstName,
-            lastName: profilecoach.lastName,
-            dob: profilecoach.dob ? moment(profilecoach.dob, 'YYYY-MM-DD') : null }: {};
+            firstName: data.firstName,
+            lastName: data.lastName,
+            dob: data.dob ? moment(data.dob, 'YYYY-MM-DD') : null }: {};
   return (<>
-    <h1> Profile du coach :  {profilecoach.firstName+" "+profilecoach.lastName}</h1>
+    <h1> Profile du coach :  {data.firstName+" "+data.lastName}</h1>
     <label>Nom de la famille:</label>
     <Typography>
-    <pre>{profilecoach.firstName}</pre>
+    <pre>{data.firstName}</pre>
     </Typography>
     <label>Prénom</label>
     <Typography>
-    <pre>{profilecoach.lastName}</pre>
+    <pre>{data.lastName}</pre>
     </Typography>
     <label>Adresse Email:</label>
     <Typography>
-    <pre>{profilecoach.email}</pre>
+    <pre>{data.email}</pre>
     </Typography>
-    <label>Date de naissance</label>
+    <label>Age</label>
     <Typography>
-    <pre>{profilecoach.dob.slice(0,10)}</pre>
+    <pre>{getAge(data.dob)} Ans</pre>
     </Typography>
     { butt=== true ?
     <>
     <label>Type d'abonnement</label>     
     <Typography>
-    <pre>{profilecoach.abonnement.type}</pre>
+    <pre>{data.abonnement.type}</pre>
     </Typography>
     <label>Nombre De joueurs</label>     
     <Typography>
-    <pre>{profilecoach.abonnement.joueurterminer}</pre>
+    <pre>{data.abonnement.joueurterminer}</pre>
     </Typography>
     <label>Date de creation d'abonnement</label>     
     <Typography>
-    <pre>{profilecoach.abonnement.doc.slice(0,10)}</pre>
+    <pre>{data.abonnement.doc.slice(0,10)}</pre>
     </Typography> </>: <Button onClick={()=>{ setButt(true); }}>More info</Button>}
     <br></br>
     <br></br>
@@ -86,7 +106,7 @@ const initialValues = profilecoach
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                {<ProfileCoachForm  initialValues={initialValues} />}
+                {<ProfileCoachForm  initialValues={initialValues} finish={finish} />}
     </Modal>
     <Modal
                 title='Modifier Password'

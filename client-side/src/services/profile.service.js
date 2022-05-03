@@ -12,6 +12,20 @@ export const getCurrentCoachProfile = async () => {
    return data;
 };
 
+// update Coach
+export const updateCoach = async ({ dob, ...rest }) => {
+   let date;
+   if (dob) {
+      date = dob.format('YYYY-MM-DD');
+   }
+   const { data } = await axios.put(
+      url+'modifierprofile',
+      { ...rest, ...(dob && { dob: date }) },
+      config
+   );
+   return data;
+};
+
 // export const getCurrentJoueurProfile = () => {} // implemented within joueur.service
 
 export const getAllJoueurs = async () => {

@@ -1,17 +1,19 @@
 import React from 'react'
 import { Button, DatePicker, Form, Input, InputNumber, message, Radio, Space, } from 'antd';
 import moment from 'moment';
-function ProfileCoachForm({initialValues}) {
+function ProfileCoachForm({initialValues,finish}) {
 
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        //finish(values);
+        finish(values);
     };
 
     const onFinishFailed = () => {
         message.error('Submit failed!');
     };
+    const disabledDate =(d) => {!d || d.isAfter("2002-12-31") || d.isSameOrBefore("1960-01-01")}
+      
   return (
   <Form
       initialValues={initialValues}
@@ -36,7 +38,7 @@ function ProfileCoachForm({initialValues}) {
       </Form.Item>
 
       <Form.Item name='dob' label='Date de naissance'>
-          <DatePicker />
+          <DatePicker disabledDate={disabledDate} defaultPickerValue={moment("2002-12-31")} />
       </Form.Item>
       <br />
       <Form.Item>

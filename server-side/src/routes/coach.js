@@ -142,6 +142,20 @@ router.get("/profile", verifyCoach, async (req, res) => {
   }
 });
 
+// modifier Profile 
+router.put("/modifierprofile", verifyCoach, async (req, res) => {
+  try {
+      const rest = req.body;
+      const coach = await Coach.findByIdAndUpdate(
+          req.user.id, rest, { new: true }
+      )
+      res.send(coach);
+  } catch {
+      res.status(400).send("there is something wrong ")
+  }
+});
+
+
 router.put("/payerabonnement", verifyCoach, async (req, res) => {
   let coach;
   try {
