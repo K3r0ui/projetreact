@@ -1,10 +1,17 @@
 import axios from 'axios';
+const configJ = {
+    headers: {
+        
+       'x-auth-token': localStorage.getItem('token'),
+    },
+ };
 const config = {
     headers:{
         'api_key': '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
         'x-auth-token':localStorage.getItem('token')
     }
   };
+  /// get all defi from coach
 export const getAllDefis =async()=>{
     try {
     const result = await axios.get(
@@ -92,7 +99,19 @@ export const assignerDefi = async (id,joueur,delai) => {
         console.log(err);
 
     }
+// get all defi from joueur 
+
 };
 
-
+export const getAllDefisJ = async () => {
+    try {
+        const rs = await axios.get(
+            'http://localhost:8080/defi/joueur',configJ
+        );
+        console.log(rs.data);
+        return rs
+    } catch (error) {
+        console.log(error);
+    }
+};
 

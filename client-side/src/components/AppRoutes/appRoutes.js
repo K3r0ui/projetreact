@@ -23,7 +23,7 @@ import LoginJoueurPage from '../../pages/LoginPage/LoginJoueurPage';
 import PrivateRoute from './privateRoute';
 import SeanceDetail from '../../pages/SeancePage/SeanceDetail';
 import ProfileCoachPage from '../../pages/ProfileCoachPage/profileCoachPage';
-
+import DefiPagePlayer from '../../pages/DefiPagePlayer/DefiPagePlayer';
 export default function AppRoutes({ user }) {
    const routes = [
       { path: '/pricing', Component: <PricingPage /> },
@@ -41,6 +41,7 @@ export default function AppRoutes({ user }) {
       { path: '/profile', Component: <ProfilePage /> },
       { path: '/logout', Component: <Logout /> },
       { path: '/myprofile', Component: <ProfileCoachPage /> },
+      { path: '/joueur/defi', Component: <DefiPagePlayer /> },
    ];
 
    return (

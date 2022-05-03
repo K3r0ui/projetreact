@@ -9,6 +9,9 @@ export default function JoueurDropMenu() {
          <NavDropdown.Item as={Link} to='/joueur/events'>
             Evennements
          </NavDropdown.Item>
+         <NavDropdown.Item as={Link} to='/joueur/defi'>
+            Evennements
+         </NavDropdown.Item>
          <NavDropdown.Divider />
          <NavDropdown.Item as={Link} to='/profile'>
             Profile

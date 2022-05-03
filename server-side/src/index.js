@@ -14,7 +14,7 @@ import program from "./routes/program";
 import seance from "./routes/seance"
 
 import configDB from "./config/db";
-//import { Discipline } from "./models/discipline";
+import { Alert } from "./models/alert";
 
 const app = express();
 app.use(cors());
@@ -50,11 +50,11 @@ app.use("/coach/seance", seance);
 
 // (async () => await discipline.save())();
 
-// const discipline2 = new Discipline({
-//   description: "handball",
-// });
+//  const alert2 = new Alert({
+//    name: "incorrect",
+//  });
 
-// (async () => await discipline2.save())();
+// (async () => await alert2.save())();
 
 const port = process.env.PORT || 3000;
 export const server = app.listen(port, () => {
