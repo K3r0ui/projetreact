@@ -21,10 +21,10 @@ router.get('/coach', verifyCoach, async (req, res) => {
     }
 })
 
-//Get List defi of joueur
-router.get('/joueur/:id', verifyJoueur, async (req, res) => {
+//Get List defi of connected players
+router.get('/joueur', verifyJoueur, async (req, res) => {
     try {
-        const joueur = await Joueur.findById(req.user.id).populate("defis")
+        const joueur = await Joueur.findById(req.user.id)
         res.status(200).send(joueur.defis)
     } catch {
         res.status(400).send("No Defi Trouved under Player")
@@ -32,14 +32,14 @@ router.get('/joueur/:id', verifyJoueur, async (req, res) => {
 })
 
 //Get defit By Id
-// router.get('/joueur/:id', verifyToken, async (req, res) => {
-//     try {
-//         let defi = await Defi.findOne({ _id: req.params.id }).populate("defis")
-//         res.status(200).send(defi)
-//     } catch {
-//         res.status(400).send("No Defi Trouved under Player")
-//     }
-// })
+ router.get('/taking/:id', verifyJoueur, async (req, res) => {
+     try {
+         let defi = await Defi.findById(req.params.id )
+        res.status(200).send(defi)
+    } catch {
+         res.status(400).send("No Defi")
+     }
+ })
 
 
 router.post('/coach', verifyCoach, async (req, res) => {
@@ -64,7 +64,8 @@ router.put('/coach/assigned/:id', verifyCoach, async (req, res) => {
     try {
         const newJoueurs = {
             joueur: req.body.joueur,
-            delai: req.body.delai
+            delai: req.body.delai,
+            donejoueur: false,
         }
         const defi = await Defi.findByIdAndUpdate(
             req.params.id,
@@ -102,10 +103,23 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
 
 router.put('/joueur/:id', verifyJoueur, async (req, res) => {
     try {
+        // const de = await Defi.findById(req.params.id).select("joueurs");
+        // de.joueurs.map(async(x) =>  {
+        //     let jou = await Joueur.findById(x.jou)
+
+        //     const find = jou.joueurs.findIndex(
+        //         (x) => x.joueur == req
+        //     )
+        // })
+        const newJoueurs = {
+            joueur: req.body.joueur,
+            delai: req.body.delai,
+            donejoueur: req.body.donejoueur,
+        }
         const defi = await Defi.findOneAndUpdate(
             { _id: req.params.id },
             {
-                done: req.body.done,
+                  joueurs: newJoueurs,
             },
             { new: true }
         );
