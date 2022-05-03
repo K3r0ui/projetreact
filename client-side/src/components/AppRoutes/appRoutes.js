@@ -22,6 +22,7 @@ import ProfilePage from '../../pages/joueur/profilePage';
 import LoginJoueurPage from '../../pages/LoginPage/LoginJoueurPage';
 import PrivateRoute from './privateRoute';
 import SeanceDetail from '../../pages/SeancePage/SeanceDetail';
+import ProfileCoachPage from '../../pages/ProfileCoachPage/profileCoachPage';
 
 export default function AppRoutes({ user }) {
    const routes = [
@@ -39,6 +40,7 @@ export default function AppRoutes({ user }) {
       { path: '/prorammes', Component: <ProgramSeance /> },
       { path: '/profile', Component: <ProfilePage /> },
       { path: '/logout', Component: <Logout /> },
+      { path: '/myprofile', Component: <ProfileCoachPage /> },
    ];
 
    return (

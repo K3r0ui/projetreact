@@ -29,7 +29,7 @@ export default function CoachDropMenu() {
             Statistique
          </NavDropdown.Item>
          <NavDropdown.Item as={Link} to='/profilejoueur'>
-            profile joueur
+            Liste profile joueurs
          </NavDropdown.Item>
          <NavDropdown.Divider />
          <NavDropdown.Item href='#action/3.4'>Equipes</NavDropdown.Item>

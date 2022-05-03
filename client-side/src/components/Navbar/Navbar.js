@@ -22,8 +22,8 @@ const NavbarApp = () => {
 
                      {localStorage.getItem('isCoach') == 'true' ? (
                         <>
-                           <Nav.Link as={Link} to='/pricing'>
-                              Pricing
+                           <Nav.Link as={Link} to='/myprofile'>
+                              Myprofile
                            </Nav.Link>
                            <CoachDropMenu />
                         </>
