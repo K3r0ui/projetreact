@@ -1,22 +1,109 @@
 import React from 'react';
+import { Form, Input, Button , DatePicker } from "antd";
+import moment from 'moment';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+function SignupForm({ handleChange, handleSubmit }) {
 
-function SignupForm({ label, type, onChange }) {
+
+   const validateMessages = {
+      required: "${label} is required!",
+      types: {
+        email: "${label} is not a valid email!"
+      }
+    };
+    const layout = {
+      labelCol: {
+        span: 8
+      },
+      wrapperCol: {
+        span: 16
+      }
+    };
+    // date entre 1960 - 2002 to guaranteed a coach between 20y - 60y
+    const disabledDate =(d) => {!d || d.isAfter("2002-12-31") || d.isSameOrBefore("1960-01-01")}
    return (
-      <div className=' mb-3'>
-         <label className='form-label'>{label}</label>
-         <div className='input-group'>
-            <span className='input-group-text' id='basic-addon1'>
-               <i className='fa-solid fa-user'></i>
-            </span>
-            <input
-               type={type}
-               className='form-control'
-               onChange={onChange}
-               required
-            />
-         </div>
-      </div>
-   );
+      <>
+      <br></br>
+      <Form
+      {...layout}
+      name="nest-messages"
+      validateMessages={validateMessages}
+      
+    >
+      <Form.Item
+          name='firstName'
+          label='Nom'
+          rules={[{ required: true, message: 'Entrer le nom de Coach' }]}>
+          <Input placeholder='Nom de Coach' />
+      </Form.Item>
+      <Form.Item
+          name='lastName'
+          label='Prenom'
+          rules={[
+              { required: true, message: 'Entrer le Prenom de Coach' },
+          ]}>
+          <Input placeholder='Prenom du Coach' />
+      </Form.Item>
+
+      <Form.Item name='dob' label='Date de naissance'>
+          <DatePicker disabledDate={disabledDate} defaultPickerValue={moment("2002-12-31")} />
+      </Form.Item>
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[
+          {
+            required: true,
+            type: "email"
+          }
+        ]}
+      >
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Put your email" onChange={handleChange('email')}/>
+      </Form.Item>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+          }
+        ]}
+      >
+        <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Put your password" onChange={handleChange('password')} />
+      </Form.Item>
+      <Form.Item
+                    name="confirm"
+                    label="Confirmer mot de passe"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please confirm your password!',
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder='Confirm your password' />
+                </Form.Item>
+
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+        <Button type="primary" onClick={handleSubmit} >
+          Submit
+        </Button>
+        Or <Link to="/login">Login now!</Link>
+      </Form.Item>
+    </Form>
+    </> );
+   
 }
 
 export default SignupForm;

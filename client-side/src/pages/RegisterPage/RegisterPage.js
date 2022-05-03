@@ -40,8 +40,8 @@ const RegisterPage = ({ user }) => {
    };
    if (user) return <Navigate to='/' replace />;
    return (
-      <>
-         <div class='container p-4 mt-4'>
+      <><SignupForm  handleSubmit={handleSubmit} handleChange={handleChange} />
+         {/* <div class='container p-4 mt-4'>
             <div class='row justify-content-evenly mt-4'>
                <div class='col-lg-6 col-md-12 mt-4'>
                   <div class='d-flex'>
@@ -96,7 +96,7 @@ const RegisterPage = ({ user }) => {
                   </div>
                </div>
             </div>
-         </div>
+         </div> */}
       </>
    );
 };
