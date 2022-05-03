@@ -16,7 +16,7 @@ const coachSchema = new mongoose.Schema(
       unique: true,
     },
     dob: {
-      type: String,
+      type: Date,
     },
     password: {
       type: String,

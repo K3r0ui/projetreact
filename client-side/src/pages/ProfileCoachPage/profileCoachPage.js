@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import ProfileCoach from '../../Coach/ProfileCoach/ProfileCoach';
+import ProfileCoach from '../../components/Coach/ProfileCoach/ProfileCoach';
 import { getCurrentCoachProfile } from '../../services/profile.service';
-
+import moment from 'moment';
 const ProfileCoachPage = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
