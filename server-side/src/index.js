@@ -10,11 +10,12 @@ import defi from "./routes/defi";
 import event from "./routes/event";
 import lieu from "./routes/lieu";
 import discipline from "./routes/discipline";
+import alert from "./routes/alert";
 import program from "./routes/program";
 import seance from "./routes/seance"
 
 import configDB from "./config/db";
-import { Alert } from "./models/alert";
+// import { Alert } from "./models/alert";
 
 const app = express();
 app.use(cors());
@@ -39,7 +40,7 @@ app.use("/event", event);
 app.use("/lieu", lieu);
 
 app.use("/discipline", discipline);
-
+app.use("/alert", alert);
 app.use("/program", program);
 app.use("/coach/seance", seance);
 
@@ -50,11 +51,25 @@ app.use("/coach/seance", seance);
 
 // (async () => await discipline.save())();
 
-//  const alert2 = new Alert({
-//    name: "incorrect",
-//  });
+//   const alert2 = new Alert({
+//     name: "incorrect",
+//     type: "error"
+//   });
 
-// (async () => await alert2.save())();
+//  (async () => await alert2.save())();
+
+//  const alert3 = new Alert({
+//   name: "utile",
+//   type: "info"
+// });
+
+// (async () => await alert3.save())();
+// const alert4 = new Alert({
+//   name: "pas utile",
+//   type: "warning"
+// });
+
+(async () => await alert4.save())();
 
 const port = process.env.PORT || 3000;
 export const server = app.listen(port, () => {
