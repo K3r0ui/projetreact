@@ -20,6 +20,11 @@ export const getAllSeances = async () => {
    }
 };
 
+export const getAllSeancesJ = async () => {
+   const { data } = await axios.get(url + '/joueur/s', config);
+   return data;
+};
+
 export const getSingleSeancePlayer = async (id) => {
    try {
       const result = await axios.get(

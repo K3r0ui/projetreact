@@ -1,5 +1,6 @@
 import express from "express";
 import verifyCoach from "../middlewares/verifyCoach";
+import verifyJoueur from "../middlewares/verifyJoueur";
 import verifyToken from "../middlewares/verifyToken";
 import { Program } from "../models/program";
 import { Seance } from "../models/seance";
@@ -62,7 +63,20 @@ route.get("/", verifyCoach, async (req, res) => {
   }
 });
 
-// get all seance of specefic joueur 
+route.get("/joueur/s", verifyJoueur, async (req, res) => {
+  try {
+    const prog = await Seance.find({ joueur: req.user.id })
+      .populate("competences")
+      .populate("statistiques.statistique")
+      .populate("lieu")
+      .populate("program");
+    res.send(prog);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
+// get all seance of specefic joueur
 route.get("/joueur/:id", verifyToken, async (req, res) => {
   try {
     const prog = await Seance.find({ joueur: req.params.id })

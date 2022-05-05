@@ -25,6 +25,9 @@ const NavbarApp = () => {
                            <Nav.Link as={Link} to='/myprofile'>
                               Myprofile
                            </Nav.Link>
+                           <Nav.Link as={Link} to='/pricing'>
+                              Pricing
+                           </Nav.Link>
                            <CoachDropMenu />
                         </>
                      ) : (
