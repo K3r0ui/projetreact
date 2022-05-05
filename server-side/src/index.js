@@ -12,7 +12,7 @@ import lieu from "./routes/lieu";
 import discipline from "./routes/discipline";
 import alert from "./routes/alert";
 import program from "./routes/program";
-import seance from "./routes/seance"
+import seance from "./routes/seance";
 
 import configDB from "./config/db";
 // import { Alert } from "./models/alert";
@@ -44,7 +44,6 @@ app.use("/alert", alert);
 app.use("/program", program);
 app.use("/coach/seance", seance);
 
-
 // const discipline = new Discipline({
 //   description: "football",
 // });
@@ -69,7 +68,7 @@ app.use("/coach/seance", seance);
 //   type: "warning"
 // });
 
-(async () => await alert4.save())();
+//(async () => await alert4.save())();
 
 const port = process.env.PORT || 3000;
 export const server = app.listen(port, () => {
