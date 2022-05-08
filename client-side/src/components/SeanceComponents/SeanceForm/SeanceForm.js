@@ -215,6 +215,10 @@ const SeanceForm = (props) => {
     <div className='container'>  
     <Form.Item
     name="joueur"
+    label="Joueurs" 
+
+    rules={[{ required: true, message: 'Selectionner un joueur' }]}
+
      >   
         
         <Select  placeholder="Selectionner un joueur" style={{ width: '80%' }} onChange={onJoueurChange}>
@@ -234,9 +238,13 @@ const SeanceForm = (props) => {
 
     <Form.Item
      name="programme"
+     label="Programme" 
+
+     rules={[{ required: true, message: 'selectionner un programme' }]}
+
      >   
         
-        <Select name="programme" placeholder="Selectionner un programme" style={{ width: "80%" }} onChange={onProgrammeChange}>
+        <Select  name="programme" placeholder="Selectionner un programme" style={{ width: "80%" }} onChange={onProgrammeChange}>
         {programmes.map(programme => (
           <Option key={programme._id}>{programme.name}</Option>
         ))}
@@ -250,6 +258,9 @@ const SeanceForm = (props) => {
       <Col span={12}>
 
         <Form.Item
+        rules={[{ required: true, message: 'selectionner un lieux' }]}
+        label="Lieux" 
+
         name="lieu">  
         <Select  name="lieu"  placeholder="Selectionner le lieu" style={{ width: "80%"}}  onChange={onLieuChange}>
             {lieux.map(lieu => (

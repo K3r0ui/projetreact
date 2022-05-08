@@ -15,7 +15,7 @@ import SeanceForm from '../../components/SeanceComponents/SeanceForm/SeanceForm'
 import moment from 'moment';
 import { getAllSeances } from '../../services/seance.service';
 import { getAllLieus } from '../../services/lieu.service';
-import { getAllPlayers } from '../../services/joueur.service';
+import { getAllPlayersI } from '../../services/joueur.service';
 import {
    addSeance,
    updateEtatSeance,
@@ -122,7 +122,7 @@ const SeancePage = () => {
             setData(dataTable);
             setAllData(dataTable);
          }
-         const resultJoueur = await getAllPlayers();
+         const resultJoueur = await getAllPlayersI();
          if (resultJoueur) {
             setJoueurs(resultJoueur);
             console.log('resultJoueur', resultJoueur);
