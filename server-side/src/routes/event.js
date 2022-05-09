@@ -12,7 +12,7 @@ const router = express.Router();
 //All evevent for Coach
 router.get('/coach', verifyCoach, async (req, res) => {
     try {
-        const events = await Event.find({ coach: req.user.id })
+        const events = await Event.find({ coach: req.user.id }).populate('joueurs.joueur')
         if (!events) {
             req.status(400).send("No event Found");
         }

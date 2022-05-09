@@ -1,14 +1,45 @@
-import { useState } from 'react';
+import { useState,  useEffect } from 'react';
 import { Popconfirm, Modal } from 'antd';
 import { message } from 'antd';
 import EventForm from '../EventForm/EventForm';
 const Event = (props) => {
    const { event, handleDeleteEventById, handleUpdateEvent, setData } = props;
    const [visible, setVisible] = useState(false);
+   const [visibleC, setVisibleC] = useState(false);
+   const [partcipPlayers,setPartcipPlayers]= useState("")
+   const [interestedPlayers,setInterestedPlayers]=useState("")
+
 
    //fonctions pour formulaire
 
    //faire la mise a jour
+   useEffect(() => {
+      const getStatus = async () => {
+       
+
+          let partPlayers= "";
+          let intPlayers="";
+          event.joueurs.map((joueur)=>{
+            if (joueur.status==="participer")
+            {
+              partPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
+            }
+            else if(joueur.status==="interessé")
+            {
+              intPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
+
+            }
+          })
+          setPartcipPlayers(partPlayers);
+          setInterestedPlayers(intPlayers);
+          
+         
+
+
+  
+      };
+      getStatus();
+    }, [event]);
    const finish = (name, description, etat) => {
       handleUpdateEvent(event._id, name, description, etat);
 
@@ -31,11 +62,28 @@ const Event = (props) => {
    const modifier = () => {
       setVisible(true);
    };
+  
+
    const handleOk = () => {
       setVisible(false);
    };
    const handleCancel = () => {
       setVisible(false);
+   };
+    
+
+
+   const consulter = () => {
+     
+      console.log(partcipPlayers)
+      console.log(interestedPlayers)
+      setVisibleC(true);
+    };
+   const handleOkC = () => {
+      setVisibleC(false);
+   };
+   const handleCancelC = () => {
+      setVisibleC(false);
    };
 
    return (
@@ -50,6 +98,12 @@ const Event = (props) => {
                   class='btn-group'
                   role='group'
                   aria-label='Basic mixed styles example'>
+                   <button
+                     type='button'
+                     onClick={consulter}
+                     class='btn btn-primary'>
+                     consulter
+                  </button>   
                   <button
                      type='button'
                      onClick={modifier}
@@ -82,6 +136,16 @@ const Event = (props) => {
                   etat: event.etat,
                }}
             />
+         </Modal>
+
+
+         <Modal
+            title='liste de Joueur'
+            visible={visibleC}
+            onOk={handleOkC}
+            onCancel={handleCancelC}
+            okButtonProps={{ disabled: true }}>
+             <h3>liste de joueur</h3>
          </Modal>
       </>
    );
