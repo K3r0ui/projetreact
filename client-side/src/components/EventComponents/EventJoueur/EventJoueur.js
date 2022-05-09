@@ -7,6 +7,8 @@ const EventJoueur = (props) => {
     const [isModalVisible,setIsModalVisible]=useState(false)
     const { currentUser } = useContext(UserContext);
     const [status,setStatus] = useState("")
+    const [partcipPlayers,setPartcipPlayers]= useState("")
+    const [interestedPlayers,setInterestedPlayers]=useState("")
 
 
 
@@ -14,12 +16,39 @@ const EventJoueur = (props) => {
     useEffect(() => {
       const getStatus = async () => {
         const eventUser=event.joueurs.find(joueur=>joueur.joueur._id===currentUser._id)
+        if (eventUser&& eventUser.status)
+        {
+          
           setStatus(eventUser.status)
+        }
+        else
+        {
+          setStatus("");
+        }
+
+          let partPlayers= "";
+          let intPlayers="";
+          event.joueurs.map((joueur)=>{
+            if (joueur.status==="participer")
+            {
+              partPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
+            }
+            else if(joueur.status==="interessé")
+            {
+              intPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
+
+            }
+          })
+          setPartcipPlayers(partPlayers);
+          setInterestedPlayers(intPlayers);
           console.log("eventUser",eventUser)
+          console.log("ev",event);
+
+
   
       };
       getStatus();
-    }, []);
+    }, [event]);
     
    const popVisible=()=>{
     setIsModalVisible(true);
@@ -57,6 +86,10 @@ const EventJoueur = (props) => {
         message.error('vous avez déjà répondu !!');
       }
 
+    }
+
+    const joueurs=(etat)=>{
+      return etat
     }
    
   
@@ -111,7 +144,17 @@ const EventJoueur = (props) => {
     width={700}>
         <center><h4>Nom de l'evennement : {event.name}</h4></center>
         <h5>Description : {event.description}</h5>
-        <h5>Participants :</h5><p></p>
+        {
+          event.coach&&
+        <h5>Coach : {event.coach.firstName+" "+event.coach.lastName}</h5>
+        }
+
+
+        <h5>Participants :</h5><p>{partcipPlayers}</p>
+
+
+        <h5> Joueur Interessés :</h5><p>{interestedPlayers}</p>
+
         <h5>Etat : {event.etat}</h5>
               </Modal>
     </>);

@@ -19,7 +19,7 @@ router.post("/login", async (req, res) => {
 
     res.send(token);
   } catch (error) {
-    return res.status(200).send("erreur de serveur ");
+    return res.status(200).send(error);
   }
 });
 

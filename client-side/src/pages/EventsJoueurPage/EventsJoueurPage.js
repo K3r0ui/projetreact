@@ -17,7 +17,6 @@ const EventsJoueurPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const data2=await getPrivateEvents()
      setData3(await getPrivateEvents());;
      setData2(await getPublicEvents());
      setData(await getPublicEvents());
