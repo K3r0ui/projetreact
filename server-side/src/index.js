@@ -13,6 +13,7 @@ import discipline from "./routes/discipline";
 import alert from "./routes/alert";
 import program from "./routes/program";
 import seance from "./routes/seance";
+import './cronJobs';
 
 import configDB from "./config/db";
 // import { Alert } from "./models/alert";
