@@ -6,52 +6,69 @@ const config = {
    },
 };
 const configCoach = {
-    headers: {
-        api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
-        'x-auth-token':
-        localStorage.getItem('token'),
-    },
+   headers: {
+      api_key: '=sqfusqhfhkjdshfjsf65464dsfd8sq8+',
+      'x-auth-token':
+         localStorage.getItem('token'),
+   },
 };
+
+
+export const getStatPartager = async () => {
+   const { data } = await axios.get(
+      'http://localhost:8080/coach/seance/joueur/statPartager',
+      config
+   )
+   return data;
+}
+
+export const getCompPartager = async () => {
+   const { data } = await axios.get(
+      'http://localhost:8080/coach/seance/joueur/CompPartager',
+      config
+   )
+   return data;
+}
 
 
 
 
 export const getAllPlayers = async () => {
-    try {
-        const { data } = await axios.get(
-            'http://localhost:8080/coach/alljoueurs',
-            configCoach
-        );
-        return data;
-    } catch (error) {
-        console.log('error');
-    }
+   try {
+      const { data } = await axios.get(
+         'http://localhost:8080/coach/alljoueurs',
+         configCoach
+      );
+      return data;
+   } catch (error) {
+      console.log('error');
+   }
 };
 
 
 export const getAllPlayersI = async () => {
    try {
-       const { data } = await axios.get(
-           'http://localhost:8080/coach/alljoueursI',
-           configCoach
-       );
-       return data;
+      const { data } = await axios.get(
+         'http://localhost:8080/coach/alljoueursI',
+         configCoach
+      );
+      return data;
    } catch (error) {
-       console.log('error');
+      console.log('error');
    }
 };
 
 export const getOnePlayer = async (id) => {
    try {
-      
-       const { data } = await axios.get(
-           'http://localhost:8080/coach/alljoueursI/'+id,
-           configCoach
-       );
-       console.log(data);
-       return data;
+
+      const { data } = await axios.get(
+         'http://localhost:8080/coach/alljoueursI/' + id,
+         configCoach
+      );
+      console.log(data);
+      return data;
    } catch (error) {
-       console.log('error');
+      console.log('error');
    }
 };
 
