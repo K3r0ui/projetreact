@@ -76,6 +76,50 @@ route.get("/joueur/s", verifyJoueur, async (req, res) => {
   }
 });
 
+route.get("/joueur/statPartager", verifyJoueur, async (req, res) => {
+  try {
+    const seances = await Seance.find({ joueur: req.user.id })
+      .populate("statistiques.statistique");
+    const stats = seances.map((seance) => seance.statistiques)
+    const allStat = [];
+
+    stats.map((stat) => {
+      stat.forEach(x => {
+        allStat.push(x)
+      })
+    })
+    const statPartager = allStat.filter((stat) => stat.statistique.isVisible == true)
+    res.send(statPartager);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
+
+route.get("/joueur/CompPartager", verifyJoueur, async (req, res) => {
+  try {
+    const seances = await Seance.find({ joueur: req.user.id })
+      .populate("competences");
+    const comp = seances.map((seance) => seance.competences)
+    const allComp = [];
+
+    comp.map((compt) => {
+      compt.forEach(x => {
+        allComp.push(x)
+      })
+    })
+    const compPartager = allComp.filter((comp) => comp.isVisible == true)
+
+    const ids = compPartager.map(o => o._id)
+    const filtered = compPartager.filter(({ _id }, index) => !ids.includes(_id, index + 1))
+
+    res.send(filtered);
+  } catch (error) {
+    res.status(500).send("something wrong happened!");
+  }
+});
+
+
 // get all seance of specefic joueur
 route.get("/joueur/:id", verifyToken, async (req, res) => {
   try {

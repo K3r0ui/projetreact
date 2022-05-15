@@ -1,30 +1,31 @@
-import React from 'react'
+import { message } from 'antd';
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
 import Profile from '../../components/joueur/profile/profile';
-import { getProfile } from '../../services/joueur.service';
+import { updateJoueur } from '../../services/joueur.service';
+import { UserContext } from '../../UserProvider';
 
 const ProfilePage = () => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+    const [visible, setVisible] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const result = await getProfile();
-            if (result) {
-                setData(result);
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
+    const finish = async (values) => {
+        try {
+            const response = await updateJoueur(values);
+            setCurrentUser(response);
+            setVisible(false)
+            console.log("hit", currentUser);
+            message.success('Submit success!');
+        } catch (error) {
+            console.log(error.message);
+            message.error('Submit failed!');
+        }
+    };
+
     return (
         <div className="container mt-5">
             <div className="main-body mt-5">
-                {loading && <div> loading ... </div>}
-                {!loading &&
-                    <Profile profile={data} />
-                }
+                {currentUser && <Profile profile={currentUser} finish={finish} visible={visible} setVisible={setVisible} />}
             </div>
         </div>
 
