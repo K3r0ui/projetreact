@@ -43,3 +43,16 @@ export const getAllJoueurs = async () => {
       console.log('error');
    }
 };
+
+// add Displine to coach 
+
+export const addDisciplineCoach = async (newDis) => {
+
+   try {
+      const result = await axios.put(url + 'discipline',{discipline : newDis },config);
+      console.log(result.data);
+
+   }catch(err){
+        console.log(err)
+   }
+};

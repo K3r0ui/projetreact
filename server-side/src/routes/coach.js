@@ -42,7 +42,8 @@ router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
     const result = await Coach.findOneAndUpdate(
       { _id: req.user.id },
       {
-        $set: { discipline: req.body.discipline },
+        $set: { discipline: req.body.discipline,
+                firstAuth: false },
       },
       { new: true }
     );
