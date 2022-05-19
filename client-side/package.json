@@ -29,7 +29,8 @@
       "test": "react-scripts test",
       "eject": "react-scripts eject",
       "lint": "npx eslint .",
-      "format": "prettier --write \"**/*.+(js|json)\""
+      "format": "prettier --write \"**/*.+(js|json)\"",
+      "cypress:open": "cypress open"
    },
    "eslintConfig": {
       "extends": [
