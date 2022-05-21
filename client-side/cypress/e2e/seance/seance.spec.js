@@ -1,5 +1,5 @@
 
-describe('Test Creation d une seance && filter ', () => {
+describe('Test filter seance ', () => {
     beforeEach(() => {
       cy.login()
     })
@@ -39,20 +39,6 @@ describe('Test Creation d une seance && filter ', () => {
       
         
     
-        //cliquer sur la bouton d'ajout 
-        /*cy.get('.ant-space-item > .ant-btn > span').click();
-  
-        
-  
-  
-        cy.get('.table').find('tbody')
-         .last().should('contain', "description defi test")
-         cy.get('.ant-modal').should('be.visible')
-  
-  
-    
-    
-        // Should be on a new URL which includes '/commands/actions'*/
       })
       it.only('filtrage par date ', () => {
         

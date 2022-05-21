@@ -40,6 +40,24 @@ Cypress.Commands.add('login', () => {
   
   })
 
+  Cypress.Commands.add('loginJoueur', () => { 
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:8080/joueur/login',
+      body: {
+       email:"najibbelhadj11@gmail.com",
+       password:"12345678"
+
+      }
+    })
+    .then((resp) => {
+      window.localStorage.setItem('token', resp.body)
+      window.localStorage.setItem('isCoach', false)
+    })
+  
+  })
+
+
 
   Cypress.Commands.add( 'multiSelect', ( selector , text) => {
     cy.get(`.ant-select${selector} > .ant-select-selector > .ant-select-selection-overflow`).click();
