@@ -8,6 +8,8 @@ const Event = (props) => {
    const [visibleC, setVisibleC] = useState(false);
    const [partcipPlayers,setPartcipPlayers]= useState("")
    const [interestedPlayers,setInterestedPlayers]=useState("")
+   const [nPartcipPlayers,setNPartcipPlayers]= useState("")
+   
 
 
    //fonctions pour formulaire
@@ -18,6 +20,7 @@ const Event = (props) => {
        
 
           let partPlayers= "";
+          let nPartPlayers= "";
           let intPlayers="";
           event.joueurs.map((joueur)=>{
             if (joueur.status==="participer")
@@ -29,9 +32,16 @@ const Event = (props) => {
               intPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
 
             }
+            else if(joueur.status==="ne pas participer")
+            {
+               nPartPlayers+=joueur.joueur.firstName+" "+joueur.joueur.lastName+" | "
+
+            }
           })
           setPartcipPlayers(partPlayers);
           setInterestedPlayers(intPlayers);
+          setNPartcipPlayers(nPartPlayers);
+          console.log(event)
           
          
 
@@ -145,7 +155,11 @@ const Event = (props) => {
             onOk={handleOkC}
             onCancel={handleCancelC}
             okButtonProps={{ disabled: true }}>
-             <h3>liste de joueur</h3>
+             <h3>liste de joueurs</h3>
+             <h5>joueurs participés: {partcipPlayers}</h5>
+             <h5>joueurs interessés: {interestedPlayers}</h5>
+             <h5>joueurs non participés: {nPartcipPlayers}</h5>
+          
          </Modal>
       </>
    );
