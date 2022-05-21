@@ -152,6 +152,8 @@ const SeanceForm = (props) => {
         <Select
         mode="multiple"
         allowClear
+        key="zdzd"
+        label="dzdz"
         
         style={{ width: '100%' }}
         placeholder="Selectionner les statistiques"
