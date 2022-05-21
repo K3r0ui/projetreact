@@ -12,7 +12,7 @@ beforeEach(() => {
     server = require("../index");
 });
 
-describe('Competence Test', () => {
+describe('Aficher et modifier Seance Test ', () => {
     jest.setTimeout(10000);
     beforeAll(async () => {
         const mongoServer = await MongoMemoryServer.create()
