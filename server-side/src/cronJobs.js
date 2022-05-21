@@ -42,6 +42,18 @@ export var job = new CronJob(
                        <h5> votre seance de coach ${seance.coach.firstName} ${seance.coach.lasName} est proche</h5>
                        <p> date: ${moment(seance.date).format('DD-MM-YYYY hh:mm')}</p>
                        </div>`
+                };
+
+                let mailOptionsCoach = {
+                    from: "nodeisamm@gmail.com",
+                    to: `${seance.coach.email}`,
+                    subject: `seance ${seance.titre} est proche`,
+                    text: "test",
+                    html: `<h3> Approche d'une seance  </h3> 
+                      <div>
+                       <h5> votre seance de ${seance.titre} avec ${seance.joueur.firstName} ${seance.joueur.lasName} est proche</h5>
+                       <p> date: ${moment(seance.date).format('DD-MM-YYYY hh:mm')}</p>
+                       </div>`
 
                 };
 
@@ -52,6 +64,15 @@ export var job = new CronJob(
                         console.log({ message: "Sucess", joueur });
                     }
                 });
+
+                smtpTransport.sendMail(mailOptionsCoach, (error, res) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log({ message: "Sucess", joueur });
+                    }
+                });
+
 
                 smtpTransport.close();
             } catch (error) {
