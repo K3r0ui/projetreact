@@ -178,21 +178,10 @@ describe('Competence Test', () => {
         await statistique.save();
 
         const response = await request(server)
-            .put(`/stat/coach/${statistique._id}`)
+            .delete(`/stat/coach/${statistique._id}`)
             .set("x-auth-token", token);
 
         expect(response.status).toBe(200);
-        expect(response.body).toMatchObject({
-            title: "Statistique test title",
-            description: "Statistique test description",
-            type: "Statistique test type",
-            unite: "Statistique testunite",
-            lien: "Statistique test lien",
-            max: "maximiser",
-            isVisible: true,
-            alert: true,
-            coach: coach._id
-        });
     });
 
 
