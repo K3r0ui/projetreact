@@ -42,8 +42,10 @@ router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) => {
     const result = await Coach.findOneAndUpdate(
       { _id: req.user.id },
       {
-        $set: { discipline: req.body.discipline,
-                firstAuth: false },
+        $set: {
+          discipline: req.body.discipline,
+          firstAuth: false
+        },
       },
       { new: true }
     );
@@ -100,9 +102,10 @@ router.get("/alljoueurs", verifyCoach, async (req, res) => {
 
 // get the player that terminated the inscription process
 const gg = (ee) => {
-if (ee.invitation.etat === "Termenated"){
-  return ee;
-}}
+  if (ee.invitation.etat === "Termenated") {
+    return ee;
+  }
+}
 
 router.get("/alljoueursI/:id", verifyCoach, async (req, res) => {
 
@@ -146,35 +149,35 @@ router.get("/profile", verifyCoach, async (req, res) => {
 // modifier Profile 
 router.put("/modifierprofile", verifyCoach, async (req, res) => {
   try {
-      const rest = req.body;
-      const coach = await Coach.findByIdAndUpdate(
-          req.user.id, rest, { new: true }
-      )
-      res.send(coach);
+    const rest = req.body;
+    const coach = await Coach.findByIdAndUpdate(
+      req.user.id, rest, { new: true }
+    )
+    res.send(coach);
   } catch {
-      res.status(400).send("there is something wrong ")
+    res.status(400).send("there is something wrong ")
   }
 });
 // modifier Profile Coach Password
 router.put("/modifierpassword", verifyCoach, async (req, res) => {
   try {
-      const coach = await Coach.findByIdAndUpdate(req.user.id)
-      const compare = await bcrypt.compare(req.body.oldPassword, coach.password)
-      if (compare) {
-          const cc = await Coach.findByIdAndUpdate(
-              req.user.id,
-              {
-                  password: bcrypt.hashSync(req.body.newPassword, 8)
-              }
-              , { new: true }
-          )
-          res.send(cc)
-      } else {
-          res.status(400).send("Verifier votre password")
-      }
+    const coach = await Coach.findByIdAndUpdate(req.user.id)
+    const compare = await bcrypt.compare(req.body.oldPassword, coach.password)
+    if (compare) {
+      const cc = await Coach.findByIdAndUpdate(
+        req.user.id,
+        {
+          password: bcrypt.hashSync(req.body.newPassword, 8)
+        }
+        , { new: true }
+      )
+      res.send(cc)
+    } else {
+      res.status(400).send("Verifier votre password")
+    }
 
   } catch {
-      res.status(500).send("there is something wrong ")
+    res.status(500).send("there is something wrong ")
   }
 });
 router.put("/payerabonnement", verifyCoach, async (req, res) => {
@@ -196,5 +199,20 @@ router.put("/payerabonnement", verifyCoach, async (req, res) => {
     res.status(500).send("there is something wrong ");
   }
 });
+
+
+router.put("/modifierprofiljoueur/:id", verifyCoach, async (req, res) => {
+  try {
+    const rest = req.body;
+    let joueur = await Joueur.findByIdAndUpdate(
+      req.params.id,
+      rest, { new: true }
+
+    )
+    res.send(joueur)
+  } catch (error) {
+    res.status(500).send("there is something wrong");
+  }
+})
 
 export default router;
