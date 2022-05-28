@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.75% </span>
+                <span class="strong">33.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>75/303</span>
+                <span class='fraction'>102/302</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.75% </span>
+                <span class="strong">33.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>75/303</span>
+                <span class='fraction'>102/302</span>
             </div>
         
             
@@ -365,8 +365,7 @@
 <a name='L300'></a><a href='#L300'>300</a>
 <a name='L301'></a><a href='#L301'>301</a>
 <a name='L302'></a><a href='#L302'>302</a>
-<a name='L303'></a><a href='#L303'>303</a>
-<a name='L304'></a><a href='#L304'>304</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L303'></a><a href='#L303'>303</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -621,34 +620,33 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -924,34 +922,33 @@ router.delete("/coach/:id", verifyCoach, async (req, res) =&gt; {
 &nbsp;
 //Joueur Join Event 
 router.put('/joueur/join/:id', verifyJoueur, async (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >        if (!mongoose.isValidObjectId(req.params.id)) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(400).send('Invalid Product Id');</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >        const joueur = await Joueur.findById(req.user.id);</span>
-<span class="cstat-no" title="statement not covered" >        const index = joueur.events.findIndex((x) =&gt; x.event == req.params.id)</span>
-<span class="cstat-no" title="statement not covered" >        if (index !== -1) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).send("you are ready join this event")</span>
-<span class="cstat-no" title="statement not covered" >        } else if (req.body.status != "interessé" &amp;&amp; req.body.status != "participer" &amp;&amp; req.body.status != "ne pas participer") {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).send("status Error")</span>
-<span class="cstat-no" title="statement not covered" >        } else {</span>
-<span class="cstat-no" title="statement not covered" >            const event = await Event.findByIdAndUpdate(</span>
-<span class="cstat-no" title="statement not covered" >                req.params.id,</span>
-<span class="cstat-no" title="statement not covered" >                { $push: { joueurs: { joueur: req.user.id, status: req.body.status } } },</span>
-<span class="cstat-no" title="statement not covered" >                { new: true }</span>
-<span class="cstat-no" title="statement not covered" >            );</span>
-<span class="cstat-no" title="statement not covered" >            await Joueur.findByIdAndUpdate(</span>
-<span class="cstat-no" title="statement not covered" >                req.user.id,</span>
-<span class="cstat-no" title="statement not covered" >                { $push: { events: { event: req.params.id, status: req.body.status } } },</span>
-<span class="cstat-no" title="statement not covered" >                { new: true }</span>
-<span class="cstat-no" title="statement not covered" >            )</span>
-<span class="cstat-no" title="statement not covered" >            res.status(200).send(event);</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    } catch {</span>
-<span class="cstat-no" title="statement not covered" >        res.status(400).send("player can not join event")</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >})</span>
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            res.status(400).send('Invalid EventId');
+        }
+        const joueur = await Joueur.findById(req.user.id);
+        const index = joueur.events.findIndex((x) =&gt; x.event == req.params.id)
+        if (index !== -1) {
+            res.status(200).send("you are ready join this event")
+        } else if (req.body.status != "interessé" &amp;&amp; req.body.status != "participer" &amp;&amp; req.body.status != "ne pas participer") {
+            res.status(200).send("status Error")
+        } else {
+            const event = await Event.findByIdAndUpdate(
+                req.params.id,
+                { $push: { joueurs: { joueur: req.user.id, status: req.body.status } } },
+                { new: true }
+            );
+            await Joueur.findByIdAndUpdate(
+                req.user.id,
+                { $push: { events: { event: req.params.id, status: req.body.status } } },
+                { new: true }
+            )
+            res.status(200).send(event);
+        }
+&nbsp;
+    } catch {
+    }
+})
 &nbsp;
 &nbsp;
 //Get joueur All event Joind
@@ -979,7 +976,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat May 28 2022 17:41:39 GMT+0200 (heure d’été d’Europe centrale)
+                at Sat May 28 2022 21:20:14 GMT+0200 (heure d’été d’Europe centrale)
             </div>
         <script src="../../prettify.js"></script>
         <script>

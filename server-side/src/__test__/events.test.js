@@ -49,7 +49,7 @@ describe('events test', () => {
                
             name: "name evest  test",
             description: "description event test",
-            etat:"en cours"
+            etat:"prive"
            
         }
         const response = await request(server).post("/event/coach").set("x-auth-token", token)
