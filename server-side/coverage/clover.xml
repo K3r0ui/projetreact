@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1653191984101" clover="3.2.0">
-  <project timestamp="1653191984101" name="All files">
-    <metrics statements="205" coveredstatements="195" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="1" elements="214" coveredelements="199" complexity="0" loc="205" ncloc="205" packages="2" files="3" classes="3"/>
+<coverage generated="1653756019868" clover="3.2.0">
+  <project timestamp="1653756019868" name="All files">
+    <metrics statements="202" coveredstatements="192" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="1" elements="211" coveredelements="196" complexity="0" loc="202" ncloc="202" packages="2" files="3" classes="3"/>
     <package name="src">
       <metrics statements="84" coveredstatements="82" conditionals="4" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="index.js" path="C:\Users\achref\Documents\code\reactV2\v3\projetreact\server-side\src\index.js">
@@ -93,7 +93,7 @@
       </file>
     </package>
     <package name="src.models">
-      <metrics statements="121" coveredstatements="113" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="1"/>
+      <metrics statements="118" coveredstatements="110" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="1"/>
       <file name="coach.js" path="C:\Users\achref\Documents\code\reactV2\v3\projetreact\server-side\src\models\coach.js">
         <metrics statements="82" coveredstatements="74" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -179,8 +179,8 @@
         <line num="81" count="1" type="stmt"/>
         <line num="82" count="1" type="stmt"/>
       </file>
-      <file name="defi.js" path="C:\Users\achref\Documents\code\reactV2\v3\projetreact\server-side\src\models\defi.js">
-        <metrics statements="39" coveredstatements="39" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="event.js" path="C:\Users\achref\Documents\code\reactV2\v3\projetreact\server-side\src\models\event.js">
+        <metrics statements="36" coveredstatements="36" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -217,9 +217,6 @@
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
       </file>
     </package>
   </project>
