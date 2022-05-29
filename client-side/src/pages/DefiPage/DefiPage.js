@@ -108,10 +108,10 @@ const DefiPage = () => {
 </>)
 }
 
-{data.length==0 &&!loading&& (<>
+{loading&& (<>
 <Empty />
 </>)}
-{data.length!=0 &&!loading &&(<>
+{data &&!loading &&(<>
 
 <DefiList handleUpdateDefi={handleUpdateDefi} handleDeleteDefiById={handleDeleteDefiById} handleAssignerDefi={handleAssignerDefi} data={data} setData={setData} />
 
