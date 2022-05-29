@@ -117,3 +117,28 @@ export const loginJoueur = async (form) => {
    );
    return data;
 };
+
+export const getDefiNotAssigned = async (id) => {
+   console.log("GG")
+   try {
+       const rs = await axios.get(
+           'http://localhost:8080/defi/coach/jouernotassigned/'+id,config
+       );
+       console.log(rs.data);
+       return rs
+   } catch (error) {
+       console.log(error);
+   }
+};
+export const makeDoneJoeur = async (id,donejoeur) => {
+   const  data={'donejoueur':donejoeur}
+   try {
+       const rs = await axios.put(
+           'http://localhost:8080/defi/joueur/'+id,data,config
+       );
+       
+       return rs
+   } catch (error) {
+       console.log(error);
+   }
+};

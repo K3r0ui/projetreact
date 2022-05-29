@@ -19,10 +19,15 @@ import configDB from "./config/db";
 // import { Alert } from "./models/alert";
 
 const app = express();
+module.exports = { app }
 app.use(cors());
 app.use(express.json());
 
-(async () => await configDB())();
+
+if (process.env.NODE_ENV !== "test") {
+  (async () => await configDB())();
+}
+
 
 // routes endpoints
 app.use("/", home);
@@ -71,7 +76,9 @@ app.use("/coach/seance", seance);
 
 //(async () => await alert4.save())();
 
-const port = process.env.PORT || 8080;
-export const server = app.listen(port, () => {
+const port = process.env.PORT || 9000;
+const server = app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
+
+module.exports = server

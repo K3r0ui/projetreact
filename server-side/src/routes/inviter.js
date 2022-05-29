@@ -108,8 +108,8 @@ router.post("/", verifyCoach, async (req, res) => {
       invitation.joueur = joueur;
       res.send(invitation);
     }
-  } catch (error) {
-    res.status(400).send({ "error to inviter": error });
+  } catch {
+    res.status(400).send("error to inviter");
   }
 });
 

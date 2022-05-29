@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate,Navigate  } from 'react-router-dom';
 import { message } from 'antd';
 import "antd/dist/antd.css";
 import { login } from '../../services/register.service';
 import SigninForm from '../../components/SignInComponents/SignInForm';
 const LoginPage = ({ user }) => {
-
+   let navigate = useNavigate();
    
 
 
 
-
+   const [firstAuth , setFirstAuth] = useState([]);
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -36,8 +36,16 @@ const LoginPage = ({ user }) => {
             password: '',
          });
          localStorage.setItem('isCoach', true);
+         if ( res.coach.firstAuth === true ){
+            localStorage.setItem('firstAuth', true);
+            console.log("HHHHH",res.coach.firstAuth)
+             return window.location = '/firstauth';
+            
+         }else{
          // navigate('/');
-         window.location = '/';
+         localStorage.setItem('firstAuth', false);
+         console.log("zzzzz")
+         window.location = '/';}
       } catch (err) {
          console.error(err.message);
          message.error('login failed!');
@@ -46,7 +54,7 @@ const LoginPage = ({ user }) => {
    if (user) return <Navigate to='/' replace />;
    return (
       <>
-        <SigninForm handleSubmit={handleSubmit} handleChange={handleChange} />
+        <SigninForm handleSubmit={handleSubmit} handleChange={handleChange}  />
          {/* <div class='container p-4 mt-4'>
             <div class='row justify-content-evenly mt-4'>
                <div class='col-lg-6 col-md-12 mt-4'>

@@ -255,7 +255,7 @@ router.delete("/coach/:id", verifyCoach, async (req, res) => {
 router.put('/joueur/join/:id', verifyJoueur, async (req, res) => {
     try {
         if (!mongoose.isValidObjectId(req.params.id)) {
-            res.status(400).send('Invalid Product Id');
+            res.status(400).send('Invalid EventId');
         }
         const joueur = await Joueur.findById(req.user.id);
         const index = joueur.events.findIndex((x) => x.event == req.params.id)
@@ -278,7 +278,6 @@ router.put('/joueur/join/:id', verifyJoueur, async (req, res) => {
         }
 
     } catch {
-        res.status(400).send("player can not join event")
     }
 })
 

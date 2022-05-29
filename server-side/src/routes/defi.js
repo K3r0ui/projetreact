@@ -24,7 +24,7 @@ router.get('/coach', verifyCoach, async (req, res) => {
 //Get List defi of connected players
 router.get('/joueur', verifyJoueur, async (req, res) => {
     try {
-        const joueur = await Joueur.findById(req.user.id)
+        const joueur = await Joueur.findById(req.user.id).populate("defis")
         res.status(200).send(joueur.defis)
     } catch {
         res.status(400).send("No Defi Trouved under Player")
@@ -103,26 +103,16 @@ router.put('/coach/:id', verifyCoach, async (req, res) => {
 
 router.put('/joueur/:id', verifyJoueur, async (req, res) => {
     try {
-        // const de = await Defi.findById(req.params.id).select("joueurs");
-        // de.joueurs.map(async(x) =>  {
-        //     let jou = await Joueur.findById(x.jou)
 
-        //     const find = jou.joueurs.findIndex(
-        //         (x) => x.joueur == req
-        //     )
-        // })
-        const newJoueurs = {
-            joueur: req.body.joueur,
-            delai: req.body.delai,
-            donejoueur: req.body.donejoueur,
+        let defi = await Defi.findById(req.params.id)
+        
+        const index= defi.joueurs.findIndex((e)=> e.joueur==req.user.id)
+        
+        if ( index != -1 ){
+             defi.joueurs[index].donejoueur = req.body.donejoueur
         }
-        const defi = await Defi.findOneAndUpdate(
-            { _id: req.params.id },
-            {
-                  joueurs: newJoueurs,
-            },
-            { new: true }
-        );
+         await defi.save();
+
         res.send(defi);
     } catch {
         return res.status(404).send("Defi CANNOT BE UPDATED ");
@@ -147,5 +137,25 @@ router.delete("/coach/:id", verifyCoach, (req, res) => {
             return res.status(404).json({ success: false, Message: err });
         });
 });
-
+const gg = (ee) => {
+    if (ee.invitation.etat === "Termenated") {
+        return ee;
+    }
+}
+router.get("/coach/jouernotassigned/:id", verifyCoach, async (req, res) => {
+    try {
+        const joueur = await Joueur.find({ coach: req.user.id }).populate("invitation");
+        const newJr = joueur.filter(gg);
+        const joueurnotassigned = [];
+        newJr.forEach((el) => {
+            const index = el.defis.findIndex((defi) => defi == req.params.id);
+            if (index == -1) {
+                joueurnotassigned.push(el)
+            }
+        })
+        res.send(joueurnotassigned)    
+    } catch (error) {
+            res.status(500).send("somthing wrong")
+        }
+    })
 export default router;

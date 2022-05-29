@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { getAllAlert } from '../../services/alert.service';
+import { getCurrentCoachProfile } from '../../services/profile.service'
 import { Alert } from 'antd';
 import { useEffect, useState } from 'react';
 const HomePage = () => {
@@ -8,6 +9,8 @@ const HomePage = () => {
    useEffect(() => {
       const fetchData = async()=>{
           const data = await getAllAlert();
+          const gg = await getCurrentCoachProfile();
+          console.log("Current Coach",gg);
           console.log("GG",data);
           if (data){
               setData(data);
@@ -20,8 +23,8 @@ const HomePage = () => {
    return (
       <div className='container'>
          <h3> This is the home page</h3>  
-         { data.map(x=> <><Alert message={x.name} type={x.type} closable  />
-         </> )}
+         {/* { data.map(x=> <><Alert message={x.name} type={x.type} closable  />
+         </> )} */}
         
          {!tokenExist && (
             <>

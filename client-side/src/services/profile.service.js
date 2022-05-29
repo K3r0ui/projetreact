@@ -19,16 +19,16 @@ export const updateCoach = async ({ dob, ...rest }) => {
       date = dob.format('YYYY-MM-DD');
    }
    const { data } = await axios.put(
-      url+'modifierprofile',
+      url + 'modifierprofile',
       { ...rest, ...(dob && { dob: date }) },
       config
    );
    return data;
 };
 // update password 
-export const updatePasswordCoach = async (oldPassword,newPassword)=>{
-   const {data} = await axios.put(
-      url+'modifierpassword',oldPassword,newPassword,config
+export const updatePasswordCoach = async (oldPassword, newPassword) => {
+   const { data } = await axios.put(
+      url + 'modifierpassword', oldPassword, newPassword, config
    );
    return data;
 }
@@ -43,3 +43,23 @@ export const getAllJoueurs = async () => {
       console.log('error');
    }
 };
+
+// add Displine to coach 
+
+export const addDisciplineCoach = async (newDis) => {
+
+   try {
+      const result = await axios.put(url + 'discipline', { discipline: newDis }, config);
+      console.log(result.data);
+
+   } catch (err) {
+      console.log(err)
+   }
+};
+
+export const updateProfilJoueur = async (id, input) => {
+   const { data } = await axios.put(
+      'http://localhost:8080/coach/modifierprofiljoueur/' + id, input, config
+   );
+   return data;
+}

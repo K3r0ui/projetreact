@@ -79,8 +79,9 @@ const Lieu = (props) => {
                finish={finish}
                initialValues={{
                   name: lieu.name,
-                  description: lieu.description,
-                  etat: lieu.etat,
+                  city: lieu.city,
+                  country: lieu.country,
+                  adresse: lieu.address,
                }}
             />
          </Modal>

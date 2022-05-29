@@ -156,7 +156,7 @@ const SeanceForm = (props) => {
         label="dzdz"
         
         style={{ width: '100%' }}
-        placeholder="Selectionner les statistiques"
+        placeholder="Selectionner les competance"
         onChange={handleChangeCompetance}
         >
              {competances.map(competance => (

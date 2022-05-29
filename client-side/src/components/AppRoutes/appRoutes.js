@@ -25,6 +25,7 @@ import SeanceDetail from '../../pages/SeancePage/SeanceDetail';
 import ProfileCoachPage from '../../pages/ProfileCoachPage/profileCoachPage';
 import DefiPagePlayer from '../../pages/DefiPagePlayer/DefiPagePlayer';
 import SeanceJoueurPage from '../../pages/SeancePage/SeanceJoueurPage';
+import EquipePage from '../../pages/EquipePage/EquipePage';
 
 export default function AppRoutes({ user }) {
    const routes = [
@@ -45,6 +46,7 @@ export default function AppRoutes({ user }) {
       { path: '/logout', Component: <Logout /> },
       { path: '/myprofile', Component: <ProfileCoachPage /> },
       { path: '/joueur/defi', Component: <DefiPagePlayer /> },
+      { path: '/firstAuth', Component: <EquipePage /> },
    ];
 
    return (

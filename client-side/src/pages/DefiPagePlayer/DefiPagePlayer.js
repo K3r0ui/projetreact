@@ -4,13 +4,14 @@ import { Spin, Space ,Modal,Empty} from 'antd';
 import DefiPlayerList from '../../components/DefiPlayerComponents/DefiPlayerList';
 import {getAllDefisJ } from '../../services/defi.service'
 import DefiPlayerForm from '../../components/DefiPlayerComponents/DefiPlayerForm';
+import { makeDoneJoeur } from '../../services/joueur.service';
 function DefiPagePlayer() {
     useEffect(() => {
         const fetchData = async ()=>{
           const data = await getAllDefisJ();
-          console.log(data);
+          console.log("dataaaa",data.data);
            if(data){
-               setData(data);
+               setData(data.data);
            }
            setLoading(false)
         };
@@ -19,8 +20,13 @@ function DefiPagePlayer() {
     const [data,setData] = useState([])
     const [loading,setLoading]=useState(false)
     const [visible, setVisible] = useState(false);
-
-
+    
+    const handleMakeDoneJoeurById = (id) => {
+      const doneJ = true;
+      makeDoneJoeur(id,doneJ);
+      // setData(data.filter(defi=>defi._id !== id)) ;
+  
+    }
     const handleOk = () => {
         setVisible(false);
      };
@@ -43,31 +49,11 @@ function DefiPagePlayer() {
     </>)}
     {data.length!=0 &&!loading &&(<>
     
-    <DefiPlayerList  />
+    <DefiPlayerList data={data} handleMakeDoneJoeurById={handleMakeDoneJoeurById} />
     
     </>)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    <Modal
-        
-        title="Mettre done un defi"
-        visible={visible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okButtonProps={{ disabled: true }}
-      
-    >
-    
-    <DefiPlayerForm />
-    
-    </Modal>
     
       
         </>  );

@@ -5,9 +5,8 @@ import { getAllDefis ,deleteDefiById, updateDefi, addDefi,assignerDefi } from '.
 
 import DefiList from '../../components/DefiComponents/DefiList/DefiList';
 import DefiForm from '../../components/DefiComponents/DefiForm/DefiForm';
-import AssignedForm from '../../components/DefiComponents/AssignedForm/AssignedForm';
 const DefiPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [loading,setLoading]=useState(false)
   const [visible, setVisible] = useState(false);
 
@@ -108,10 +107,10 @@ const DefiPage = () => {
 </>)
 }
 
-{data.length==0 &&!loading&& (<>
+{loading&& (<>
 <Empty />
 </>)}
-{data.length!=0 &&!loading &&(<>
+{data &&!loading &&(<>
 
 <DefiList handleUpdateDefi={handleUpdateDefi} handleDeleteDefiById={handleDeleteDefiById} handleAssignerDefi={handleAssignerDefi} data={data} setData={setData} />
 
