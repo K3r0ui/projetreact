@@ -5,12 +5,6 @@ import "antd/dist/antd.css";
 import { login } from '../../services/register.service';
 import SigninForm from '../../components/SignInComponents/SignInForm';
 const LoginPage = ({ user }) => {
-   let navigate = useNavigate();
-   
-
-
-
-   const [firstAuth , setFirstAuth] = useState([]);
    const [values, setValues] = useState({
       email: '',
       password: '',
@@ -24,7 +18,6 @@ const LoginPage = ({ user }) => {
    };
     
    const handleSubmit = async (e) => {
-      console.log(values)
       e.preventDefault();
 
       try {
@@ -38,13 +31,9 @@ const LoginPage = ({ user }) => {
          localStorage.setItem('isCoach', true);
          if ( res.coach.firstAuth === true ){
             localStorage.setItem('firstAuth', true);
-            console.log("HHHHH",res.coach.firstAuth)
              return window.location = '/firstauth';
-            
          }else{
-         // navigate('/');
          localStorage.setItem('firstAuth', false);
-         console.log("zzzzz")
          window.location = '/';}
       } catch (err) {
          console.error(err.message);
@@ -55,44 +44,6 @@ const LoginPage = ({ user }) => {
    return (
       <>
         <SigninForm handleSubmit={handleSubmit} handleChange={handleChange}  />
-         {/* <div class='container p-4 mt-4'>
-            <div class='row justify-content-evenly mt-4'>
-               <div class='col-lg-6 col-md-12 mt-4'>
-                  <div class='d-flex'>
-                     <i class='fa-solid fa-right-to-bracket fs-1 mx-2'></i>{' '}
-                     <h2>Login</h2>
-                  </div>
-                  <div
-                     class='p-6 shadow-lg p-3 mb-5 bg-body rounded'
-                     style={{ backgroundColor: 'white' }}>
-                     <form>
-                        <SigninForm
-                           label='Email'
-                           type='text'
-                           value={email}
-                           onChange={handleChange('email')}
-                        />
-                        <SigninForm
-                           label='Password'
-                           type='password'
-                           value={password}
-                           onChange={handleChange('password')}
-                        />
-                        <div class='d-flex justify-content-between'>
-                           <button
-                              type='values.
-                              values.submit'
-                              onClick={handleSubmit}
-                              class='btn btn-outline-primary'>
-                              Sign In <i class='fa-solid fa-floppy-disk'></i>
-                           </button>
-                           <Link to='/register'>I don't have account</Link>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-         </div> */}
       </>
    );
 };

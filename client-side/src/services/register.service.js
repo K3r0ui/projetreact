@@ -12,13 +12,14 @@ export const login = async (email, password) => {
    return data;
 };
 
-export const register = async (firstName, lastName, email, password, dob) => {
+export const register = async (firstName, lastName, email, dob, password) => {
    const input = {
       firstName,
       lastName,
       email,
-      password,
       dob,
+      password,
+      
    };
    const { data } = await axios.post(
       'http://localhost:8080/coach/signup',

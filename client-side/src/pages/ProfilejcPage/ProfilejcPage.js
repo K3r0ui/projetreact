@@ -91,7 +91,7 @@ const ProfilejcPage = () => {
       }
 
    }
-
+ if (joueur.length != 0)
    return (
       <div className='container'>
          <table class='table mt-3'>
@@ -131,10 +131,8 @@ const ProfilejcPage = () => {
                                     setSingleSeance(data85)
                                     setAllDefis(data95)
                                     const ay = (element) => {
-                                       console.log("element", element);
                                        let test = false;
-                                       element.joueurs.map(e => { { console.log("gggggggggg", e.joueur); { if (joueur._id === e.joueur) { test = true; } }; } })
-                                       console.log("test", test);
+                                       element.joueurs.map(e => { { { if (joueur._id === e.joueur) { test = true; } }; } })
                                        return test;
                                     }
                                     const filterdefi = (id1, id2) => {
@@ -146,9 +144,6 @@ const ProfilejcPage = () => {
                                     const data101 = await data95.filter(ay);
                                     const data100 = data95.map(x => x.joueurs.filter(y => filterdefi(y, joueur._id)));
                                     setEtatDefi(data101);
-                                    console.log("alojada", data85);
-                                    console.log("FILER 1 ", data95.filter(ay));
-                                    console.log("ALO DEFI", data100);
                                  }}
                                  class='btn btn-secondary'>
                                  Afficher profile
@@ -214,6 +209,11 @@ const ProfilejcPage = () => {
 
       </div>
    );
+   else if(joueur.length == 0)
+   return(
+   <>
+   <Empty />
+</>)
 };
 
 export default ProfilejcPage;
