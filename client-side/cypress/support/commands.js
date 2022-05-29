@@ -50,5 +50,14 @@ Cypress.Commands.add('login', () => {
       cy.get(dropDownSelector).next().find('.ant-select-item-option-content').click()
     })
   })
+  Cypress.Commands.add( 'selectDropdown', ( testId , optionText) => {
+    cy.get(`.ant-select${selector} > .ant-select-selector > .ant-select-selection-overflow`).click();
+    cy.get(`.ant-select${selector} .ant-select-selection-search input`).clear()
+    cy.get(`.ant-select${selector} .ant-select-selection-search input`).invoke('attr', 'id').then((selElm) => {
+      const dropDownSelector = `#${selElm}_list`;
+      cy.get(`.ant-select${selector} .ant-select-selection-search input`).type(`${text}`);
+      cy.get(dropDownSelector).next().find('.ant-select-item-option-content').click()
+    })
+  })
 
   
