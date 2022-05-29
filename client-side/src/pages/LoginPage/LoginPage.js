@@ -39,7 +39,7 @@ const LoginPage = ({ user }) => {
          if ( res.coach.firstAuth === true ){
             localStorage.setItem('firstAuth', true);
             console.log("HHHHH",res.coach.firstAuth)
-             return window.location = '/creerequipe';
+             return window.location = '/firstauth';
             
          }else{
          // navigate('/');

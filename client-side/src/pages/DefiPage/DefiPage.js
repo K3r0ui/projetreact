@@ -7,7 +7,7 @@ import DefiList from '../../components/DefiComponents/DefiList/DefiList';
 import DefiForm from '../../components/DefiComponents/DefiForm/DefiForm';
 import AssignedForm from '../../components/DefiComponents/AssignedForm/AssignedForm';
 const DefiPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [loading,setLoading]=useState(false)
   const [visible, setVisible] = useState(false);
 

@@ -70,3 +70,17 @@ Cypress.Commands.add('login', () => {
   })
 
   
+
+  function selectDropdown(testId, optionText) {
+    // open select
+    getById(testId).click();
+  
+    return cy
+      .get('.ant-select-dropdown :not(.ant-select-dropdown-hidden)')
+      .find('.ant-select-item-option')
+      .each(el => {
+        if (el.text() === optionText) {
+          cy.wrap(el).click();
+        }
+      });
+  }
