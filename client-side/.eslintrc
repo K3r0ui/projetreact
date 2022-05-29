@@ -1,0 +1,23 @@
+{
+   
+    
+    "parserOptions": {
+        "ecmaVersion": 6,                                                //version ta3 ES6
+        "sourceType" : "module",                                         //ykhalik tekhdem bel import w export 
+        "ecmaFeatures": {                                                //ykhalik tekhdem bel react wel jsx
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+
+        }
+    },
+    "extends": ["eslint:recommended","eslint-config-prettier"],          //nom des rules 7adhrin
+    "rules": {                                                           //njibou les rules men site
+                          
+        "semi" :"off",                                                   //kina3melch ;(semicolon) ykharajli error sinon semi :OFF
+        "no-undef" :"error"                                              //ki testa3mel variable sans declaration
+    },
+    "env": {
+            "browser" :true                                              //tous les varieble sont sus window (kima console)
+    }
+    
+}
