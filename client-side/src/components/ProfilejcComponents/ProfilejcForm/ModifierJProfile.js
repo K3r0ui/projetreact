@@ -13,7 +13,7 @@ export default function ModifierJProfile({ initialValues, finish }) {
         message.error('Submit failed!');
     };
 
-    initialValues.dob = moment(initialValues.dob, 'DD/MM/YYYY')
+    initialValues.dob = initialValues.dob ? moment(initialValues.dob, 'YYYY-MM-DD') : null
 
 
     return (
@@ -42,17 +42,7 @@ export default function ModifierJProfile({ initialValues, finish }) {
                     <Input placeholder="Prenom de Joueur" />
 
                 </Form.Item>
-                <Form.Item
-                    name="email"
-                    label="Email"
-                    rules={[
-                        { required: true, message: 'Entrer email de Joueur' },
-                        { type: "email", message: 'email n\'est pas valid ' }
-                    ]}
-                >
-                    <Input placeholder="Email" />
 
-                </Form.Item>
 
                 <Form.Item name="dob" label="Date de Naissance">
                     <DatePicker />
