@@ -5,7 +5,6 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 function SignupForm({ handleChange, handleSubmit }) {
 
-
    const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -20,8 +19,7 @@ function SignupForm({ handleChange, handleSubmit }) {
         span: 16
       }
     };
-    // date entre 1960 - 2002 to guaranteed a coach between 20y - 60y
-    const disabledDate =(d) => {!d || d.isAfter("2002-12-31") || d.isSameOrBefore("1960-01-01")}
+   
    return (
       <>
       <br></br>
@@ -32,22 +30,27 @@ function SignupForm({ handleChange, handleSubmit }) {
       
     >
       <Form.Item
-          name='firstName'
+          name="firstName"
           label='Nom'
           rules={[{ required: true, message: 'Entrer le nom de Coach' }]}>
-          <Input placeholder='Nom de Coach' />
+          <Input placeholder='Nom de Coach' onChange={handleChange('firstName')} />
       </Form.Item>
       <Form.Item
-          name='lastName'
-          label='Prenom'
+          name="lastName"
+          label="Prenom"
           rules={[
               { required: true, message: 'Entrer le Prenom de Coach' },
           ]}>
-          <Input placeholder='Prenom du Coach' />
+          <Input placeholder='Prenom du Coach' onChange={handleChange('lastName')} />
       </Form.Item>
 
-      <Form.Item name='dob' label='Date de naissance'>
-          <DatePicker disabledDate={disabledDate} defaultPickerValue={moment("2002-12-31")} />
+      <Form.Item name="dob" label="Date de naissance"
+              rules={[
+                {
+                  required: true,
+                }
+              ]}>
+          <Input onChange={handleChange("dob")}/>
       </Form.Item>
       <Form.Item
         name="email"
