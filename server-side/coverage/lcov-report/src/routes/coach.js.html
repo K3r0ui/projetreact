@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.14% </span>
+                <span class="strong">27.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>57/218</span>
+                <span class='fraction'>59/218</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.14% </span>
+                <span class="strong">27.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/218</span>
+                <span class='fraction'>59/218</span>
             </div>
         
             
@@ -288,36 +288,36 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -505,36 +505,36 @@ import { Joueur } from "../models/joueur";
 const router = express.Router();
 &nbsp;
 router.post("/signup", async (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  let coach;</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    coach = new Coach({</span>
-<span class="cstat-no" title="statement not covered" >      firstName: req.body.firstName,</span>
-<span class="cstat-no" title="statement not covered" >      lastName: req.body.lastName,</span>
-<span class="cstat-no" title="statement not covered" >      email: req.body.email,</span>
-<span class="cstat-no" title="statement not covered" >      password: req.body.password,</span>
-<span class="cstat-no" title="statement not covered" >      dob: req.body.dob,</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >    coach = await coach.save();</span>
-<span class="cstat-no" title="statement not covered" >    const token = await coach.generateJWT();</span>
-<span class="cstat-no" title="statement not covered" >    res.header("x-auth-token", token).send(coach);</span>
-<span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
+  let coach;
+  try {
+    coach = new Coach({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      dob: req.body.dob,
+    });
+    coach = await coach.save();
+    const token = await coach.generateJWT();
+    res.header("x-auth-token", token).send(coach);
+  } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400).send(error);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >});</span>
+});
 &nbsp;
 router.post("/login", async (req, res) =&gt; {
-  let coach = await Coach.findByEmail(req.body.email);
-&nbsp;
-  if (!coach) return res.status(400).send("Email or Password invalid.");
-&nbsp;
-  const validPwd = await bcrypt.compare(req.body.password, coach.password);
-&nbsp;
-  if (!validPwd) <span class="branch-0 cbranch-no" title="branch not covered" >return r</span>es.status(400).send("Email or Password invalid.");
-&nbsp;
-  const token = await coach.generateJWT();
-&nbsp;
-  res.send({ coach, token });
-});
+<span class="cstat-no" title="statement not covered" >  let coach = await Coach.findByEmail(req.body.email);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  if (!coach) return res.status(400).send("Email or Password invalid.");</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const validPwd = await bcrypt.compare(req.body.password, coach.password);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  if (!validPwd) return res.status(400).send("Email or Password invalid.");</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const token = await coach.generateJWT();</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  res.send({ coach, token });</span>
+<span class="cstat-no" title="statement not covered" >});</span>
 &nbsp;
 router.put("/discipline", [verifyCoach, firstAuthMid], async (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  try {</span>
@@ -721,7 +721,7 @@ export default router;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun May 29 2022 12:14:26 GMT+0200 (Central European Summer Time)
+                at Sun May 29 2022 12:58:19 GMT+0200 (Central European Summer Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
