@@ -24,7 +24,7 @@ router.get('/coach', verifyCoach, async (req, res) => {
 //Get List defi of connected players
 router.get('/joueur', verifyJoueur, async (req, res) => {
     try {
-        const joueur = await Joueur.findById(req.user.id)
+        const joueur = await Joueur.findById(req.user.id).populate("defis")
         res.status(200).send(joueur.defis)
     } catch {
         res.status(400).send("No Defi Trouved under Player")
