@@ -9,7 +9,7 @@ const {handleDeleteDefiById,handleUpdateDefi, handleAssignerDefi,data,setData} =
     <table class="table mt-3">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">defi</th>
         <th scope="col">Description</th>
         <th scope="col">Lien</th>
         <th scope="col">Video</th>

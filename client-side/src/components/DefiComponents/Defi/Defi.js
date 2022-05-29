@@ -87,7 +87,7 @@ const Defi = (props) => {
       <td> <iframe src={defi.link} title="YouTube video" allowfullscreen></iframe></td>
       <td>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <button type="button" onClick={assigner} class="btn btn-success">Assigner defi</button>
+        <button type="button" onClick={assigner}  class="btn btn-success">Assigner defi</button>
         <button type="button" onClick={modifier} class="btn btn-secondary">modifier</button>
         
           <Popconfirm
@@ -119,7 +119,7 @@ const Defi = (props) => {
           okButtonProps={{ disabled: true }}
         
         >
-         <AssignedForm finishassigner={finishassigner}/>
+         <AssignedForm defi={defi} finishassigner={finishassigner}/>
         </Modal> 
         
         

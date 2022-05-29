@@ -1,18 +1,20 @@
 import React from 'react'
 import { Form, Select, message, Button, Space,DatePicker } from 'antd';
 import { useEffect, useState } from 'react';
-import { getAllPlayersI } from '../../../services/joueur.service'
+import { getDefiNotAssigned } from '../../../services/joueur.service'
 import moment from 'moment';
 import 'antd/dist/antd.css'; 
 function AssignedForm(props) {
   const [form] = Form.useForm();
   const [joueur,setJoueurs] = useState([]);
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
-        const resultJoueur = await getAllPlayersI();
-        if (resultJoueur) {
-            setJoueurs(resultJoueur);
+      
+        const resultJoueur = await getDefiNotAssigned(props.defi._id);
+        if (resultJoueur.data) {
+            setJoueurs(resultJoueur.data);
             console.log('resultJoueur',resultJoueur)
           }
        

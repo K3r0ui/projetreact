@@ -114,4 +114,3 @@ export const getAllDefisJ = async () => {
         console.log(error);
     }
 };
-

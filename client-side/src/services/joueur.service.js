@@ -117,3 +117,16 @@ export const loginJoueur = async (form) => {
    );
    return data;
 };
+
+export const getDefiNotAssigned = async (id) => {
+   console.log("GG")
+   try {
+       const rs = await axios.get(
+           'http://localhost:8080/defi/coach/jouernotassigned/'+id,config
+       );
+       console.log(rs.data);
+       return rs
+   } catch (error) {
+       console.log(error);
+   }
+};
