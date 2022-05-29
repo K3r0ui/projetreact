@@ -44,7 +44,7 @@ describe('events test', () => {
         expect(response.body.length).toEqual(0)
     });
   
-    test("should save defi object into the db", async () => {
+    test("should save event object into the db", async () => {
         const data={
                
             name: "name evest  test",
