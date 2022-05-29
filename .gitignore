@@ -5,11 +5,12 @@ client-side/.pnp
 client-side/.pnp.js
 
 # env
-client-side/.env.development
-server-side/.env
+# client-side/.env.development
+# server-side/.env
 
 # testing
 client-side/coverage
+server-side/coverage
 
 # production
 client-side/build
