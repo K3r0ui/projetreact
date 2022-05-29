@@ -23,46 +23,62 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', () => { 
-    cy.request({
+Cypress.Commands.add('login', () => {
+   cy.request({
       method: 'POST',
       url: 'http://localhost:8080/coach/login',
       body: {
-       email:"coach2@gmail.com",
-       password:"12345678"
+         email: 'coach2@gmail.com',
+         password: '12345678',
+      },
+   }).then((resp) => {
+      window.localStorage.setItem('token', resp.body.token);
+      window.localStorage.setItem('isCoach', true);
+   });
+});
 
-      }
-    })
-    .then((resp) => {
-      window.localStorage.setItem('token', resp.body.token)
-      window.localStorage.setItem('isCoach', true)
-    })
-  
-  })
+Cypress.Commands.add('loginJoueur', () => {
+   cy.request({
+      method: 'POST',
+      url: 'http://localhost:8080/joueur/login',
+      body: {
+         email: 'najibbelhadj11@gmail.com',
+         password: '12345678',
+      },
+   }).then((resp) => {
+      window.localStorage.setItem('token', resp.body);
+      window.localStorage.setItem('isCoach', false);
+   });
+});
 
-
-  Cypress.Commands.add( 'multiSelect', ( selector , text) => {
-    cy.get(`.ant-select${selector} > .ant-select-selector > .ant-select-selection-overflow`).click();
-    cy.get(`.ant-select${selector} .ant-select-selection-search input`).clear()
-    cy.get(`.ant-select${selector} .ant-select-selection-search input`).invoke('attr', 'id').then((selElm) => {
-      const dropDownSelector = `#${selElm}_list`;
-      cy.get(`.ant-select${selector} .ant-select-selection-search input`).type(`${text}`);
-      cy.get(dropDownSelector).next().find('.ant-select-item-option-content').click()
-    })
-  })
-
-
-  Cypress.Commands.add("selectDropdown", (testId, optionText) => {
-    cy.get(testId).click({ force: true });
-  
-    return cy
-      .get(".ant-select-dropdown :not(.ant-select-dropdown-hidden)")
-      .find(".ant-select-item-option")
-      .each((el) => {
-        if (el.text() === optionText) {
-          cy.wrap(el).click({ force: true });
-        }
+Cypress.Commands.add('multiSelect', (selector, text) => {
+   cy.get(
+      `.ant-select${selector} > .ant-select-selector > .ant-select-selection-overflow`
+   ).click();
+   cy.get(`.ant-select${selector} .ant-select-selection-search input`).clear();
+   cy.get(`.ant-select${selector} .ant-select-selection-search input`)
+      .invoke('attr', 'id')
+      .then((selElm) => {
+         const dropDownSelector = `#${selElm}_list`;
+         cy.get(
+            `.ant-select${selector} .ant-select-selection-search input`
+         ).type(`${text}`);
+         cy.get(dropDownSelector)
+            .next()
+            .find('.ant-select-item-option-content')
+            .click();
       });
-  });
+});
 
-  
+Cypress.Commands.add('selectDropdown', (testId, optionText) => {
+   cy.get(testId).click({ force: true });
+
+   return cy
+      .get('.ant-select-dropdown :not(.ant-select-dropdown-hidden)')
+      .find('.ant-select-item-option')
+      .each((el) => {
+         if (el.text() === optionText) {
+            cy.wrap(el).click({ force: true });
+         }
+      });
+});
