@@ -36,7 +36,7 @@ export default function Program({
             <th scope='row'>{index + 1}</th>
             <td>{program.name}</td>
             <td>{program.description}</td>
-            <td>{program.image}</td>
+            <td><img src={program.image} alt="not-found" style={{width: "200px"}}/></td>
             <td>{program.videoLink}</td>
             <td>
                <div

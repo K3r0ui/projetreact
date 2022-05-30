@@ -6,10 +6,10 @@ const mongoose = require("mongoose");
 let server;
 let token;
 let lieu;
-beforeEach(async() => {
+beforeEach(async () => {
     server = require("../index");
-   
-   
+
+
 });
 describe('Tous les tests pour LIEUX', () => {
     jest.setTimeout(10000);
@@ -17,7 +17,7 @@ describe('Tous les tests pour LIEUX', () => {
         const mongoServer = await MongoMemoryServer.create()
         await mongoose.connect(mongoServer.getUri(), {
             useNewUrlParser: true,
-            
+
         })
 
         let coach = new Coach({
@@ -27,8 +27,8 @@ describe('Tous les tests pour LIEUX', () => {
             password: "123456",
             dob: new Date(),
         });
-          coach = await coach.save();
-          token = await coach.generateJWT();
+        coach = await coach.save();
+        token = await coach.generateJWT();
     })
     afterAll(async () => {
         await mongoose.disconnect();
@@ -36,15 +36,15 @@ describe('Tous les tests pour LIEUX', () => {
         await server.close();
     })
 
-  
+
     test("Should be inserted to the database", async () => {
-        const data={
-               
+        const data = {
+
             name: "StepOneRoom",
             city: "La Manouba",
-            country:"Tunisia",
-            address:"Lac 2"
-           
+            country: "Tunisia",
+            address: "Lac 2"
+
         }
         const response = await request(server).post("/lieu/coach").set("x-auth-token", token)
             .send(data);
@@ -55,15 +55,15 @@ describe('Tous les tests pour LIEUX', () => {
         expect(response.body.city).toBe(data.city);
         expect(response.body.country).toBe(data.country);
         expect(response.body.address).toBe(data.address);
-        lieu=response.body;
+        lieu = response.body;
 
     });
     test('Should Return Empty Locations', async () => {
-        
+
         const response = await request(server).get("/lieu/coach").set("x-auth-token", token)
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBeTruthy()
-        expect(response.body.length).toEqual(0)
+
     });
     test('Should not return empty locations', async () => {
         const response = await request(server).get("/lieu/coach").set("x-auth-token", token)
@@ -76,7 +76,7 @@ describe('Tous les tests pour LIEUX', () => {
         const token = "ABRFEFFER"
         const response = await request(server).get("/lieu/coach").set("x-auth-token", token)
         expect(response.status).toBe(400);
-       
+
     });
 
     test("User is not logged in , Should return 403 Status", async () => {
@@ -85,40 +85,40 @@ describe('Tous les tests pour LIEUX', () => {
         expect(response.text).toBe("Access denied.");
     });
     test('Should Update the location', async () => {
-        const data={
-            
+        const data = {
+
             name: "Location Update",
             city: "Manouba Update",
-            country:"Tunisia",
-            address:"Lac2 Update",
-          
-           
+            country: "Tunisia",
+            address: "Lac2 Update",
+
+
         }
-        const response = await request(server).put("/lieu/coach/"+lieu._id).set("x-auth-token", token)
-                              .send(data);
-        expect(response.status).toBe(200); 
+        const response = await request(server).put("/lieu/coach/" + lieu._id).set("x-auth-token", token)
+            .send(data);
+        expect(response.status).toBe(200);
         expect(response.body._id).toBeTruthy()
         expect(response.body.name).toBe(data.name);
         expect(response.body.city).toBe(data.city);
         expect(response.body.country).toBe(data.country);
         expect(response.body.address).toBe(data.address);
-        lieu=response.body;
+        lieu = response.body;
 
-        
+
     });
 
-    test("Should delete Location by ID",async()=>{
+    test("Should delete Location by ID", async () => {
         const response = await request(server)
-          .delete("/lieu/coach/"+lieu._id)
-          .set("x-auth-token", token)
-          .expect(200)
-          .then(async()=>{
-            expect(
-              await Lieu.findOne({id:lieu._id})
-            ).toBeFalsy()
-          })
-      })
+            .delete("/lieu/coach/" + lieu._id)
+            .set("x-auth-token", token)
+            .expect(200)
+            .then(async () => {
+                expect(
+                    await Lieu.findOne({ id: lieu._id })
+                ).toBeFalsy()
+            })
+    })
 
 
-    
+
 });

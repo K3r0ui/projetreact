@@ -90,6 +90,7 @@ export const acceptInvitation = async (id) => {
 };
 
 export const finishJoueurCreation = async ({ dob, ...rest }, id) => {
+   console.log("service", rest);
    const date = dob.format('DD/MM/YYYY');
    const { data } = await axios.put(
       'http://localhost:8080/inviter/updatejoueur/' + id,

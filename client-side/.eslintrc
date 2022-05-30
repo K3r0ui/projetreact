@@ -1,6 +1,5 @@
 {
-   
-    
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
         "ecmaVersion": 6,                                                //version ta3 ES6
         "sourceType" : "module",                                         //ykhalik tekhdem bel import w export 
@@ -10,7 +9,7 @@
 
         }
     },
-    "extends": ["eslint:recommended","eslint-config-prettier"],          //nom des rules 7adhrin
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {                                                           //njibou les rules men site
                           
         "semi" :"off",                                                   //kina3melch ;(semicolon) ykharajli error sinon semi :OFF
@@ -19,5 +18,4 @@
     "env": {
             "browser" :true                                              //tous les varieble sont sus window (kima console)
     }
-    
 }

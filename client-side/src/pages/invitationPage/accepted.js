@@ -44,9 +44,10 @@ export default function Accepted() {
 
    const onFinish = async (values) => {
       try {
+         console.log(values);
          const res = await finishJoueurCreation(values, idJ);
          message.success('submit success!');
-         navigate('/login');
+         navigate('/loginJoueur');
       } catch (error) {
          console.error(error.message);
          message.error('submit failed!');
@@ -59,20 +60,20 @@ export default function Accepted() {
 
    const initialValues = joueurData
       ? {
-           firstName: joueurData.firstName,
-           lastName: joueurData.lastName,
-           dob: joueurData.dob ? moment(joueurData.dob, 'DD/MM/YYYY') : null,
-           pob: joueurData.pob,
-           sexe: joueurData.sexe,
-           job: joueurData.job,
-           ville: joueurData.ville,
-           telephone: joueurData.telephone,
-           taille: joueurData.taille,
-           poid: joueurData.poid,
-           orientation: joueurData.orientation,
-           price: joueurData.price,
-           nbscweek: joueurData.nbscweek,
-        }
+         firstName: joueurData.firstName,
+         lastName: joueurData.lastName,
+         dob: joueurData.dob ? moment(joueurData.dob, 'DD/MM/YYYY') : null,
+         pob: joueurData.pob,
+         sexe: joueurData.sexe,
+         job: joueurData.job,
+         ville: joueurData.ville,
+         telephone: joueurData.telephone,
+         taille: joueurData.taille,
+         poid: joueurData.poid,
+         orientation: joueurData.orientation,
+         price: joueurData.price,
+         nbscweek: joueurData.nbscweek,
+      }
       : {};
 
    console.log('initialValues', initialValues);
@@ -107,7 +108,8 @@ export default function Accepted() {
                <Input.Password placeholder='input password' />
             </Form.Item>
 
-            <Form.Item name='dob' label='Date de naissance'>
+            <Form.Item name='dob' label='Date de naissance'
+               rules={[{ required: true, message: 'Entrer Date' }]}>
                <DatePicker />
             </Form.Item>
             <Form.Item name='pob' label='Lieu de Naissance'>

@@ -179,7 +179,7 @@ router.put("/updatejoueur/:id", async (req, res) => {
     } else {
       const { password, ...rest } = req.body;
       joueur = await Joueur.findOneAndUpdate(
-        req.params.id,
+        { _id: req.params.id },
         {
           password: bcrypt.hashSync(password, 8),
           ...rest,
@@ -196,7 +196,7 @@ router.put("/updatejoueur/:id", async (req, res) => {
 
       const coch = await Coach.findById(joueur.coach).populate("abonnement");
 
-      await Coach.findOneAndUpdate(joueur.coach, {
+      await Coach.findOneAndUpdate({ _id: joueur.coach }, {
         $set: {
           "abonnement.joueurterminer": coch.abonnement.joueurterminer + 1,
         },

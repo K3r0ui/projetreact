@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Popconfirm, Modal } from 'antd';
 import { message } from 'antd';
+
 import LieuForm from '../LieuForm/LieuForm';
+import { UserContext } from './../../../UserProvider';
 const Lieu = (props) => {
    const { lieu, handleDeleteLieuById, handleUpdateLieu, setData } = props;
    const [visible, setVisible] = useState(false);
-
+   const { currentUser, setCurrentUser } = useContext(UserContext);
    //fonctions pour formulaire
 
    //faire la mise a jour
@@ -13,7 +15,6 @@ const Lieu = (props) => {
       handleUpdateLieu(lieu._id, name, city, country, address);
 
       setVisible(false);
-      console.log('Received values of form: ', values);
    };
 
    const onFinishFailed = () => {
@@ -47,25 +48,28 @@ const Lieu = (props) => {
             <td> {lieu.country}</td>
             <td> {lieu.address}</td>
             <td>
-               <div
-                  class='btn-group'
-                  role='group'
-                  aria-label='Basic mixed styles example'>
-                  <button
-                     type='button'
-                     onClick={modifier}
-                     class='btn btn-secondary'>
-                     modifier
-                  </button>
-                  <Popconfirm
-                     title='Title'
-                     onConfirm={confirm}
-                     onVisibleChange={() => console.log('visible change')}>
-                     <button type='button' class='btn btn-danger'>
-                        supprimer
+               {currentUser && currentUser._id == lieu.coach && (
+
+                  <div
+                     class='btn-group'
+                     role='group'
+                     aria-label='Basic mixed styles example'>
+                     <button
+                        type='button'
+                        onClick={modifier}
+                        class='btn btn-secondary'>
+                        modifier
                      </button>
-                  </Popconfirm>
-               </div>
+                     <Popconfirm
+                        title='Title'
+                        onConfirm={confirm}
+                        onVisibleChange={() => console.log('visible change')}>
+                        <button type='button' class='btn btn-danger'>
+                           supprimer
+                        </button>
+                     </Popconfirm>
+                  </div>
+               )}
             </td>
          </tr>
 
