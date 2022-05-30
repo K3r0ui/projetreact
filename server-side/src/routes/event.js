@@ -169,24 +169,6 @@ router.get("/joueur/interess", verifyJoueur, async (req, res) => {
 
 
 
-//routes for players and coatchs 
-router.get('/:id', verifyToken, async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-        if (event) {
-            res.status(200).send(event);
-        }
-        res.status(200).json({
-            msg: "event not exists"
-        });
-    }
-    catch {
-        res.status(400).send("No Event Trouved")
-    }
-
-})
-
-
 //routes for  coatchs 
 // insert event 
 router.post('/coach', verifyCoach, async (req, res) => {
